@@ -16,5 +16,9 @@ export default defineConfig({
             fallbackType: "rewrite"
         }
     },
-    output: 'server'
+    output: 'server',
+    prefetch: {
+        prefetchAll: true,
+        defaultStrategy: 'hover'
+    }
 });
