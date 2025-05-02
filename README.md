@@ -18,19 +18,22 @@ Inside of your Astro project, you'll see the following folders and files:
 │   └── pages/
 │       └── index.astro
 │       └── en/
-│           └── index.astro
-│           └── blog.astro
-│           └── about.astro
-│           └── contact.astro
+│       │   └── index.astro
+│       │   └── blog.astro
+│       │   └── about.astro
+│       │   └── contact.astro
+│       │   └── posts/
 │       └── fr/
-│           └── index.astro
-│           └── blog.astro
-│           └── about.astro
-│           └── contact.astro
+│       │   └── index.astro
+│       │   └── blog.astro
+│       │   └── about.astro
+│       │   └── contact.astro
+│       │   └── posts/
 │       └── jp/
-│           └── index.astro
-│           └── about.astro
-│           └── contact.astro
+│       │   └── index.astro
+│       │   └── blog.astro
+│       │   └── about.astro
+│       │   └── contact.astro
 └── package.json
 ```
 

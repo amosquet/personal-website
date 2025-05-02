@@ -1,11 +1,10 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
+import Welcome from '../../components/Welcome.astro';
+import Layout from '../../layouts/Layout.astro';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
 
 import { useUserAgent } from 'astro-useragent';
-
 const uaString = Astro.request.headers.get('user-agent');
 const { source, isFirefox } = useUserAgent(uaString);
 
@@ -21,6 +20,8 @@ const { source, isFirefox } = useUserAgent(uaString);
 
 </Layout>
 
+<p>Source: {source}</p>
+<p>Is Firefox: {isFirefox ? 'Yes' : 'No'}</p>
 
 <!-- <a href="/">Home</a>
 <a href="/about/">About</a>
