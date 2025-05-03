@@ -8,16 +8,11 @@ const t = useTranslations(locale);
 ---
 
 <!-- <Home /> -->
-<style>
-    h1 {
-        text-align: left;
-        font-size: 40px;
-        font-weight: bold;
-        padding: 20px;
-    }
-</style>
 
 <Home>
-    <h1>Hello Here! I'm {t("siteTitle")}</h1>
-
+    <div class="flex-1">
+        <h1 class="text-4xl font-bold mb-4">Hello Here! I'm {t("siteTitle")}</h1>
+        <p>I'm a {t("myOccupation")} at Purdue. I speak {t("languages")}</p>
+        <p>I enjoy working on web development projects.</p>
+    </div>
 </Home>

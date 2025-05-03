@@ -9,7 +9,9 @@ const { source, isFirefox } = useUserAgent(uaString);
 <Layout>
 	<!-- <p>Source: {source}</p>
 	<p>Is Firefox: {isFirefox ? 'Yes' : 'No'}</p> -->
-	<slot />
+	<section class='flex items-center gap-12 border-b pb-12'>
+		<slot />
+	</section>
 </Layout>
 <!-- <h1>My Astro Site</h1>
 

@@ -69,4 +69,9 @@ export const uiStrings: TypeUIStrings = {
         fr: "Écrit par:",
         jp: "著者:", //fix?
     },
+    languages: {
+        en: "French and English",
+        fr: "Français et anglais",
+        jp: "フランス語と英語", //fix?
+    },
 };
