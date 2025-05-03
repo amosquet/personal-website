@@ -6,6 +6,8 @@ export interface TypeUIStrings {
     };
 }
 
+
+
 export const uiStrings: TypeUIStrings = {
     siteTitle: {
         en: "Artus Mosquet",
@@ -52,10 +54,19 @@ export const uiStrings: TypeUIStrings = {
         fr: "Suivez-moi sur",
         jp: "私をフォローしてください", //fix?
     },
-    // footerCopyright: {
-    //     en: "© 2025", 
-    //     fr: "© 2025",
-    //     jp: "© 2025",
-    // },
-
+    welcome: {
+        en: "Welcome!",
+        fr: "Bienvenue!",
+        jp: "ようこそ！", //fix?
+    },
+    publishDate: {
+        en: "Published on:",
+        fr: "Publié le:",
+        jp: "公開日:", //fix?
+    },
+    writtenBy: {
+        en: "Written by:",
+        fr: "Écrit par:",
+        jp: "著者:", //fix?
+    },
 };

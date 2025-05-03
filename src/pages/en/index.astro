@@ -1,5 +1,23 @@
 ---
 import Home from '@/components/Home.astro';
+
+import { defaultLocale } from "@/i18n/i18n";
+const locale = Astro.currentLocale || defaultLocale;
+import { useTranslations } from '@/i18n/utils';
+const t = useTranslations(locale);
 ---
 
-<Home />
+<!-- <Home /> -->
+<style>
+    h1 {
+        text-align: left;
+        font-size: 40px;
+        font-weight: bold;
+        padding: 20px;
+    }
+</style>
+
+<Home>
+    <h1>Hello Here! I'm {t("siteTitle")}</h1>
+
+</Home>

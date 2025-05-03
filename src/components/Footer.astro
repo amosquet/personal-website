@@ -1,8 +1,9 @@
 ---
 
 import { defaultLocale } from "@/i18n/i18n";
-import { uiStrings } from "@/i18n/uiStrings";
 const locale = Astro.currentLocale || defaultLocale;
+import { useTranslations } from '@/i18n/utils';
+const t = useTranslations(locale);
 
 
 const git = "github";
@@ -13,8 +14,16 @@ const twitch = "twitch";
 const twitch_username = "Almondmanttv";
 ---
 
+<style>
+    footer {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+</style>
+
 <footer>
-    <p>{uiStrings["footerProject"]![locale]} <a href={`https://www.github.com/amosquet`}>{git}</a>!</p>
-    <p>{uiStrings["footerSocial"]![locale]} <a href={`https://www.twitter.com/almondmanttv`}>Twitter</a>, <a href={`https://www.twitch.tv/almondmanttv`}>Twitch</a>!</p>
-    <p>© 2025 {uiStrings["siteTitle"]![locale]}</p>
+    <p>{t("footerProject")} <a href={`https://www.github.com/amosquet`}>{git}</a>!</p>
+    <p>{t("footerSocial")} <a href={`https://www.twitter.com/almondmanttv`}>Twitter</a>, <a href={`https://www.twitch.tv/almondmanttv`}>Twitch</a>!</p>
+    <p>© 2025 {t("siteTitle")}</p>
 </footer>

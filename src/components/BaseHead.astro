@@ -2,15 +2,51 @@
 import { defaultLocale, locales } from "@/i18n/i18n";
 import { uiStrings } from "@/i18n/uiStrings";
 const locale = Astro.currentLocale || defaultLocale;
+import { useTranslations } from '@/i18n/utils';
+const t = useTranslations(locale);
 
 const currentIndex = locales.indexOf(locale);
 const nextLocale = locales[(currentIndex + 1) % locales.length];
+
+// Replace the current locale in the URL path with the next locale
+const currentPath = Astro.url.pathname;
+const updatedPath = currentPath.replace(`/${locale}/`, `/${nextLocale}/`);
 ---
 
-<nav class="mx-auto flex flex-row gap-6 p-8 bg-black text-white justify-end">
-    <a href={"/" + locale + "/"}>{uiStrings["navHome"]![locale]}</a>
-    <a href={"/" + locale + "/blog/"}>{uiStrings["navBlog"]![locale]}</a>
-    <a href={"/" + locale + "/about/"}>{uiStrings["navAbout"]![locale]}</a>
-    <a href={"/" + locale + "/contact/"}>{uiStrings["navContact"]![locale]}</a>
-    <a href={"/" + nextLocale + "/"}>{locale}</a>
+<style>
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: black;
+        padding: 20px 16px; /* Keeps consistent padding */
+    }
+    .name {
+        color: white;
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-right: auto; /* Pushes the links to the right */
+    }
+    a {
+        color: white;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    .links {
+        display: flex;
+        gap: 16px; /* Keeps consistent spacing between links */
+    }
+</style>
+
+<nav>
+    <div class="name">{t("siteTitle")}</div>
+    <div class="links">
+        <a href={"/" + locale + "/"}>{uiStrings["navHome"]![locale]}</a>
+        <a href={"/" + locale + "/blog/"}>{uiStrings["navBlog"]![locale]}</a>
+        <a href={"/" + locale + "/about/"}>{uiStrings["navAbout"]![locale]}</a>
+        <a href={"/" + locale + "/contact/"}>{uiStrings["navContact"]![locale]}</a>
+        <a href={updatedPath}>{locale}</a>
+    </div>
 </nav>
