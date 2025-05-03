@@ -1,11 +1,13 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
+import BaseHead from '@/components/BaseHead.astro';
+import Footer from '@/components/Footer.astro';
 const { title } = Astro.props;
 
 import { defaultLocale } from "@/i18n/i18n";
 import { uiStrings } from "@/i18n/uiStrings";
 const locale = Astro.currentLocale || defaultLocale;
+
+import "@/styles/global.css";
 
 // import { useUserAgent } from 'astro-useragent';
 // const uaString = Astro.request.headers.get('user-agent');
@@ -23,7 +25,6 @@ const locale = Astro.currentLocale || defaultLocale;
     <BaseHead title={title}/>
   </head>
   <body>
-
     <h1>{title}</h1>
     <article>
       <slot /> <!-- your content is injected here -->

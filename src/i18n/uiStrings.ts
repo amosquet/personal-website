@@ -15,7 +15,7 @@ export const uiStrings: TypeUIStrings = {
     navHome: {
         en: "Home",
         fr: "Accueil",
-        jp: "主要",
+        jp: "主要", //fix?
     },
     navBlog: {
         en: "Blog",
@@ -25,7 +25,7 @@ export const uiStrings: TypeUIStrings = {
     navAbout: {
         en: "About",
         fr: "À propos",
-        jp: "約",
+        jp: "約", //fix?
     },
     navContact: {
         en: "Contact",
@@ -42,5 +42,20 @@ export const uiStrings: TypeUIStrings = {
         fr: "Étudiant en ECE à temps plein",
         jp: "フルタイムのECE学生", //fix
     },
+    footerProject: {
+        en: "Learn more about my projects on",
+        fr: "En savoir plus sur mes projets sur",
+        jp: "私のプロジェクトについては、", //fix?
+    },
+    footerSocial: {
+        en: "Follow me on",
+        fr: "Suivez-moi sur",
+        jp: "私をフォローしてください", //fix?
+    },
+    // footerCopyright: {
+    //     en: "© 2025", 
+    //     fr: "© 2025",
+    //     jp: "© 2025",
+    // },
 
 };

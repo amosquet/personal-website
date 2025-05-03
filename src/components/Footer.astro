@@ -1,4 +1,10 @@
 ---
+
+import { defaultLocale } from "@/i18n/i18n";
+import { uiStrings } from "@/i18n/uiStrings";
+const locale = Astro.currentLocale || defaultLocale;
+
+
 const git = "github";
 const git_username = "amosquet";
 const twitter = "twitter";
@@ -8,7 +14,7 @@ const twitch_username = "Almondmanttv";
 ---
 
 <footer>
-    <p>Learn more about my projects on <a href={`https://www.${git}.com/${git_username}`}>{git}</a>!</p>
-    <p>Follow me on <a href={`https://www.${twitter}.com/${twitter_username}`}>Twitter</a> and <a href={`https://www.${twitch}.tv/${twitch_username}`}>Twitch</a>!</p>
-    <p>© Artus Mosquet 2025</p>
+    <p>{uiStrings["footerProject"]![locale]} <a href={`https://www.${git}.com/${git_username}`}>{git}</a>!</p>
+    <p>{uiStrings["footerSocial"]![locale]} <a href={`https://www.${twitter}.com/${twitter_username}`}>Twitter</a>, <a href={`https://www.${twitch}.tv/${twitch_username}`}>Twitch</a>!</p>
+    <p>© 2025 {uiStrings["siteTitle"]![locale]}</p>
 </footer>
