@@ -22,15 +22,13 @@ const skills = ["Python", "Proxmox", "Ubiquiti"];
 
 <p>Here are a few facts about me:</p>
 <ul>
-  <li>My name is {identity.firstName}.</li>
-  <li>I live in the {identity.country} and I am a {identity.occupation}.</li>
-  {identity.hobbies.length >= 2 &&
-    <li>Two of my hobbies are: {identity.hobbies[0]} and {identity.hobbies[1]}</li>
-  }
+  <li>My name is Artus Mosquet</li>
+  <li>I am French and live in the United States</li>
+  <li>Full-Time ECE Student at Purdue University.</li>
+  <li>Languages: English and French</li>
+  <li>Two of my hobbies are: traveling and gaming</li>
+  <li>Skills: Python, Proxmox, Ubiquiti</li>
 </ul>
-<p>My skills are:</p>
-<ul>
-  {skills.map((skill) => <li>{skill}</li>)}
-</ul>
+
 
 </Layout>

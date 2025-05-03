@@ -10,7 +10,7 @@ export const uiStrings: TypeUIStrings = {
     siteTitle: {
         en: "Artus Mosquet",
         fr: "Artus Mosquet",
-        jp: "モスケ ア-タス ",
+        jp: "モスケ アータス",
     },
     navHome: {
         en: "Home",
