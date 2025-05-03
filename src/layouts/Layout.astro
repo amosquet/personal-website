@@ -3,6 +3,10 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 const { title } = Astro.props;
 
+import { defaultLocale } from "@/i18n/i18n";
+import { uiStrings } from "@/i18n/uiStrings";
+const locale = Astro.currentLocale || defaultLocale;
+
 // import { useUserAgent } from 'astro-useragent';
 // const uaString = Astro.request.headers.get('user-agent');
 // const { source, isFirefox } = useUserAgent(uaString);
@@ -12,19 +16,14 @@ const { title } = Astro.props;
 // }
 ---
 
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <BaseHead title={title}/>
   </head>
   <body>
-    <nav>
-      <a href="/">Home</a>
-	  <a href="/blog/">Blog</a>
-      <a href="/about/">About</a>
-      <a href="/contact/">Contact</a>
-    </nav>
+
     <h1>{title}</h1>
     <article>
       <slot /> <!-- your content is injected here -->
@@ -39,57 +38,4 @@ const { title } = Astro.props;
   <script>
 
   </script>
-</html>
-
-
-<html lang="fr">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <BaseHead title={title}/>
-  </head>
-  <body>
-    <nav>
-      <a href="/">accueil</a>
-	  <a href="/blog/">Blog</a>
-      <a href="/about/">à propos</a>
-      <a href="/contact/">Contact</a>
-    </nav>
-    <h1>{title}</h1>
-    <article>
-      <slot /> <!-- your content is injected here -->
-    </article>
-    <Footer />
-  </body>
-  <style>
-    h1 {
-      font-size: 2rem;
-    }
-  </style>
-</html>
-
-<html lang="jp">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <BaseHead title={title}/>
-  </head>
-  <body>
-    <nav>
-      <a href="/">主要</a>
-	  <a href="/blog/">ブログ</a>
-      <a href="/about/">約</a>
-      <a href="/contact/">接触</a>
-    </nav>
-    <h1>{title}</h1>
-    <article>
-      <slot /> <!-- your content is injected here -->
-    </article>
-    <Footer />
-  </body>
-  <style>
-    h1 {
-      font-size: 2rem;
-    }
-  </style>
 </html>
