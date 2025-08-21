@@ -5,12 +5,7 @@ const locale = Astro.currentLocale || defaultLocale;
 import { useTranslations } from '@/i18n/utils';
 const t = useTranslations(locale);
 
-const currentIndex = locales.indexOf(locale);
-const nextLocale = locales[(currentIndex + 1) % locales.length];
-
-// Replace the current locale in the URL path with the next locale
 const currentPath = Astro.url.pathname;
-const updatedPath = currentPath.replace(`/${locale}/`, `/${nextLocale}/`);
 ---
 
 <style>
@@ -37,6 +32,55 @@ const updatedPath = currentPath.replace(`/${locale}/`, `/${nextLocale}/`);
     .links {
         display: flex;
         gap: 16px; /* Keeps consistent spacing between links */
+        align-items: center;
+    }
+
+    /* Dropdown container */
+    .language-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Dropdown button */
+    .dropbtn {
+        background: none;
+        border: none;
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        font-family: inherit;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+
+    .dropbtn:hover {
+        text-decoration: underline;
+    }
+
+    /* Dropdown content (hidden by default) */
+    .language-dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: black;
+        min-width: 50px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        right: 0;
+        border: 1px solid #333;
+        border-radius: 4px;
+    }
+
+    /* Links inside the dropdown */
+    .language-dropdown-content a {
+        padding: 12px 16px;
+        display: block;
+        text-align: left;
+        text-transform: uppercase;
+    }
+
+    /* Show the dropdown menu on hover */
+    .language-dropdown:hover .language-dropdown-content {
+        display: block;
     }
 </style>
 
@@ -47,6 +91,16 @@ const updatedPath = currentPath.replace(`/${locale}/`, `/${nextLocale}/`);
         <a href={"/" + locale + "/blog/"}>{uiStrings["navBlog"]![locale]}</a>
         <a href={"/" + locale + "/about/"}>{uiStrings["navAbout"]![locale]}</a>
         <a href={"/" + locale + "/contact/"}>{uiStrings["navContact"]![locale]}</a>
-        <a href={updatedPath}>{locale}</a>
+        
+        <div class="language-dropdown">
+            <button class="dropbtn">{locale}</button>
+            <div class="language-dropdown-content">
+                {locales.map(otherLocale => {
+                    if (otherLocale === locale) return null;
+                    const newPath = currentPath.replace(`/${locale}/`, `/${otherLocale}/`);
+                    return <a href={newPath}>{otherLocale}</a>;
+                })}
+            </div>
+        </div>
     </div>
 </nav>
