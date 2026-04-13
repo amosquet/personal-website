@@ -155,7 +155,7 @@ const themeStyles = {
                                     <h4
                                         class="font-medium text-gray-800"
                                         set:html={category.name}
-                                    </>
+                                    />
                                     <p
                                         class="text-gray-600 text-sm"
                                         set:html={category.list}
@@ -172,9 +172,8 @@ const themeStyles = {
         <section>
             <h2
                 class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
-            >
-                {projects.title}
-            </h2>
+                set:html={projects.title}
+            />
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {
                     projects.items.map((project) => (
@@ -184,8 +183,7 @@ const themeStyles = {
                             <h3
                                 class={`font-medium ${themeStyles[project.theme].title}`}
                                 set:html={project.name}
-                            >
-                            </h3>
+                            />
                             <p
                                 class={`text-sm mt-1 ${themeStyles[project.theme].desc}`}
                                 set:html={project.description}
