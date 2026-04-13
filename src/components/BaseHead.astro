@@ -2,7 +2,7 @@
 import { defaultLocale, locales } from "@/i18n/i18n";
 import { uiStrings } from "@/i18n/uiStrings";
 const locale = Astro.currentLocale || defaultLocale;
-import { useTranslations } from '@/i18n/utils';
+import { useTranslations } from "@/i18n/utils";
 const t = useTranslations(locale);
 
 const currentPath = Astro.url.pathname;
@@ -63,7 +63,7 @@ const currentPath = Astro.url.pathname;
         position: absolute;
         background-color: black;
         min-width: 50px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1;
         right: 0;
         border: 1px solid #333;
@@ -90,16 +90,31 @@ const currentPath = Astro.url.pathname;
         <a href={"/" + locale + "/"}>{uiStrings["navHome"]![locale]}</a>
         <a href={"/" + locale + "/blog/"}>{uiStrings["navBlog"]![locale]}</a>
         <a href={"/" + locale + "/about/"}>{uiStrings["navAbout"]![locale]}</a>
-        <a href={"/" + locale + "/contact/"}>{uiStrings["navContact"]![locale]}</a>
-        
+        <a href={"/" + locale + "/contact/"}
+            >{uiStrings["navContact"]![locale]}</a
+        >
+
+        <a
+            href="https://status.amcloud.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Status
+        </a>
+
         <div class="language-dropdown">
             <button class="dropbtn">{locale}</button>
             <div class="language-dropdown-content">
-                {locales.map(otherLocale => {
-                    if (otherLocale === locale) return null;
-                    const newPath = currentPath.replace(`/${locale}/`, `/${otherLocale}/`);
-                    return <a href={newPath}>{otherLocale}</a>;
-                })}
+                {
+                    locales.map((otherLocale) => {
+                        if (otherLocale === locale) return null;
+                        const newPath = currentPath.replace(
+                            `/${locale}/`,
+                            `/${otherLocale}/`,
+                        );
+                        return <a href={newPath}>{otherLocale}</a>;
+                    })
+                }
             </div>
         </div>
     </div>

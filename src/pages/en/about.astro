@@ -1,24 +1,217 @@
 ---
-import Layout from '@/layouts/Layout.astro';
+import Layout from "@/layouts/Layout.astro";
 
-import { defaultLocale, locales } from "@/i18n/i18n";
-import { uiStrings } from "@/i18n/uiStrings";
+import { defaultLocale } from "@/i18n/i18n";
 const locale = Astro.currentLocale || defaultLocale;
 
 const pageTitle = "About Me";
 ---
 
+<!-- <Layout title={pageTitle}> -->
 <Layout>
+    <div class="max-w-4xl mx-auto py-8 px-4 flex flex-col gap-12">
+        <section>
+            <h2 class="text-3xl font-bold mb-4 text-blue-600">
+                Bonjour! I'm Artus Mosquet 👋
+            </h2>
+            <p class="text-lg text-gray-700">
+                I am a French student living in the United States, currently
+                pursuing a B.Sc in Electrical Engineering at Purdue University.
+                When I am not writing software or configuring Linux systems, I
+                enjoy travelling, gaming, and contributing to community hardware
+                and software projects.
+            </p>
+        </section>
 
-<p>Here are a few facts about me:</p>
-<ul>
-  <li>My name is Artus Mosquet</li>
-  <li>I am French and live in the United States</li>
-  <li>Full-Time ECE Student at Purdue University.</li>
-  <li>Languages: English and French</li>
-  <li>Two of my hobbies are: traveling and gaming</li>
-  <li>Skills: Python, Proxmox, Ubiquiti</li>
-</ul>
+        <section>
+            <h2
+                class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
+            >
+                Experience
+            </h2>
+            <div class="flex flex-col gap-6">
+                <div
+                    class="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+                >
+                    <div
+                        class="flex justify-between items-start mb-2 flex-wrap gap-2"
+                    >
+                        <h3 class="text-xl font-medium">
+                            Software Engineer Intern
+                        </h3>
+                        <span
+                            class="text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full"
+                            >Valeo | Summer 2025</span
+                        >
+                    </div>
+                    <ul class="list-disc list-inside text-gray-600 space-y-1">
+                        <li>
+                            Developed an Nvidia DriveWorks plugin for custom
+                            LiDAR hardware.
+                        </li>
+                        <li>
+                            Programmed a Python state-flow application,
+                            cross-compatible with MathWorks Stateflow.
+                        </li>
+                    </ul>
+                </div>
 
+                <div
+                    class="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+                >
+                    <div
+                        class="flex justify-between items-start mb-2 flex-wrap gap-2"
+                    >
+                        <h3 class="text-xl font-medium">Organiser</h3>
+                        <span
+                            class="text-sm bg-yellow-100 text-yellow-800 py-1 px-3 rounded-full"
+                            >Purdue Hackers | Spring 2025 - Present</span
+                        >
+                    </div>
+                    <p class="text-gray-600">
+                        Organising technical workshops and community events
+                        whilst leading an initiative to archive the
+                        organisation's technical data.
+                    </p>
+                </div>
 
+                <div
+                    class="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+                >
+                    <div
+                        class="flex justify-between items-start mb-2 flex-wrap gap-2"
+                    >
+                        <h3 class="text-xl font-medium">
+                            IT Specialist Intern
+                        </h3>
+                        <span
+                            class="text-sm bg-gray-100 text-gray-800 py-1 px-3 rounded-full"
+                            >Detroit Country Day School | 2023</span
+                        >
+                    </div>
+                    <p class="text-gray-600">
+                        Administered Active Directory and device management
+                        tools for staff and students in a BYOD environment.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h2
+                        class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
+                    >
+                        Education
+                    </h2>
+                    <div
+                        class="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+                    >
+                        <h3 class="font-medium text-lg">Purdue University</h3>
+                        <p class="text-gray-600 mb-4">
+                            B.Sc. Electrical Engineering (Class of 2027)
+                        </p>
+
+                        <h3 class="font-medium text-lg">
+                            Oakland Community College
+                        </h3>
+                        <p class="text-gray-600">
+                            Coursework: C++ Object-Oriented Programming &
+                            Linux/Unix Administration
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h2
+                        class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
+                    >
+                        Skills
+                    </h2>
+                    <div
+                        class="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+                    >
+                        <div class="mb-4">
+                            <h4 class="font-medium text-gray-800">
+                                Programming
+                            </h4>
+                            <p class="text-gray-600 text-sm">
+                                Python, C, C++, Java, MATLAB
+                            </p>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="font-medium text-gray-800">
+                                Infrastructure
+                            </h4>
+                            <p class="text-gray-600 text-sm">
+                                Linux, Proxmox, Active Directory, Ubiquiti,
+                                Network Administration
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">Languages</h4>
+                            <p class="text-gray-600 text-sm">
+                                English (Fluent), French (Fluent), Japanese
+                                (Elementary)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2
+                class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
+            >
+                Projects & Interests
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div
+                    class="bg-purple-50 p-4 rounded border border-purple-100 hover:shadow-md transition-shadow"
+                >
+                    <h3 class="font-medium text-purple-800">
+                        Video Production
+                    </h3>
+                    <p class="text-sm text-purple-600 mt-1">
+                        Collaborated with a team to produce Twitch streamer
+                        LilyPichu's 10-year anniversary video.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-green-50 p-4 rounded border border-green-100 hover:shadow-md transition-shadow"
+                >
+                    <h3 class="font-medium text-green-800">
+                        Distributed Computing
+                    </h3>
+                    <p class="text-sm text-green-600 mt-1">
+                        Built high-powered systems contributing to protein
+                        synthesis mapping for SARS-CoV-2 and cancer research.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-blue-50 p-4 rounded border border-blue-100 hover:shadow-md transition-shadow"
+                >
+                    <h3 class="font-medium text-blue-800">Cryptography</h3>
+                    <p class="text-sm text-blue-600 mt-1">
+                        Developed a Python application to encode and decode
+                        messages via custom encryption algorithms.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-orange-50 p-4 rounded border border-orange-100 hover:shadow-md transition-shadow"
+                >
+                    <h3 class="font-medium text-orange-800">Advocacy</h3>
+                    <p class="text-sm text-orange-600 mt-1">
+                        Active proponent of Right to Repair legislation and data
+                        preservation methodologies.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
 </Layout>
