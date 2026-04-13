@@ -1,18 +1,32 @@
 ---
-import Home from '@/components/Home.astro';
+import Home from "@/components/Home.astro";
 
 import { defaultLocale } from "@/i18n/i18n";
 const locale = Astro.currentLocale || defaultLocale;
-import { useTranslations } from '@/i18n/utils';
+import { useTranslations } from "@/i18n/utils";
 const t = useTranslations(locale);
 ---
 
 <!-- <Home /> -->
-
 <Home>
     <div class="flex-1">
-        <h1 class="text-4xl font-bold mb-4">Hello Here! I'm {t("siteTitle")}</h1>
+        <h1 class="text-4xl font-bold mb-4">
+            Hello Here! I'm {t("siteTitle")}
+        </h1>
         <p>I'm a {t("myOccupation")} at Purdue. I speak {t("languages")}</p>
         <p>I enjoy working on web development projects.</p>
+        <p>
+            I'm a big data hoarder with over 20TB's of data stored and over 1TB
+            of traffic served by my network each month
+        </p>
+        <p>
+            On a weekly basis I use three devices; a custom-built Desktop (Arch
+            Linux), Framework 16 (AMD Ryzen 7840HS) (Arch Linux), and M2 Macbook
+            Air
+        </p>
+        <p>
+            If you want to learn more about me, checkout my github repository,
+            the about section in the toolbar, or visit my blog
+        </p>
     </div>
 </Home>
