@@ -1,0 +1,35 @@
+[
+  {
+    "id": "desktop",
+    "name": "Desktop",
+    "icon": "mdi:desktop-tower-monitor",
+    "specs": {
+      "OS": "Arch Linux (KDE Plasma)",
+      "CPU": "AMD Ryzen 5 3600",
+      "RAM": "16GB DDR4",
+      "Storage": "500GB NVMe SSD"
+    }
+  },
+  {
+    "id": "framework",
+    "name": "Framework 16",
+    "icon": "mdi:laptop",
+    "specs": {
+      "OS": "Arch Linux (KDE Plasma)",
+      "CPU": "AMD Ryzen 7 7840HS",
+      "RAM": "32GB DDR5",
+      "Storage": "2TB NVMe SSD"
+    }
+  },
+  {
+    "id": "macbook",
+    "name": "MacBook Air",
+    "icon": "mdi:apple",
+    "specs": {
+      "OS": "macOS",
+      "CPU": "Apple M2",
+      "RAM": "16GB Unified",
+      "Storage": "512GB SSD"
+    }
+  }
+]
