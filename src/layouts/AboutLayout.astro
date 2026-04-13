@@ -82,18 +82,18 @@ const themeStyles = {
         <section>
             <h2
                 class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
-            >
-                {experience.title}
-            </h2>
+                set:html={experience.title}
+            />
             <div class="flex flex-col gap-6">
                 {
                     experience.items.map((item) => (
                         <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
                             <div class="flex justify-between items-start mb-2 flex-wrap gap-2">
                                 <h3 class="text-xl font-medium">{item.role}</h3>
-                                <span class="text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full">
-                                    {item.company} | {item.date}
-                                </span>
+                                <span
+                                    class="text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full"
+                                    set:html={`${item.company} | ${item.date}`}
+                                />
                             </div>
                             {item.bullets ? (
                                 <ul class="list-disc list-inside text-gray-600 space-y-1">
@@ -119,18 +119,18 @@ const themeStyles = {
                 <div>
                     <h2
                         class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
-                    >
-                        {education.title}
-                    </h2>
+                        set:html={education.title}
+                    />
                     <div
                         class="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
                     >
                         {
                             education.items.map((item) => (
                                 <div class="mb-4 last:mb-0">
-                                    <h3 class="font-medium text-lg">
-                                        {item.institution}
-                                    </h3>
+                                    <h3
+                                        class="font-medium text-lg"
+                                        set:html={item.institution}
+                                    />
                                     <p
                                         class="text-gray-600"
                                         set:html={item.details}
@@ -144,18 +144,18 @@ const themeStyles = {
                 <div>
                     <h2
                         class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
-                    >
-                        {skills.title}
-                    </h2>
+                        set:html={skills.title}
+                    />
                     <div
                         class="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
                     >
                         {
                             skills.categories.map((category) => (
                                 <div class="mb-4 last:mb-0">
-                                    <h4 class="font-medium text-gray-800">
-                                        {category.name}
-                                    </h4>
+                                    <h4
+                                        class="font-medium text-gray-800"
+                                        set:html={category.name}
+                                    </>
                                     <p
                                         class="text-gray-600 text-sm"
                                         set:html={category.list}
@@ -183,8 +183,8 @@ const themeStyles = {
                         >
                             <h3
                                 class={`font-medium ${themeStyles[project.theme].title}`}
+                                set:html={project.name}
                             >
-                                {project.name}
                             </h3>
                             <p
                                 class={`text-sm mt-1 ${themeStyles[project.theme].desc}`}
