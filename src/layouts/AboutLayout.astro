@@ -1,0 +1,197 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+export interface Props {
+    intro: {
+        title: string;
+        description: string;
+    };
+    experience: {
+        title: string;
+        items: Array<{
+            role: string;
+            company: string;
+            date: string;
+            bullets?: string[];
+            description?: string;
+        }>;
+    };
+    education: {
+        title: string;
+        items: Array<{
+            institution: string;
+            details: string;
+        }>;
+    };
+    skills: {
+        title: string;
+        categories: Array<{
+            name: string;
+            list: string;
+        }>;
+    };
+    projects: {
+        title: string;
+        items: Array<{
+            name: string;
+            description: string;
+            theme: "purple" | "green" | "blue" | "orange";
+        }>;
+    };
+}
+
+const { intro, experience, education, skills, projects } = Astro.props;
+
+// Pre-defining Tailwind classes prevents them from being purged at build time
+const themeStyles = {
+    purple: {
+        wrapper: "bg-purple-50 border-purple-100",
+        title: "text-purple-800",
+        desc: "text-purple-600",
+    },
+    green: {
+        wrapper: "bg-green-50 border-green-100",
+        title: "text-green-800",
+        desc: "text-green-600",
+    },
+    blue: {
+        wrapper: "bg-blue-50 border-blue-100",
+        title: "text-blue-800",
+        desc: "text-blue-600",
+    },
+    orange: {
+        wrapper: "bg-orange-50 border-orange-100",
+        title: "text-orange-800",
+        desc: "text-orange-600",
+    },
+};
+---
+
+<Layout>
+    <div class="max-w-4xl mx-auto py-8 px-4 flex flex-col gap-12">
+        {/* Introduction Section */}
+        <section>
+            <h2
+                class="text-3xl font-bold mb-4 text-blue-600"
+                set:html={intro.title}
+            />
+            <p class="text-lg text-gray-700" set:html={intro.description} />
+        </section>
+
+        {/* Experience Section */}
+        <section>
+            <h2
+                class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
+                set:html={experience.title}
+            />
+            <div class="flex flex-col gap-6">
+                {
+                    experience.items.map((item) => (
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                            <div class="flex justify-between items-start mb-2 flex-wrap gap-2">
+                                <h3 class="text-xl font-medium">{item.role}</h3>
+                                <span
+                                    class="text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full"
+                                    set:html={`${item.company} | ${item.date}`}
+                                />
+                            </div>
+                            {item.bullets ? (
+                                <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                    {item.bullets.map((bullet) => (
+                                        <li set:html={bullet} />
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p
+                                    class="text-gray-600"
+                                    set:html={item.description}
+                                />
+                            )}
+                        </div>
+                    ))
+                }
+            </div>
+        </section>
+
+        {/* Education & Skills Section */}
+        <section>
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <h2
+                        class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
+                        set:html={education.title}
+                    />
+                    <div
+                        class="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+                    >
+                        {
+                            education.items.map((item) => (
+                                <div class="mb-4 last:mb-0">
+                                    <h3
+                                        class="font-medium text-lg"
+                                        set:html={item.institution}
+                                    />
+                                    <p
+                                        class="text-gray-600"
+                                        set:html={item.details}
+                                    />
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <div>
+                    <h2
+                        class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
+                        set:html={skills.title}
+                    />
+                    <div
+                        class="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+                    >
+                        {
+                            skills.categories.map((category) => (
+                                <div class="mb-4 last:mb-0">
+                                    <h4
+                                        class="font-medium text-gray-800"
+                                        set:html={category.name}
+                                    />
+                                    <p
+                                        class="text-gray-600 text-sm"
+                                        set:html={category.list}
+                                    />
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {/* Projects Section */}
+        <section>
+            <h2
+                class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
+                set:html={projects.title}
+            />
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {
+                    projects.items.map((project) => (
+                        <div
+                            class={`p-4 rounded border hover:shadow-md transition-shadow ${themeStyles[project.theme].wrapper}`}
+                        >
+                            <h3
+                                class={`font-medium ${themeStyles[project.theme].title}`}
+                                set:html={project.name}
+                            />
+                            <p
+                                class={`text-sm mt-1 ${themeStyles[project.theme].desc}`}
+                                set:html={project.description}
+                            />
+                        </div>
+                    ))
+                }
+            </div>
+        </section>
+    </div>
+</Layout>
