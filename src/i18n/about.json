@@ -1,15 +1,15 @@
 {
   "intro": {
     "en": {
-      "title": "Bonjour! I'm Artus Mosquet 👋",
+      "title": "Bonjour! I'm Artus Mosquet",
       "description": "I'm a French student living in the United States, currently pursuing a B.Sc. in Electrical Engineering at Purdue University. When I am not writing software or configuring Linux systems, I enjoy travelling, gaming, and contributing to community hardware and software projects."
     },
     "fr": {
-      "title": "Bonjour ! Je suis Artus Mosquet 👋",
+      "title": "Bonjour ! Je suis Artus Mosquet",
       "description": "Je suis un étudiant français vivant aux États-Unis, préparant actuellement une licence (B.Sc.) en ingénierie électrique à l'Université Purdue. Quand je ne développe pas de logiciels ou ne configure pas des systèmes Linux, j'aime voyager, jouer aux jeux vidéo et contribuer à des projets communautaires matériels et logiciels."
     },
     "jp": {
-      "title": "こんにちは！アルテゥス・モスケです 👋",
+      "title": "こんにちは！アルテゥス・モスケです",
       "description": "<ruby>私<rt>わたし</rt></ruby>はアメリカに<ruby>住<rt>す</rt></ruby>むフランス<ruby>人<rt>じん</rt></ruby><ruby>学生<rt>がくせい</rt></ruby>で、<ruby>現在<rt>げんざい</rt></ruby>パデュー<ruby>大学<rt>だいがく</rt></ruby>で<ruby>電気工学<rt>でんきこうがく</rt></ruby>の<ruby>学士号<rt>がくしごう</rt></ruby>を<ruby>取得中<rt>しゅとくちゅう</rt></ruby>です。ソフトウェアの<ruby>開発<rt>かいはつ</rt></ruby>やLinuxシステムの<ruby>設定<rt>せってい</rt></ruby>をしていない<ruby>時<rt>とき</rt></ruby>は、<ruby>旅行<rt>りょこう</rt></ruby>、ゲーム、そしてコミュニティのハードウェアおよびソフトウェアプロジェクトへの<ruby>貢献<rt>こうけん</rt></ruby>を<ruby>楽<rt>たの</rt></ruby>しんでいます。"
     }
   },
