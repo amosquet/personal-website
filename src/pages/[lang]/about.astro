@@ -1,0 +1,25 @@
+---
+import AboutLayout from "@/layouts/AboutLayout.astro";
+import translations from "@/i18n/about.json";
+
+export function getStaticPaths() {
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "fr" } },
+        { params: { lang: "jp" } },
+    ];
+}
+
+const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+
+// Reconstruct the object to match the AboutLayout Props interface
+const aboutData = {
+    intro: translations.intro[lang],
+    experience: translations.experience[lang],
+    education: translations.education[lang],
+    skills: translations.skills[lang],
+    projects: translations.projects[lang],
+};
+---
+
+<AboutLayout {...aboutData} />

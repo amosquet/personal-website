@@ -1,0 +1,258 @@
+{
+  "intro": {
+    "en": {
+      "title": "Bonjour! I'm Artus Mosquet 👋",
+      "description": "I'm a French student living in the United States, currently pursuing a B.Sc. in Electrical Engineering at Purdue University. When I am not writing software or configuring Linux systems, I enjoy travelling, gaming, and contributing to community hardware and software projects."
+    },
+    "fr": {
+      "title": "Bonjour ! Je suis Artus Mosquet 👋",
+      "description": "Je suis un étudiant français vivant aux États-Unis, préparant actuellement une licence (B.Sc.) en ingénierie électrique à l'Université Purdue. Quand je ne développe pas de logiciels ou ne configure pas des systèmes Linux, j'aime voyager, jouer aux jeux vidéo et contribuer à des projets communautaires matériels et logiciels."
+    },
+    "jp": {
+      "title": "こんにちは！アルテュス・モスケです 👋",
+      "description": "<ruby>私<rt>わたし</rt></ruby>はアメリカに<ruby>住<rt>す</rt></ruby>むフランス<ruby>人<rt>じん</rt></ruby><ruby>学生<rt>がくせい</rt></ruby>で、<ruby>現在<rt>げんざい</rt></ruby>パデュー<ruby>大学<rt>だいがく</rt></ruby>で<ruby>電気工学<rt>でんきこうがく</rt></ruby>の<ruby>学士号<rt>がくしごう</rt></ruby>を<ruby>取得中<rt>しゅとくちゅう</rt></ruby>です。ソフトウェアの<ruby>開発<rt>かいはつ</rt></ruby>やLinuxシステムの<ruby>設定<rt>せってい</rt></ruby>をしていない<ruby>時<rt>とき</rt></ruby>は、<ruby>旅行<rt>りょこう</rt></ruby>、ゲーム、そしてコミュニティのハードウェアおよびソフトウェアプロジェクトへの<ruby>貢献<rt>こうけん</rt></ruby>を<ruby>楽<rt>たの</rt></ruby>しんでいます。"
+    }
+  },
+  "experience": {
+    "en": {
+      "title": "Experience",
+      "items": [
+        {
+          "role": "Software Engineer Intern",
+          "company": "Valeo",
+          "date": "Summer 2025",
+          "bullets": [
+            "Developed an Nvidia DriveWorks plugin for custom LiDAR hardware.",
+            "Programmed a Python state-flow application, cross-compatible with MathWorks Stateflow."
+          ]
+        },
+        {
+          "role": "Organiser",
+          "company": "Purdue Hackers",
+          "date": "Spring 2025 - Present",
+          "description": "Organising technical workshops and community events whilst leading an initiative to archive the organisation's technical data."
+        },
+        {
+          "role": "IT Specialist Intern",
+          "company": "Detroit Country Day School",
+          "date": "2023",
+          "description": "Administered Active Directory and device management tools for staff and students in a BYOD environment."
+        }
+      ]
+    },
+    "fr": {
+      "title": "Expérience",
+      "items": [
+        {
+          "role": "Stagiaire Ingénieur Logiciel",
+          "company": "Valeo",
+          "date": "Été 2025",
+          "bullets": [
+            "Développement d'un plugin Nvidia DriveWorks pour du matériel LiDAR personnalisé.",
+            "Programmation d'une application de diagramme d'état en Python, rétrocompatible avec MathWorks Stateflow."
+          ]
+        },
+        {
+          "role": "Organisateur",
+          "company": "Purdue Hackers",
+          "date": "Printemps 2025 - Présent",
+          "description": "Organisation d'ateliers techniques et d'événements communautaires tout en menant une initiative pour archiver les données techniques de l'organisation."
+        },
+        {
+          "role": "Stagiaire Spécialiste Informatique",
+          "company": "Detroit Country Day School",
+          "date": "2023",
+          "description": "Administration de l'Active Directory et des outils de gestion des appareils pour le personnel et les étudiants dans un environnement BYOD."
+        }
+      ]
+    },
+    "jp": {
+      "title": "<ruby>経験<rt>けいけん</rt></ruby>",
+      "items": [
+        {
+          "role": "ソフトウェアエンジニア・インターン",
+          "company": "Valeo",
+          "date": "2025<ruby>年<rt>ねん</rt></ruby> <ruby>夏<rt>なつ</rt></ruby>",
+          "bullets": [
+            "カスタムLiDARハードウェア<ruby>向<rt>む</rt></ruby>けのNvidia DriveWorksプラグインを<ruby>開発<rt>かいはつ</rt></ruby>。",
+            "MathWorks Stateflowと<ruby>互換性<rt>ごかんせい</rt></ruby>のあるPythonステートフローアプリケーションをプログラミング。"
+          ]
+        },
+        {
+          "role": "<ruby>主催者<rt>しゅさいしゃ</rt></ruby>",
+          "company": "Purdue Hackers",
+          "date": "2025<ruby>年<rt>ねん</rt></ruby> <ruby>春<rt>はる</rt></ruby> - <ruby>現在<rt>げんざい</rt></ruby>",
+          "description": "<ruby>技術<rt>ぎじゅつ</rt></ruby>ワークショップやコミュニティイベントを<ruby>企画<rt>きかく</rt></ruby>し、<ruby>組織<rt>そしき</rt></ruby>の<ruby>技術<rt>ぎじゅつ</rt></ruby>データをアーカイブするプロジェクトを<ruby>主導<rt>しゅどう</rt></ruby>。"
+        },
+        {
+          "role": "ITスペシャリスト・インターン",
+          "company": "Detroit Country Day School",
+          "date": "2023<ruby>年<rt>ねん</rt></ruby>",
+          "description": "BYOD<ruby>環境<rt>かんきょう</rt></ruby>において、スタッフと<ruby>学生<rt>がくせい</rt></ruby><ruby>向<rt>む</rt></ruby>けのActive Directoryとデバイス<ruby>管理<rt>かんり</rt></ruby>ツールを<ruby>運用<rt>うんよう</rt></ruby>。"
+        }
+      ]
+    }
+  },
+  "education": {
+    "en": {
+      "title": "Education",
+      "items": [
+        {
+          "institution": "Purdue University",
+          "details": "B.Sc. Electrical Engineering (Class of 2027)"
+        },
+        {
+          "institution": "Oakland Community College",
+          "details": "Coursework: C++ Object-Oriented Programming & Linux/Unix Administration"
+        }
+      ]
+    },
+    "fr": {
+      "title": "Formation",
+      "items": [
+        {
+          "institution": "Université Purdue",
+          "details": "B.Sc. Ingénierie Électrique (Promotion 2027)"
+        },
+        {
+          "institution": "Oakland Community College",
+          "details": "Cours : Programmation orientée objet en C++ et administration Linux/Unix"
+        }
+      ]
+    },
+    "jp": {
+      "title": "<ruby>学歴<rt>がくれき</rt></ruby>",
+      "items": [
+        {
+          "institution": "パデュー<ruby>大学<rt>だいがく</rt></ruby>",
+          "details": "<ruby>電気工学<rt>でんきこうがく</rt></ruby> <ruby>学士号<rt>がくしごう</rt></ruby> (2027<ruby>年<rt>ねん</rt></ruby><ruby>卒業予定<rt>そつぎょうよてい</rt></ruby>)"
+        },
+        {
+          "institution": "Oakland Community College",
+          "details": "<ruby>履修科目<rt>りしゅうかもく</rt></ruby>: C++オブジェクト<ruby>指向<rt>しこう</rt></ruby>プログラミング & Linux/Unix<ruby>管理<rt>かんり</rt></ruby>"
+        }
+      ]
+    }
+  },
+  "skills": {
+    "en": {
+      "title": "Skills",
+      "categories": [
+        { "name": "Programming", "list": "Python, C, C++, Java, MATLAB" },
+        {
+          "name": "Infrastructure",
+          "list": "Linux, Proxmox, Active Directory, Ubiquiti, Network Administration"
+        },
+        {
+          "name": "Languages",
+          "list": "English (Fluent), French (Native), Japanese (Elementary)"
+        }
+      ]
+    },
+    "fr": {
+      "title": "Compétences",
+      "categories": [
+        { "name": "Programmation", "list": "Python, C, C++, Java, MATLAB" },
+        {
+          "name": "Infrastructure",
+          "list": "Linux, Proxmox, Active Directory, Ubiquiti, Administration Réseau"
+        },
+        {
+          "name": "Langues",
+          "list": "Anglais (Courant), Français (Maternel), Japonais (Débutant)"
+        }
+      ]
+    },
+    "jp": {
+      "title": "スキル",
+      "categories": [
+        { "name": "プログラミング", "list": "Python, C, C++, Java, MATLAB" },
+        {
+          "name": "インフラ",
+          "list": "Linux, Proxmox, Active Directory, Ubiquiti, <ruby>ネットワーク<rt>ネットワーク</rt></ruby><ruby>管理<rt>かんり</rt></ruby>"
+        },
+        {
+          "name": "<ruby>言語<rt>げんご</rt></ruby>",
+          "list": "<ruby>英語<rt>えいご</rt></ruby> (<ruby>流暢<rt>りゅうちょう</rt></ruby>), フランス<ruby>語<rt>ご</rt></ruby> (<ruby>母語<rt>ぼご</rt></ruby>), <ruby>日本語<rt>にほんご</rt></ruby> (<ruby>初級<rt>しょきゅう</rt></ruby>)"
+        }
+      ]
+    }
+  },
+  "projects": {
+    "en": {
+      "title": "Projects & Interests",
+      "items": [
+        {
+          "name": "Video Production",
+          "description": "Collaborated with a team to produce Twitch streamer LilyPichu's 10-year anniversary video.",
+          "theme": "purple"
+        },
+        {
+          "name": "Distributed Computing",
+          "description": "Built high-powered systems contributing to protein synthesis mapping for SARS-CoV-2 and cancer research.",
+          "theme": "green"
+        },
+        {
+          "name": "Cryptography",
+          "description": "Developed a Python application to encode and decode messages via custom encryption algorithms.",
+          "theme": "blue"
+        },
+        {
+          "name": "Advocacy",
+          "description": "Active proponent of Right to Repair legislation and data preservation methodologies.",
+          "theme": "orange"
+        }
+      ]
+    },
+    "fr": {
+      "title": "Projets & Centres d'intérêt",
+      "items": [
+        {
+          "name": "Production Vidéo",
+          "description": "Collaboration avec une équipe pour produire la vidéo du 10e anniversaire de la streameuse Twitch LilyPichu.",
+          "theme": "purple"
+        },
+        {
+          "name": "Informatique Distribuée",
+          "description": "Création de systèmes haute performance contribuant à la cartographie de la synthèse des protéines pour le SRAS-CoV-2 et la recherche sur le cancer.",
+          "theme": "green"
+        },
+        {
+          "name": "Cryptographie",
+          "description": "Développement d'une application Python pour encoder et décoder des messages via des algorithmes de chiffrement personnalisés.",
+          "theme": "blue"
+        },
+        {
+          "name": "Engagement",
+          "description": "Fervent défenseur de la législation sur le droit à la réparation et des méthodologies de préservation des données.",
+          "theme": "orange"
+        }
+      ]
+    },
+    "jp": {
+      "title": "プロジェクトと<ruby>興味<rt>きょうみ</rt></ruby>",
+      "items": [
+        {
+          "name": "<ruby>動画制作<rt>どうがせいさく</rt></ruby>",
+          "description": "TwitchストリーマーLilyPichuの10<ruby>周年記念<rt>しゅうねんきねん</rt></ruby>ビデオをチームで<ruby>共同制作<rt>きょうどうせいさく</rt></ruby>。",
+          "theme": "purple"
+        },
+        {
+          "name": "<ruby>分散<rt>ぶんさん</rt></ruby>コンピューティング",
+          "description": "SARS-CoV-2およびがん<ruby>研究<rt>けんきゅう</rt></ruby>のためのタンパク<ruby>質合成<rt>しつごうせい</rt></ruby>マッピングに<ruby>貢献<rt>こうけん</rt></ruby>する<ruby>高性能<rt>こうせいのう</rt></ruby>システムを<ruby>構築<rt>こうちく</rt></ruby>。",
+          "theme": "green"
+        },
+        {
+          "name": "<ruby>暗号化<rt>あんごうか</rt></ruby>",
+          "description": "<ruby>独自<rt>どくじ</rt></ruby>の<ruby>暗号化<rt>あんごうか</rt></ruby>アルゴリズムを<ruby>介<rt>かい</rt></ruby>してメッセージをエンコード・デコードするPythonアプリケーションを<ruby>開発<rt>かいはつ</rt></ruby>。",
+          "theme": "blue"
+        },
+        {
+          "name": "<ruby>提唱<rt>ていしょう</rt></ruby>",
+          "description": "<ruby>修理<rt>しゅうり</rt></ruby>する<ruby>権利<rt>けんり</rt></ruby>（Right to Repair）の<ruby>法律<rt>ほうりつ</rt></ruby>およびデータ<ruby>保存手法<rt>ほぞんしゅほう</rt></ruby>の<ruby>積極的<rt>せっきょくてき</rt></ruby>な<ruby>支持者<rt>しじしゃ</rt></ruby>。",
+          "theme": "orange"
+        }
+      ]
+    }
+  }
+}

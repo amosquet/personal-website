@@ -1,22 +1,43 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import BaseHead from "@/components/BaseHead.astro";
+import Footer from "@/components/Footer.astro";
+const { title } = Astro.props;
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+import { defaultLocale } from "@/i18n/i18n";
+import { uiStrings } from "@/i18n/uiStrings";
+
+const locale = Astro.currentLocale || defaultLocale;
+// If the locale is 'jp' (internal/URL), display 'ja' (Japanese) to the browser
+const langAttribute = locale === "jp" ? "ja" : locale;
+
+import "@/styles/global.css";
+
+// import { useUserAgent } from 'astro-useragent';
+// const uaString = Astro.request.headers.get('user-agent');
+// const { source, isFirefox } = useUserAgent(uaString);
+
+// if (!isFirefox) {
+// 	return Astro.redirect('https://www.mozilla.org/download', 307);
+// }
+---
+
+<html lang={langAttribute}>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <BaseHead title={title} />
+    </head>
+    <body>
+        <h1>{title}</h1>
+        <article>
+            <slot />
+            <!-- your content is injected here -->
+        </article>
+        <Footer />
+    </body><style>
+        h1 {
+            font-size: 2rem;
+        }
+    </style>
+    <script></script>
+</html>
