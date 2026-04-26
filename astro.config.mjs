@@ -22,7 +22,7 @@ export default defineConfig({
     },
   },
 
-  output: "server",
+  // output: "server",
 
   prefetch: {
     prefetchAll: true,
