@@ -3,6 +3,7 @@ import AboutLayout from "@/layouts/AboutLayout.astro";
 import translations from "@/i18n/about.json";
 import Layout from "@/layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
+import { useTranslations } from "@/i18n/utils";
 
 export function getStaticPaths() {
     return [
@@ -13,11 +14,9 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+const t = useTranslations(lang);
 
 import hardwareData from "@/data/hardware.json";
-// import TimeWidget from "@/components/Clock.astro";
-
-const sectionTitle = "Daily Drivers"; //Placeholder
 ---
 
 <Layout>
@@ -26,15 +25,12 @@ const sectionTitle = "Daily Drivers"; //Placeholder
             class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(180px,auto)]"
         >
             <div
-                class="md:col-span-2 bg-gradient-to-br from-blue-50 to-indigo-100 p-8 rounded-3xl border border-blue-200 flex flex-col justify-center"
+                class="md:col-span-2 bg-linear-to-br from-blue-50 to-indigo-100 p-8 rounded-3xl border border-blue-200 flex flex-col justify-center"
             >
                 <h1 class="text-4xl font-bold text-gray-900 mb-4">
-                    Hello Here! 👋
+                    {t("helloThere")}
                 </h1>
-                <p class="text-xl text-gray-700">
-                    I'm a Full-Time ECE Student at Purdue. I speak French and
-                    English, and I enjoy working on web development projects.
-                </p>
+                <p class="text-xl text-gray-700" set:html={t("introText")} />
             </div>
 
             <div
@@ -49,10 +45,13 @@ const sectionTitle = "Daily Drivers"; //Placeholder
                 >
                     20TB+
                 </div>
-                <p class="text-sm text-gray-400 mt-2">Data Stored</p>
+                <p class="text-sm text-gray-400" set:html={t("dataStored")} />
                 <div class="w-full h-px bg-gray-800 my-3"></div>
                 <div class="text-xl font-bold text-gray-200">1TB+/mo</div>
-                <p class="text-sm text-gray-400">Network Traffic</p>
+                <p
+                    class="text-sm text-gray-400"
+                    set:html={t("networkTraffic")}
+                />
             </div>
 
             <div
@@ -65,7 +64,7 @@ const sectionTitle = "Daily Drivers"; //Placeholder
                         name="mdi:laptop-account"
                         class="w-6 h-6 text-gray-600"
                     />
-                    {sectionTitle}
+                    <Fragment set:html={t("dailyDrivers")} />
                 </h2>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
