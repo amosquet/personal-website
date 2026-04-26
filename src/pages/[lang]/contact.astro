@@ -1,5 +1,18 @@
 ---
-import Layout from '@/layouts/Layout.astro';
+import Layout from "@/layouts/Layout.astro";
+
+import AboutLayout from "@/layouts/AboutLayout.astro";
+import translations from "@/i18n/about.json";
+
+export function getStaticPaths() {
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "fr" } },
+        { params: { lang: "jp" } },
+    ];
+}
+
+const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
 
 import { defaultLocale, locales } from "@/i18n/i18n";
 import { uiStrings } from "@/i18n/uiStrings";
@@ -9,9 +22,5 @@ const pageTitle = "About Me";
 ---
 
 <Layout>
-
-<p>Here</p>
-
-
-
+    <p>Here</p>
 </Layout>
