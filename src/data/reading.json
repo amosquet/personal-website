@@ -1,0 +1,26 @@
+[
+  {
+    "title": "A Promised Land",
+    "author": "Barack Obama",
+    "status": "reading",
+    "completed": "2026",
+    "year": "2020",
+    "isbn": "9781524763183"
+  },
+  {
+    "title": "Project Hail Mary",
+    "author": "Andy Weir",
+    "status": "read",
+    "completed": "2026",
+    "year": "2021",
+    "isbn": "9780593135211"
+  },
+  {
+    "title": "The Martian",
+    "author": "Andy Weir",
+    "status": "read",
+    "completed": "2026",
+    "year": "2011",
+    "isbn": "9780804139038"
+  }
+]
