@@ -72,4 +72,9 @@ export const uiStrings: TypeUIStrings = {
     fr: "Français et anglais",
     jp: "フランス語と英語", //fix?
   },
+  status: {
+    en: "Status",
+    fr: "Statut",
+    jp: "ステータス",
+  },
 };
