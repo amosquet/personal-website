@@ -37,8 +37,8 @@
     "name": "Pixel 10 Pro",
     "icon": "mdi:android",
     "specs": {
-      "SoC": "Android 16",
-      "CPU": "Tensor G5",
+      "OS": "Android 16",
+      "SoC": "Tensor G5",
       "RAM": "16GB",
       "Storage": "512GB UFS 4.0"
     }
