@@ -1,5 +1,6 @@
 ---
 import AboutLayout from "@/layouts/AboutLayout.astro";
+import type { Props as AboutProps } from "@/layouts/AboutLayout.astro";
 import translations from "@/i18n/about.json";
 
 export function getStaticPaths() {
@@ -18,7 +19,7 @@ const aboutData = {
     experience: translations.experience[lang],
     education: translations.education[lang],
     skills: translations.skills[lang],
-    projects: translations.projects[lang],
+    projects: translations.projects[lang] as AboutProps["projects"],
 };
 ---
 

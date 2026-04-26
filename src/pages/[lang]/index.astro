@@ -2,6 +2,7 @@
 import AboutLayout from "@/layouts/AboutLayout.astro";
 import translations from "@/i18n/about.json";
 import Layout from "@/layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
 
 export function getStaticPaths() {
     return [
@@ -13,7 +14,7 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
 
-// import hardwareData from "@/data/hardware.json";
+import hardwareData from "@/data/hardware.json";
 // import TimeWidget from "@/components/Clock.astro";
 
 const sectionTitle = "Daily Drivers"; //Placeholder

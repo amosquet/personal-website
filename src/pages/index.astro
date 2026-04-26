@@ -1,8 +1,20 @@
 ---
+import AboutLayout from "@/layouts/AboutLayout.astro";
+import translations from "@/i18n/about.json";
 import Layout from "@/layouts/Layout.astro";
 import { Icon } from "astro-icon/components";
 
-// import hardwareData from "@/data/hardware.json";
+export function getStaticPaths() {
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "fr" } },
+        { params: { lang: "jp" } },
+    ];
+}
+
+const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+
+import hardwareData from "@/data/hardware.json";
 // import TimeWidget from "@/components/Clock.astro";
 
 const sectionTitle = "Daily Drivers"; //Placeholder
