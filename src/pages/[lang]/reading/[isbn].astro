@@ -1,0 +1,144 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import readingData from "@/data/reading.json";
+import { useTranslations } from "@/i18n/utils";
+
+export async function getStaticPaths() {
+    const paths = [];
+    const locales = ["en", "fr", "jp"];
+
+    for (const lang of locales) {
+        for (const book of readingData) {
+            paths.push({
+                params: { lang, isbn: book.isbn },
+                props: { book },
+            });
+        }
+    }
+    return paths;
+}
+
+const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+const { book } = Astro.props;
+const t = useTranslations(lang);
+const apiKey = import.meta.env.GOOGLE_BOOKS_API_KEY;
+
+// Fetch full details for this specific book
+const response = await fetch(
+    `https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}&key=${apiKey}`,
+);
+const data = await response.json();
+const volumeInfo = data.items?.[0]?.volumeInfo || {};
+
+const fullDescription = volumeInfo.description || "No description available.";
+
+// Force HTTPS, request higher resolution, and strip the corner curl effect
+const coverHiRes =
+    volumeInfo.imageLinks?.thumbnail
+        ?.replace("http:", "https:")
+        .replace("&zoom=1", "&zoom=3")
+        .replace("&edge=curl", "") || null;
+---
+
+<Layout>
+    <div class="max-w-5xl mx-auto px-4 py-12">
+        <a
+            href={`/${lang}/reading`}
+            class="text-blue-600 hover:underline mb-8 inline-block"
+        >
+            &larr; <Fragment set:html={t("navReading")} />
+        </a>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+            <div class="flex justify-center md:justify-start">
+                {
+                    coverHiRes && (
+                        <img
+                            src={coverHiRes}
+                            alt={book.title}
+                            class="w-64 md:w-80 shadow-2xl border border-gray-100"
+                        />
+                    )
+                }
+            </div>
+
+            <div class="flex flex-col gap-6">
+                <h1 class="text-5xl font-black text-gray-900 leading-tight">
+                    {book.title}
+                </h1>
+                <p class="text-2xl text-gray-600">by {book.author}</p>
+
+                <div class="text-[11px] font-bold text-gray-500 border-y border-gray-100 py-2 flex flex-wrap items-center gap-x-6">
+                    <span class="text-blue-700 uppercase">{book.status}</span>
+                    <span>PUB: {volumeInfo.publishedDate || book.year}</span>
+                    {book.startDate && (
+                        <span>START: {book.startDate}</span>
+                    )}
+                    {(book.endDate || (book.status === "read" && book.completed)) && (
+                        <span>END: {book.endDate || book.completed}</span>
+                    )}
+                </div>
+
+                <div id="description-wrapper" class="relative">
+                    <div
+                        id="description"
+                        class="prose prose-lg text-gray-800 leading-relaxed line-clamp-3 transition-all duration-300"
+                        set:html={fullDescription}
+                    />
+                    <button
+                        id="toggle-description"
+                        class="mt-2 text-blue-600 font-semibold hover:underline cursor-pointer hidden"
+                        data-more={t("readMore")}
+                        data-less={t("readLess")}
+                    >
+                        {t("readMore")}
+                    </button>
+                </div>
+
+                <script is:inline>
+                    function setupDescriptionToggle() {
+                        const description =
+                            document.getElementById("description");
+                        const button = document.getElementById(
+                            "toggle-description",
+                        );
+
+                        if (!description || !button) return;
+
+                        // Reset in case of re-run
+                        button.classList.add("hidden");
+                        description.classList.add("line-clamp-3");
+
+                        // Check if content overflows
+                        // We use a small timeout to ensure styles are applied
+                        setTimeout(() => {
+                            const isOverflowing =
+                                description.scrollHeight >
+                                description.clientHeight;
+
+                            if (isOverflowing) {
+                                button.classList.remove("hidden");
+                            }
+                        }, 0);
+
+                        button.addEventListener("click", () => {
+                            const isClamped =
+                                description.classList.contains("line-clamp-3");
+                            if (isClamped) {
+                                description.classList.remove("line-clamp-3");
+                                button.textContent =
+                                    button.getAttribute("data-less");
+                            } else {
+                                description.classList.add("line-clamp-3");
+                                button.textContent =
+                                    button.getAttribute("data-more");
+                            }
+                        });
+                    }
+
+                    setupDescriptionToggle();
+                </script>
+            </div>
+        </div>
+    </div>
+</Layout>

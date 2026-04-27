@@ -1,0 +1,134 @@
+---
+export function getStaticPaths() {
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "fr" } },
+        { params: { lang: "jp" } },
+    ];
+}
+
+const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+
+import Layout from "@/layouts/Layout.astro";
+import readingData from "@/data/reading.json";
+import { useTranslations } from "@/i18n/utils";
+
+const t = useTranslations(lang);
+const apiKey = import.meta.env.GOOGLE_BOOKS_API_KEY;
+
+// Fetch data concurrently at build time
+const enrichedBooks = await Promise.all(
+    readingData.map(async (book) => {
+        try {
+            // 1. Primary Strategy: Attempt strict ISBN search
+            let response = await fetch(
+                `https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}&key=${apiKey}`,
+            );
+            let data = await response.json();
+
+            // 2. Fallback Strategy: If ISBN fails, search by Title and Author
+            if (data.totalItems === 0 || !data.items) {
+                const query = encodeURIComponent(
+                    `intitle:${book.title} inauthor:${book.author}`,
+                );
+                response = await fetch(
+                    `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`,
+                );
+                data = await response.json();
+            }
+
+            const volumeInfo = data.items?.[0]?.volumeInfo || {};
+
+            return {
+                ...book,
+                title: volumeInfo.title || book.title,
+                author: volumeInfo.authors?.join(", ") || book.author,
+                cover:
+                    volumeInfo.imageLinks?.thumbnail
+                        ?.replace("http:", "https:") // Force HTTPS
+                        ?.replace("&edge=curl", "") || // Remove the curling effect
+                    null,
+                description:
+                    volumeInfo.description || "No description available.",
+                publishDate: volumeInfo.publishedDate || book.year,
+            };
+        } catch (error) {
+            console.error(`Network error for ${book.title}:`, error);
+            return {
+                ...book,
+                cover: null,
+                description: "No description available.",
+                publishDate: book.year,
+            };
+        }
+    }),
+);
+---
+
+<Layout>
+    <div class="max-w-5xl mx-auto px-4 py-12">
+        <h1 class="text-3xl font-bold mb-8 text-gray-900">
+            <Fragment set:html={t("navReading")} />
+        </h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {
+                enrichedBooks.map((book) => (
+                    <a
+                        href={`/${lang}/reading/${book.isbn}`}
+                        class="block group"
+                    >
+                        <div class="border border-gray-200 p-6 bg-white shadow-sm hover:border-blue-400 transition-colors h-full">
+                            {book.cover && (
+                                <img
+                                    src={book.cover}
+                                    alt={`Cover of ${book.title}`}
+                                    class="w-full h-48 object-contain mb-4 group-hover:scale-105 transition-transform"
+                                />
+                            )}
+                            <h2 class="text-xl font-bold text-gray-900 mb-1">
+                                {book.title}
+                            </h2>
+                            <p class="text-gray-600 mb-4">{book.author}</p>
+
+                            <p
+                                class="text-sm text-gray-700 line-clamp-3 mb-4"
+                                set:html={book.description}
+                            />
+
+                            <div class="flex flex-col gap-2 mt-auto">
+                                <div class="flex items-center justify-between text-xs font-bold">
+                                    <span class="px-2.5 py-1 bg-blue-50 text-blue-700 capitalize">
+                                        {book.status}
+                                    </span>
+                                    <span class="text-gray-500">
+                                        {book.publishDate}
+                                    </span>
+                                </div>
+                                {
+                                    (book.startDate || book.endDate || (book.status === "read" && book.completed)) && (
+                                        <div class="text-[10px] text-gray-400 uppercase tracking-wider text-right font-bold">
+                                            {book.endDate ? (
+                                                <>
+                                                    {t("finished")}: {book.endDate}
+                                                </>
+                                            ) : book.status === "read" && book.completed ? (
+                                                <>
+                                                    {t("finished")}: {book.completed}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {t("started")}: {book.startDate}
+                                                </>
+                                            )}
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </div>
+</Layout>

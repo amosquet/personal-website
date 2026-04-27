@@ -11,10 +11,16 @@ const currentPath = Astro.url.pathname;
 
 <style>
     nav {
+        background-color: black;
+        width: 100%;
+    }
+    .nav-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: black;
+        width: 100%;
+        max-width: 64rem; /* 5xl */
+        margin: 0 auto;
         padding: 20px 16px; /* Keeps consistent padding */
     }
     .name {
@@ -86,43 +92,70 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <nav>
-    <div class="name">{t("siteTitle")}</div>
-    <div class="links">
-        <a href={"/" + locale + "/"}>{uiStrings["navHome"]![locale]}</a>
-        <!-- <a href={"/" + locale + "/blog/"}>{uiStrings["navBlog"]![locale]}</a> -->
-        <a href={"/" + locale + "/about/"}>{uiStrings["navAbout"]![locale]}</a>
-        <!-- <a href={"/" + locale + "/contact/"}
-            >{uiStrings["navContact"]![locale]}</a
-        > -->
-        <a
-            href="mailto:contact@amcloud.dev"
-            aria-label="Send Email"
-            class="text-gray-600 hover:text-blue-600 transition-colors flex items-center"
-        >
-            <Icon name="mdi:email" class="w-6 h-6" />
-        </a>
+    <div class="nav-container">
+        <div class="name">{t("siteTitle")}</div>
+        <div class="links">
+            <a href={"/" + locale + "/"}>{uiStrings["navHome"]![locale]}</a>
+            <!-- <a href={"/" + locale + "/blog/"}>{uiStrings["navBlog"]![locale]}</a> -->
+            <a href={"/" + locale + "/about/"}>{uiStrings["navAbout"]![locale]}</a>
+            <!-- <a href={"/" + locale + "/contact/"}
+                >{uiStrings["navContact"]![locale]}</a
+            > -->
+            <a
+                href="mailto:contact@amcloud.dev"
+                aria-label="Send Email"
+                class="text-gray-600 hover:text-blue-600 transition-colors flex items-center"
+            >
+                <Icon name="mdi:email" class="w-6 h-6" />
+            </a>
 
-        <a
-            href="https://status.amcloud.dev"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            {uiStrings["status"]![locale]}
-        </a>
+            <a
+                href={`/${locale}/reading`}
+                class="flex items-center gap-2 hover:text-blue-600 transition-colors group"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="square"
+                    stroke-linejoin="miter"
+                    class="opacity-80"
+                >
+                    <rect x="4" y="2" width="16" height="20"></rect>
+                    <line x1="8" y1="2" x2="8" y2="22"></line>
+                    <line x1="12" y1="6" x2="16" y2="6"></line>
+                    <line x1="12" y1="10" x2="16" y2="10"></line>
+                </svg>
 
-        <div class="language-dropdown">
-            <button class="dropbtn">{locale}</button>
-            <div class="language-dropdown-content">
-                {
-                    locales.map((otherLocale) => {
-                        if (otherLocale === locale) return null;
-                        const newPath = currentPath.replace(
-                            `/${locale}/`,
-                            `/${otherLocale}/`,
-                        );
-                        return <a href={newPath}>{otherLocale}</a>;
-                    })
-                }
+                <span set:html={t("navReading")} />
+            </a>
+
+            <a
+                href="https://status.amcloud.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                {uiStrings["status"]![locale]}
+            </a>
+
+            <div class="language-dropdown">
+                <button class="dropbtn">{locale}</button>
+                <div class="language-dropdown-content">
+                    {
+                        locales.map((otherLocale) => {
+                            if (otherLocale === locale) return null;
+                            const newPath = currentPath.replace(
+                                `/${locale}/`,
+                                `/${otherLocale}/`,
+                            );
+                            return <a href={newPath}>{otherLocale}</a>;
+                        })
+                    }
+                </div>
             </div>
         </div>
     </div>

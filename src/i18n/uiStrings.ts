@@ -32,6 +32,11 @@ export const uiStrings: TypeUIStrings = {
     fr: "Contact",
     jp: "連絡先", //fix 接触?
   },
+  navReading: {
+    en: "Reading List",
+    fr: "Liste de lecture",
+    jp: "<ruby>読書<rt>どくしょ</rt></ruby>リスト",
+  },
   myCountry: {
     en: "United States",
     fr: "États-Unis",
@@ -101,5 +106,25 @@ export const uiStrings: TypeUIStrings = {
     en: "Daily Drivers",
     fr: "Appareils quotidiens",
     jp: "<ruby>日常<rt>にちじょう</rt></ruby>のデバイス",
+  },
+  readMore: {
+    en: "Read more",
+    fr: "Lire la suite",
+    jp: "続きを読む",
+  },
+  readLess: {
+    en: "Read less",
+    fr: "Lire moins",
+    jp: "閉じる",
+  },
+  started: {
+    en: "Started",
+    fr: "Commencé",
+    jp: "開始日",
+  },
+  finished: {
+    en: "Finished",
+    fr: "Terminé",
+    jp: "読了日",
   },
 };
