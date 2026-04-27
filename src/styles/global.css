@@ -1,16 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Noto Sans JP", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: "Noto Sans JP", sans-serif;
 }
 
 html {
-    filter: grayscale(100%);
     font-family: var(--font-sans);
+    filter: grayscale(100%);
 }
 
 body {
-    color: #1a1a1a;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    color: #000;
 }
