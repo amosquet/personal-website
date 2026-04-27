@@ -31,6 +31,33 @@ import hardwareData from "@/data/hardware.json";
                     {t("helloThere")}
                 </h1>
                 <p class="text-xl text-gray-700" set:html={t("introText")} />
+                <div class="flex gap-4 mt-6">
+                    <a
+                        href="https://github.com/amosquet"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-gray-600 hover:text-blue-600 transition-colors"
+                        aria-label="GitHub"
+                    >
+                        <Icon name="mdi:github" class="w-7 h-7" />
+                    </a>
+                    <a
+                        href="https://www.linkedin.com/in/artus-mosquet-b036681a2/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-gray-600 hover:text-blue-600 transition-colors"
+                        aria-label="LinkedIn"
+                    >
+                        <Icon name="mdi:linkedin" class="w-7 h-7" />
+                    </a>
+                    <a
+                        href="mailto:contact@amcloud.dev"
+                        class="text-gray-600 hover:text-blue-600 transition-colors"
+                        aria-label="Email"
+                    >
+                        <Icon name="mdi:email" class="w-7 h-7" />
+                    </a>
+                </div>
             </div>
 
             <div
