@@ -10,7 +10,7 @@
         const browserLang = navigator.language.split('-')[0];
 
         // Map standard browser language codes to your internal route names
-        const langMapping = {
+        const langMapping: Record<string, string> = {
             'ja': 'jp'
         };
 
