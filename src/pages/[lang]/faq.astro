@@ -1,0 +1,42 @@
+---
+import AboutLayout from "@/layouts/AboutLayout.astro";
+import translations from "@/i18n/about.json";
+import Layout from "@/layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import { useTranslations } from "@/i18n/utils";
+
+export function getStaticPaths() {
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "fr" } },
+        { params: { lang: "jp" } },
+    ];
+}
+
+const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+const t = useTranslations(lang);
+
+import hardwareData from "@/data/hardware.json";
+---
+
+<Layout>
+    <div class="max-w-5xl mx-auto py-12 px-4">
+        Random FAQ
+        I own a lot of domains, here are some of them;
+        artusm.com
+        artusmosquet.com
+        artusmosquet.fr
+        artusmosquet.eu
+        trollclam.com
+        framedoesnt.work
+        lttstore.fr
+        churchoftemmie.org
+        churchoftdavinky.org
+        amcloud.dev
+
+        I use Arch Linux because it's the only OS that I haven't managed to break, which is crazy.
+        I have had issues with Windows, Ubuntu, Fedora, and NixOS.
+        I actually broke Fedora entirely, couldn't update it properly and eventually I was unable to login.
+
+        Other stuff, I work for LilyPichu and I'm a fan of JR West's イコちゃん character. I spent over 4 hours at the Railway Museum in Saitama
+</Layout>
