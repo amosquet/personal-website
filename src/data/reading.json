@@ -5,14 +5,18 @@
     "status": "reading",
     "startDate": "2026-04-19",
     "year": "2020",
-    "isbn": "9781524763183"
+    "isbn": {
+      "en": "9781524763183"
+    }
   },
   {
     "title": "System Collapse",
     "author": "Martha Wells",
     "status": "reading",
     "year": "2021",
-    "isbn": "9781250826985"
+    "isbn": {
+      "en": "9781250826985"
+    }
   },
   {
     "title": "Fugitive Telemetry",
@@ -20,7 +24,9 @@
     "status": "read",
     "completed": "2026",
     "year": "2021",
-    "isbn": "9781250765383"
+    "isbn": {
+      "en": "9781250765383"
+    }
   },
   {
     "title": "Network Effect",
@@ -28,7 +34,9 @@
     "status": "read",
     "startDate": "2026-03-31",
     "year": "2020",
-    "isbn": "9781250229847"
+    "isbn": {
+      "en": "9781250229847"
+    }
   },
   {
     "title": "Exit Strategy",
@@ -37,7 +45,9 @@
     "startDate": "2026-03-29",
     "endDate": "2026-03-31",
     "year": "2018",
-    "isbn": "9781250185464"
+    "isbn": {
+      "en": "9781250185464"
+    }
   },
   {
     "title": "Rogue Protocol",
@@ -46,7 +56,9 @@
     "startDate": "2026-03-28",
     "endDate": "2026-03-29",
     "year": "2018",
-    "isbn": "9781250185433"
+    "isbn": {
+      "en": "9781250185433"
+    }
   },
   {
     "title": "Artificial Condition",
@@ -54,7 +66,9 @@
     "status": "read",
     "endDate": "2026-03-28",
     "year": "2018",
-    "isbn": "9781250186935"
+    "isbn": {
+      "en": "9781250186935"
+    }
   },
   {
     "title": "All Systems Red",
@@ -62,7 +76,9 @@
     "status": "read",
     "completed": "2026",
     "year": "2017",
-    "isbn": "9781250214713"
+    "isbn": {
+      "en": "9781250214713"
+    }
   },
   {
     "title": "Project Hail Mary",
@@ -71,7 +87,9 @@
     "startDate": "2026-02-11",
     "endDate": "2026-02-17",
     "year": "2021",
-    "isbn": "9780593135211"
+    "isbn": {
+      "en": "9780593135211"
+    }
   },
   {
     "title": "The Martian",
@@ -79,6 +97,9 @@
     "status": "read",
     "completed": "2026",
     "year": "2011",
-    "isbn": "9780804139038"
+    "isbn": {
+      "en": "9780804139038",
+      "fr": "9782820517814",
+      "jp": "9784150120443"
   }
 ]
