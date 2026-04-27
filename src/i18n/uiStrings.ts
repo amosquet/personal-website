@@ -127,4 +127,9 @@ export const uiStrings: TypeUIStrings = {
     fr: "Terminé",
     jp: "読了日",
   },
+  googleBooksCredit: {
+    en: "Data provided by Google Books API",
+    fr: "Données fournies par l'API Google Books",
+    jp: "Google Books APIのデータを使用しています",
+  },
 };
