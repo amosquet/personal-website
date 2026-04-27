@@ -117,4 +117,14 @@ export const uiStrings: TypeUIStrings = {
     fr: "Lire moins",
     jp: "閉じる",
   },
+  started: {
+    en: "Started",
+    fr: "Commencé",
+    jp: "開始日",
+  },
+  finished: {
+    en: "Finished",
+    fr: "Terminé",
+    jp: "読了日",
+  },
 };

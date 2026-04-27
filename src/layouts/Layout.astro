@@ -11,33 +11,22 @@ const locale = Astro.currentLocale || defaultLocale;
 const langAttribute = locale === "jp" ? "ja" : locale;
 
 import "@/styles/global.css";
-
-// import { useUserAgent } from 'astro-useragent';
-// const uaString = Astro.request.headers.get('user-agent');
-// const { source, isFirefox } = useUserAgent(uaString);
-
-// if (!isFirefox) {
-// 	return Astro.redirect('https://www.mozilla.org/download', 307);
-// }
 ---
 
 <html lang={langAttribute}>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{title}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+        <title>{title ? `${title} | ${uiStrings.siteTitle[locale]}` : uiStrings.siteTitle[locale]}</title>
     </head>
-    <body>
+    <body class="bg-white min-h-screen flex flex-col font-sans">
         <BaseHead title={title} />
-        <h1>{title}</h1>
-        <article>
+        <main class="flex-grow">
             <slot />
-            <!-- your content is injected here -->
-        </article>
+        </main>
         <Footer />
-    </body><style>
-        h1 {
-            font-size: 2rem;
-        }
-    </style>
+    </body>
 </html>

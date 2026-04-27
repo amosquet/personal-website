@@ -96,13 +96,34 @@ const enrichedBooks = await Promise.all(
                                 set:html={book.description}
                             />
 
-                            <div class="flex items-center justify-between text-sm mt-auto">
-                                <span class="px-2.5 py-1 font-medium bg-blue-50 text-blue-700 capitalize">
-                                    {book.status}
-                                </span>
-                                <span class="text-gray-500 font-mono">
-                                    {book.publishDate}
-                                </span>
+                            <div class="flex flex-col gap-2 mt-auto">
+                                <div class="flex items-center justify-between text-xs font-bold">
+                                    <span class="px-2.5 py-1 bg-blue-50 text-blue-700 capitalize">
+                                        {book.status}
+                                    </span>
+                                    <span class="text-gray-500">
+                                        {book.publishDate}
+                                    </span>
+                                </div>
+                                {
+                                    (book.startDate || book.endDate || (book.status === "read" && book.completed)) && (
+                                        <div class="text-[10px] text-gray-400 uppercase tracking-wider text-right font-bold">
+                                            {book.endDate ? (
+                                                <>
+                                                    {t("finished")}: {book.endDate}
+                                                </>
+                                            ) : book.status === "read" && book.completed ? (
+                                                <>
+                                                    {t("finished")}: {book.completed}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {t("started")}: {book.startDate}
+                                                </>
+                                            )}
+                                        </div>
+                                    )
+                                }
                             </div>
                         </div>
                     </a>

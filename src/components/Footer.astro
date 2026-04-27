@@ -5,37 +5,35 @@ import { useTranslations } from "@/i18n/utils";
 const t = useTranslations(locale);
 
 import { Icon } from "astro-icon/components";
-
-const git = "github";
-const git_username = "amosquet";
-const twitter = "twitter";
-const twitter_username = "Almondmanttv";
-const twitch = "twitch";
-const twitch_username = "Almondmanttv";
 ---
 
-<style>
-    footer {
-        display: flex;
-        gap: 1rem;
-        margin-top: 2rem;
-    }
-</style>
+<footer class="mt-20 border-t border-gray-100 py-8 bg-white">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+        
+        <!-- Copyright -->
+        <div class="text-gray-400 text-xs font-medium order-3 md:order-1">
+            © 2025 {t("siteTitle")}
+        </div>
 
-<footer>
-    {t("footerProject")}
-    <a href="https://www.github.com/amosquet" aria-label="GitHub">
-        <Icon
-            name="simple-icons:github"
-            class="w-8 h-8 text-gray-800 hover:text-blue-600 transition-colors"
-        />
-    </a>
-    {t("footerSocial")}
-    <a href={`https://www.twitter.com/almondmanttv`}>Twitter</a>, <a
-        href={`https://www.twitch.tv/almondmanttv`}>Twitch</a
-    >!
+        <!-- Purdue Hackers Webring -->
+        <div class="flex items-center gap-3 py-1.5 px-4 bg-gray-50 rounded-full border border-gray-100 text-xs text-gray-500 order-1 md:order-2">
+            <a href="https://ring.purduehackers.com/previous" class="hover:text-blue-600 transition-colors font-bold">←</a>
+            <a href="https://ring.purduehackers.com/" class="hover:text-blue-600 transition-colors">Purdue Hackers Webring</a>
+            <a href="https://ring.purduehackers.com/next" class="hover:text-blue-600 transition-colors font-bold">→</a>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex items-center gap-4 order-2 md:order-3">
+            <a href="https://github.com/amosquet" aria-label="GitHub" class="text-gray-400 hover:text-black transition-colors">
+                <Icon name="simple-icons:github" class="w-5 h-5" />
+            </a>
+            <a href="https://twitter.com/almondmanttv" aria-label="Twitter" class="text-gray-400 hover:text-blue-400 transition-colors">
+                <Icon name="simple-icons:twitter" class="w-5 h-5" />
+            </a>
+            <a href="https://twitch.tv/almondmanttv" aria-label="Twitch" class="text-gray-400 hover:text-purple-600 transition-colors">
+                <Icon name="simple-icons:twitch" class="w-5 h-5" />
+            </a>
+        </div>
+        
+    </div>
 </footer>
-<a href="https://ring.purduehackers.com/previous">Previous</a>
-<a href="https://ring.purduehackers.com/">Purdue Hackers webring</a>
-<a href="https://ring.purduehackers.com/next">Next</a>
-<p>© 2025 {t("siteTitle")}</p>

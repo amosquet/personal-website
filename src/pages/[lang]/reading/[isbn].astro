@@ -68,19 +68,15 @@ const coverHiRes =
                 </h1>
                 <p class="text-2xl text-gray-600">by {book.author}</p>
 
-                <div
-                    class="flex gap-4 items-center border-y border-gray-100 py-4"
-                >
-                    <span
-                        class="px-4 py-2 bg-blue-50 text-blue-700 font-bold uppercase tracking-widest text-xs"
-                    >
-                        {book.status}
-                    </span>
-                    <span class="text-gray-400"
-                        >Published: {
-                            volumeInfo.publishedDate || book.year
-                        }</span
-                    >
+                <div class="text-[11px] font-bold text-gray-500 border-y border-gray-100 py-2 flex flex-wrap items-center gap-x-6">
+                    <span class="text-blue-700 uppercase">{book.status}</span>
+                    <span>PUB: {volumeInfo.publishedDate || book.year}</span>
+                    {book.startDate && (
+                        <span>START: {book.startDate}</span>
+                    )}
+                    {(book.endDate || (book.status === "read" && book.completed)) && (
+                        <span>END: {book.endDate || book.completed}</span>
+                    )}
                 </div>
 
                 <div id="description-wrapper" class="relative">
