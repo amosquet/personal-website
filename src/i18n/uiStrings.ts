@@ -107,4 +107,14 @@ export const uiStrings: TypeUIStrings = {
     fr: "Appareils quotidiens",
     jp: "<ruby>日常<rt>にちじょう</rt></ruby>のデバイス",
   },
+  readMore: {
+    en: "Read more",
+    fr: "Lire la suite",
+    jp: "続きを読む",
+  },
+  readLess: {
+    en: "Read less",
+    fr: "Lire moins",
+    jp: "閉じる",
+  },
 };

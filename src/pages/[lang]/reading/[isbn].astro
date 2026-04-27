@@ -40,7 +40,7 @@ const coverHiRes =
         .replace("&edge=curl", "") || null;
 ---
 
-<Layout title={book.title}>
+<Layout>
     <div class="max-w-5xl mx-auto px-4 py-12">
         <a
             href={`/${lang}/reading`}
@@ -50,13 +50,13 @@ const coverHiRes =
         </a>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-            <div>
+            <div class="flex justify-center md:justify-start">
                 {
                     coverHiRes && (
                         <img
                             src={coverHiRes}
                             alt={book.title}
-                            class="w-full border border-gray-100"
+                            class="w-64 md:w-80 shadow-2xl border border-gray-100"
                         />
                     )
                 }
@@ -83,10 +83,65 @@ const coverHiRes =
                     >
                 </div>
 
-                <div
-                    class="prose prose-lg text-gray-800 leading-relaxed"
-                    set:html={fullDescription}
-                />
+                <div id="description-wrapper" class="relative">
+                    <div
+                        id="description"
+                        class="prose prose-lg text-gray-800 leading-relaxed line-clamp-3 transition-all duration-300"
+                        set:html={fullDescription}
+                    />
+                    <button
+                        id="toggle-description"
+                        class="mt-2 text-blue-600 font-semibold hover:underline cursor-pointer hidden"
+                        data-more={t("readMore")}
+                        data-less={t("readLess")}
+                    >
+                        {t("readMore")}
+                    </button>
+                </div>
+
+                <script is:inline>
+                    function setupDescriptionToggle() {
+                        const description =
+                            document.getElementById("description");
+                        const button = document.getElementById(
+                            "toggle-description",
+                        );
+
+                        if (!description || !button) return;
+
+                        // Reset in case of re-run
+                        button.classList.add("hidden");
+                        description.classList.add("line-clamp-3");
+
+                        // Check if content overflows
+                        // We use a small timeout to ensure styles are applied
+                        setTimeout(() => {
+                            const isOverflowing =
+                                description.scrollHeight >
+                                description.clientHeight;
+
+                            if (isOverflowing) {
+                                button.classList.remove("hidden");
+                            }
+                        }, 0);
+
+                        button.addEventListener("click", () => {
+                            const isClamped =
+                                description.classList.contains("line-clamp-3");
+                            if (isClamped) {
+                                description.classList.remove("line-clamp-3");
+                                button.textContent =
+                                    button.getAttribute("data-less");
+                            } else {
+                                description.classList.add("line-clamp-3");
+                                button.textContent =
+                                    button.getAttribute("data-more");
+                            }
+                        });
+                    }
+
+                    setupDescriptionToggle();
+                </script>
             </div>
         </div>
     </div>
