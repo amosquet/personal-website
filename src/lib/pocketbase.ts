@@ -11,7 +11,7 @@ const pb = new PocketBase(url);
  */
 export async function authenticate() {
     if (!pb.authStore.isValid) {
-        await pb.collection("_superusers").authWithPassword(
+        await pb.collection("users").authWithPassword(
             import.meta.env.POCKETBASE_USER,
             import.meta.env.POCKETBASE_PASSWORD
         );
