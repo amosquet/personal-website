@@ -12,57 +12,75 @@ const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
 import Layout from "@/layouts/Layout.astro";
 import readingData from "@/data/reading.json";
 import { useTranslations } from "@/i18n/utils";
+import pb, { authenticate } from "@/lib/pocketbase";
+import type { RecordModel } from "pocketbase";
 
 const t = useTranslations(lang);
-const apiKey = import.meta.env.GOOGLE_BOOKS_API_KEY;
 
-// Fetch data concurrently at build time
-const enrichedBooks = await Promise.all(
-    readingData.map(async (book) => {
-        try {
-            // 1. Primary Strategy: Attempt strict ISBN search
-            let response = await fetch(
-                `https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}&key=${apiKey}`,
-            );
-            let data = await response.json();
+interface BookRecord extends RecordModel {
+    isbn: string;
+    title: string;
+    author: string;
+    description: string;
+    cover: string;
+    publishDate: string;
+}
 
-            // 2. Fallback Strategy: If ISBN fails, search by Title and Author
-            if (data.totalItems === 0 || !data.items) {
-                const query = encodeURIComponent(
-                    `intitle:${book.title} inauthor:${book.author}`,
-                );
-                response = await fetch(
-                    `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`,
-                );
-                data = await response.json();
+interface EnrichedBook {
+    isbn: string;
+    title: string;
+    author: string;
+    status: string;
+    startDate?: string;
+    endDate?: string;
+    completed?: string;
+    publishDate: string;
+    cover: string | null;
+    description: string;
+}
+
+// Fetch data from PocketBase at build time
+let enrichedBooks: EnrichedBook[] = [];
+try {
+    await authenticate();
+    const pbBooks = await pb.collection("books").getFullList<BookRecord>();
+    const pbBooksByIsbn = Object.fromEntries(pbBooks.map((b) => [b.isbn, b]));
+
+    enrichedBooks = readingData.map((book: any) => {
+        const pbBook = pbBooksByIsbn[book.isbn];
+        const baseBook = {
+            ...book,
+            publishDate: pbBook?.publishDate || book.publishDate || "",
+        };
+
+        if (pbBook) {
+            const coverUrl = pbBook.cover ? pb.files.getUrl(pbBook, pbBook.cover) : null;
+            if (coverUrl) {
+                console.log(`[DEBUG] Generated cover URL for ${book.title}: ${coverUrl}`);
             }
-
-            const volumeInfo = data.items?.[0]?.volumeInfo || {};
-
             return {
-                ...book,
-                title: volumeInfo.title || book.title,
-                author: volumeInfo.authors?.join(", ") || book.author,
-                cover:
-                    volumeInfo.imageLinks?.thumbnail
-                        ?.replace("http:", "https:") // Force HTTPS
-                        ?.replace("&edge=curl", "") || // Remove the curling effect
-                    null,
-                description:
-                    volumeInfo.description || "No description available.",
-                publishDate: volumeInfo.publishedDate || book.year,
-            };
-        } catch (error) {
-            console.error(`Network error for ${book.title}:`, error);
-            return {
-                ...book,
-                cover: null,
-                description: "No description available.",
-                publishDate: book.year,
-            };
+                ...baseBook,
+                title: pbBook.title || book.title,
+                author: pbBook.author || book.author,
+                cover: coverUrl,
+                description: pbBook.description || "No description available.",
+            } as EnrichedBook;
         }
-    }),
-);
+        return {
+            ...baseBook,
+            cover: null,
+            description: "No description available.",
+        } as EnrichedBook;
+    });
+} catch (error) {
+    console.error("Error fetching from PocketBase:", error);
+    enrichedBooks = readingData.map((book: any) => ({
+        ...book,
+        publishDate: book.publishDate || "",
+        cover: null,
+        description: "No description available.",
+    } as EnrichedBook));
+}
 ---
 
 <Layout>
@@ -91,7 +109,7 @@ const enrichedBooks = await Promise.all(
                             </h2>
                             <p class="text-gray-600 mb-4">{book.author}</p>
 
-                            <p
+                            <div
                                 class="text-sm text-gray-700 line-clamp-3 mb-4"
                                 set:html={book.description}
                             />
