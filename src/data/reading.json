@@ -4,14 +4,14 @@
     "author": "Barack Obama",
     "status": "reading",
     "startDate": "2026-04-19",
-    "year": "2020",
+    "publishDate": "2020",
     "isbn": "9781524763183"
   },
   {
     "title": "System Collapse",
     "author": "Martha Wells",
     "status": "reading",
-    "year": "2021",
+    "publishDate": "2021",
     "isbn": "9781250826985"
   },
   {
@@ -19,7 +19,7 @@
     "author": "Martha Wells",
     "status": "read",
     "completed": "2026",
-    "year": "2021",
+    "publishDate": "2021",
     "isbn": "9781250765383"
   },
   {
@@ -27,7 +27,7 @@
     "author": "Martha Wells",
     "status": "read",
     "startDate": "2026-03-31",
-    "year": "2020",
+    "publishDate": "2020",
     "isbn": "9781250229847"
   },
   {
@@ -36,7 +36,7 @@
     "status": "read",
     "startDate": "2026-03-29",
     "endDate": "2026-03-31",
-    "year": "2018",
+    "publishDate": "2018",
     "isbn": "9781250185464"
   },
   {
@@ -45,7 +45,7 @@
     "status": "read",
     "startDate": "2026-03-28",
     "endDate": "2026-03-29",
-    "year": "2018",
+    "publishDate": "2018",
     "isbn": "9781250185433"
   },
   {
@@ -53,7 +53,7 @@
     "author": "Martha Wells",
     "status": "read",
     "endDate": "2026-03-28",
-    "year": "2018",
+    "publishDate": "2018",
     "isbn": "9781250186935"
   },
   {
@@ -61,7 +61,7 @@
     "author": "Martha Wells",
     "status": "read",
     "completed": "2026",
-    "year": "2017",
+    "publishDate": "2017",
     "isbn": "9781250214713"
   },
   {
@@ -70,7 +70,7 @@
     "status": "read",
     "startDate": "2026-02-11",
     "endDate": "2026-02-17",
-    "year": "2021",
+    "publishDate": "2021",
     "isbn": "9780593135211"
   },
   {
@@ -78,7 +78,7 @@
     "author": "Andy Weir",
     "status": "read",
     "completed": "2026",
-    "year": "2011",
+    "publishDate": "2011",
     "isbn": "9780804139038"
   }
 ]

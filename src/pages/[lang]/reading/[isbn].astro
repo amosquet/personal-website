@@ -2,16 +2,68 @@
 import Layout from "@/layouts/Layout.astro";
 import readingData from "@/data/reading.json";
 import { useTranslations } from "@/i18n/utils";
+import pb, { authenticate } from "@/lib/pocketbase";
+import type { RecordModel } from "pocketbase";
+
+interface BookRecord extends RecordModel {
+    isbn: string;
+    title: string;
+    author: string;
+    description: string;
+    cover: string;
+    publishDate: string;
+}
+
+interface EnrichedBook {
+    isbn: string;
+    title: string;
+    author: string;
+    status: string;
+    startDate?: string;
+    endDate?: string;
+    completed?: string;
+    publishDate: string;
+    cover: string | null;
+    description: string;
+}
 
 export async function getStaticPaths() {
-    const paths = [];
     const locales = ["en", "fr", "jp"];
+    let pbBooks: BookRecord[] = [];
+    try {
+        await authenticate();
+        pbBooks = await pb.collection("books").getFullList<BookRecord>();
+    } catch (error) {
+        console.error("Error fetching from PocketBase in getStaticPaths:", error);
+    }
+    const pbBooksByIsbn = Object.fromEntries(pbBooks.map((b) => [b.isbn, b]));
 
+    const paths = [];
     for (const lang of locales) {
-        for (const book of readingData) {
+        for (const book of readingData as any[]) {
+            const pbBook = pbBooksByIsbn[book.isbn];
+            const baseBook = {
+                ...book,
+                publishDate: pbBook?.publishDate || book.publishDate || "",
+            };
+
+            const enrichedBook: EnrichedBook = pbBook
+                ? {
+                      ...baseBook,
+                      title: pbBook.title || book.title,
+                      author: pbBook.author || book.author,
+                      cover: pbBook.cover ? pb.files.getUrl(pbBook, pbBook.cover) : null,
+                      description: pbBook.description || "No description available.",
+                  }
+                : {
+                      ...baseBook,
+                      cover: null,
+                      description: "No description available.",
+                  };
+
             paths.push({
                 params: { lang, isbn: book.isbn },
-                props: { book },
+                props: { book: enrichedBook },
             });
         }
     }
@@ -19,25 +71,11 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
-const { book } = Astro.props;
+const { book } = Astro.props as { book: EnrichedBook };
 const t = useTranslations(lang);
-const apiKey = import.meta.env.GOOGLE_BOOKS_API_KEY;
 
-// Fetch full details for this specific book
-const response = await fetch(
-    `https://www.googleapis.com/books/v1/volumes?q=isbn:${book.isbn}&key=${apiKey}`,
-);
-const data = await response.json();
-const volumeInfo = data.items?.[0]?.volumeInfo || {};
-
-const fullDescription = volumeInfo.description || "No description available.";
-
-// Force HTTPS, request higher resolution, and strip the corner curl effect
-const coverHiRes =
-    volumeInfo.imageLinks?.thumbnail
-        ?.replace("http:", "https:")
-        .replace("&zoom=1", "&zoom=3")
-        .replace("&edge=curl", "") || null;
+const fullDescription = book.description;
+const coverHiRes = book.cover;
 ---
 
 <Layout>
@@ -70,7 +108,7 @@ const coverHiRes =
 
                 <div class="text-[11px] font-bold text-gray-500 border-y border-gray-100 py-2 flex flex-wrap items-center gap-x-6">
                     <span class="text-blue-700 uppercase">{book.status}</span>
-                    <span>PUB: {volumeInfo.publishedDate || book.year}</span>
+                    <span>PUB: {book.publishDate}</span>
                     {book.startDate && (
                         <span>START: {book.startDate}</span>
                     )}

@@ -49,6 +49,9 @@ jobs:
         working-directory: ${{ env.BUILD_PATH }}
         env:
           GOOGLE_BOOKS_API_KEY: ${{ secrets.GOOGLE_BOOKS_API_KEY }}
+          POCKETBASE_URL: ${{ secrets.POCKETBASE_URL }}
+          POCKETBASE_USER: ${{ secrets.POCKETBASE_USER }}
+          POCKETBASE_PASSWORD: ${{ secrets.POCKETBASE_PASSWORD }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
