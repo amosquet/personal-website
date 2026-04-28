@@ -7,7 +7,8 @@ const pb = new PocketBase(url);
 const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
 
 async function syncBooks() {
-    await pb.collection("_superusers").authWithPassword(
+  // await pb.collection("_superusers").authWithPassword(
+    await pb.collection("users").authWithPassword(
         process.env.POCKETBASE_USER as string,
         process.env.POCKETBASE_PASSWORD as string
     );
@@ -44,11 +45,11 @@ async function syncBooks() {
             const imageLinks = volumeInfo.imageLinks || {};
 
             // Priority: extraLarge > large > medium > small > thumbnail
-            let coverUrl = 
-                imageLinks.extraLarge || 
-                imageLinks.large || 
-                imageLinks.medium || 
-                imageLinks.small || 
+            let coverUrl =
+                imageLinks.extraLarge ||
+                imageLinks.large ||
+                imageLinks.medium ||
+                imageLinks.small ||
                 imageLinks.thumbnail || "";
 
             if (coverUrl) {
