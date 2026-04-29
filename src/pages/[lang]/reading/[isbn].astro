@@ -52,7 +52,7 @@ export async function getStaticPaths() {
                       ...baseBook,
                       title: pbBook.title || book.title,
                       author: pbBook.author || book.author,
-                      cover: pbBook.cover ? pb.files.getUrl(pbBook, pbBook.cover) : null,
+                      cover: pbBook.cover ? pb.files.getURL(pbBook, pbBook.cover) : null,
                       description: pbBook.description || "No description available.",
                   }
                 : {

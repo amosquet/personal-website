@@ -54,7 +54,7 @@ try {
         };
 
         if (pbBook) {
-            const coverUrl = pbBook.cover ? pb.files.getUrl(pbBook, pbBook.cover) : null;
+            const coverUrl = pbBook.cover ? pb.files.getURL(pbBook, pbBook.cover) : null;
             if (coverUrl) {
                 console.log(`[DEBUG] Generated cover URL for ${book.title}: ${coverUrl}`);
             }
