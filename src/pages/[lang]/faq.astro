@@ -15,28 +15,49 @@ export function getStaticPaths() {
 
 const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
 const t = useTranslations(lang);
-
-import hardwareData from "@/data/hardware.json";
 ---
 
 <Layout>
-    <div class="max-w-5xl mx-auto py-12 px-4">
-        Random FAQ
-        I own a lot of domains, here are some of them;
-        artusm.com
-        artusmosquet.com
-        artusmosquet.fr
-        artusmosquet.eu
-        trollclam.com
-        framedoesnt.work
-        lttstore.fr
-        churchoftemmie.org
-        churchoftdavinky.org
-        amcloud.dev
+    <div class="max-w-2xl mx-auto py-16 px-6 font-mono text-sm leading-relaxed">
+        <h1 class="text-xl font-bold mb-12 border-b border-black pb-2 uppercase tracking-tight">FAQ / Random Info</h1>
 
-        I use Arch Linux because it's the only OS that I haven't managed to break, which is crazy.
-        I have had issues with Windows, Ubuntu, Fedora, and NixOS.
-        I actually broke Fedora entirely, couldn't update it properly and eventually I was unable to login.
+        <div class="space-y-12">
+            <section>
+                <p class="mb-4">I own a lot of domains, here are some of them:</p>
+                <ul class="space-y-1">
+                    <li>- artusm.com</li>
+                    <li>- artusmosquet.com</li>
+                    <li>- artusmosquet.fr</li>
+                    <li>- artusmosquet.eu</li>
+                    <li>- trollclan.com</li>
+                    <li>- framedoesnt.work</li>
+                    <li>- lttstore.fr</li>
+                    <li>- churchoftemmie.org</li>
+                    <li>- churchofdavinky.org</li>
+                    <li>- amcloud.dev</li>
+                </ul>
+                <p class="mt-12">
+                    amcloud.dev is used for my services like the database hosting the reading list, vpn, sso, and a lot of other stuff.
+                </p>
+            </section>
 
-        Other stuff, I work for LilyPichu and I'm a fan of JR West's イコちゃん character. I spent over 4 hours at the Railway Museum in Saitama
+            <section>
+                <div class="space-y-4">
+                    <p>
+                        I use Arch Linux because it's the only OS that I haven't managed to break, which is crazy.
+                    </p>
+                    <p>
+                        I have had issues with Windows, Ubuntu, Fedora, and NixOS.
+                        I actually broke Fedora entirely; couldn't update it properly and eventually I was unable to login.
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <p>
+                    I work for LilyPichu and I'm a fan of JR West's イコちゃん character. I spent over 4 hours at the Railway Museum in Saitama.
+                </p>
+            </section>
+        </div>
+    </div>
 </Layout>
