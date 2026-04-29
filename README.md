@@ -1,6 +1,6 @@
 # Personal Website
 
-This repository contains the source code for my personal portfolio and blog as an Electrical Engineering student. It is built to be lightweight and statically generated.
+This repository contains the source code for my personal website. It's got my reading list and such and an overkill caching method for the book data.
 
 ## Stack
 
