@@ -1,5 +1,6 @@
 ---
 import { defaultLocale } from "@/i18n/i18n";
+import { uiStrings } from "@/i18n/uiStrings";
 const locale = Astro.currentLocale || defaultLocale;
 import { useTranslations } from "@/i18n/utils";
 const t = useTranslations(locale);
@@ -9,10 +10,14 @@ import { Icon } from "astro-icon/components";
 
 <footer class="mt-20 border-t border-gray-100 py-8 bg-white">
     <div class="max-w-5xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
-        
-        <!-- Copyright -->
-        <div class="text-gray-400 text-xs font-medium order-3 md:order-1">
-            © 2025 {t("siteTitle")}
+
+        <!-- Copyright & FAQ -->
+        <div class="text-gray-400 text-xs font-medium order-3 md:order-1 flex items-center gap-4">
+            <span>© 2025 {t("siteTitle")}</span>
+            <span class="text-gray-200"></span>
+            <a href={`/${locale}/faq`} class="hover:text-black transition-colors">
+                {uiStrings.faq[locale]}
+            </a>
         </div>
 
         <!-- Purdue Hackers Webring -->
@@ -34,6 +39,6 @@ import { Icon } from "astro-icon/components";
                 <Icon name="simple-icons:twitch" class="w-5 h-5" />
             </a>
         </div>
-        
+
     </div>
 </footer>
