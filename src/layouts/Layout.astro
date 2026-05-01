@@ -17,10 +17,23 @@ import "@/styles/global.css";
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
-        <title>{title ? `${title} | ${uiStrings.siteTitle[locale]}` : uiStrings.siteTitle[locale]}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap"
+            rel="stylesheet"
+        />
+        <title>
+            {
+                title
+                    ? `${title} | ${uiStrings.siteTitle[locale]}`
+                    : uiStrings.siteTitle[locale]
+            }
+        </title>
+        <script
+            defer
+            src="https://umami.purduehackers.com/script.js"
+            data-website-id="a4719bd5-323b-424b-a461-1dcd96c98c92"></script>
     </head>
     <body class="bg-white min-h-screen flex flex-col font-sans">
         <BaseHead title={title} />
