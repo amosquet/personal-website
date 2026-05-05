@@ -1,0 +1,40 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { useTranslations } from "@/i18n/utils";
+import projects from "@/data/projects.json";
+
+export function getStaticPaths() {
+    const langs = ["en", "fr", "jp"] as const;
+    return langs.flatMap((lang) => {
+        return projects.map((project) => ({
+            params: { lang, project: project.name },
+            props: { project },
+        }));
+    });
+}
+
+const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+const { project } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Layout title={project.name}>
+    <div class="max-w-5xl mx-auto px-4 py-12">
+        <a
+            href={`/${lang}/projects`}
+            class="text-blue-600 hover:underline mb-8 inline-block"
+        >
+            &larr; {t("navProjects")}
+        </a>
+
+        <article class="max-w-none">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                {project.name}
+            </h1>
+
+            <p class="text-xl text-gray-700 leading-relaxed">
+                {project.description}
+            </p>
+        </article>
+    </div>
+</Layout>

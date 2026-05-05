@@ -17,6 +17,11 @@ export const uiStrings: TypeUIStrings = {
     fr: "Accueil",
     jp: "主要", //fix?
   },
+  navProjects: {
+    en: "Projects",
+    fr: "Projets",
+    jp: "プロジェクト",
+  },
   navBlog: {
     en: "Blog",
     fr: "Blog",
