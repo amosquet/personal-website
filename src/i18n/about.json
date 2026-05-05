@@ -138,7 +138,7 @@
     "en": {
       "title": "Skills",
       "categories": [
-        { "name": "Programming", "list": "Python, C, C++, Java, MATLAB" },
+        { "name": "Programming", "list": "Python, C, C++, Java, MATLAB, SystemVerilog" },
         {
           "name": "Infrastructure",
           "list": "Linux, Proxmox, Active Directory, Ubiquiti, Network Administration"
@@ -152,7 +152,7 @@
     "fr": {
       "title": "Compétences",
       "categories": [
-        { "name": "Programmation", "list": "Python, C, C++, Java, MATLAB" },
+        { "name": "Programmation", "list": "Python, C, C++, Java, MATLAB, SystemVerilog" },
         {
           "name": "Infrastructure",
           "list": "Linux, Proxmox, Active Directory, Ubiquiti, Administration Réseau"
@@ -166,7 +166,7 @@
     "jp": {
       "title": "スキル",
       "categories": [
-        { "name": "プログラミング", "list": "Python, C, C++, Java, MATLAB" },
+        { "name": "プログラミング", "list": "Python, C, C++, Java, MATLAB, SystemVerilog" },
         {
           "name": "インフラ",
           "list": "Linux, Proxmox, Active Directory, Ubiquiti, <ruby>ネットワーク<rt>ネットワーク</rt></ruby><ruby>管理<rt>かんり</rt></ruby>"
