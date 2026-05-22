@@ -1,5 +1,14 @@
 [
   {
+    "title": "How to Avoid a Climate Disaster",
+    "author": "Bill Gates",
+    "status": "planned",
+    "startDate": "",
+    "endDate": "",
+    "publishDate": "2021",
+    "isbn": "9780385546140"
+  },
+  {
     "title": "A Promised Land",
     "author": "Barack Obama",
     "status": "reading",
@@ -82,7 +91,7 @@
     "isbn": "9780804139038"
   },
   {
-    "title": "Les délices de Tokyo",
+    "title": "Les d\u00e9lices de Tokyo",
     "author": "Durian Sukegawa",
     "status": "read",
     "completed": "2023",
