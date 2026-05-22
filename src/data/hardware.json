@@ -33,7 +33,7 @@
     }
   },
   {
-    "id": "Pixel",
+    "id": "pixel",
     "name": "Pixel 10 Pro",
     "icon": "mdi:android",
     "specs": {
@@ -41,6 +41,28 @@
       "SoC": "Tensor G5",
       "RAM": "16GB",
       "Storage": "512GB UFS 4.0"
+    }
+  },
+  {
+    "id": "pixel-watch-2",
+    "name": "Pixel Watch 2",
+    "icon": "mdi:watch",
+    "specs": {
+      "OS": "Wear OS 6.1",
+      "SoC": "Qualcomm 5100",
+      "RAM": "2GB",
+      "Storage": "32GB eMMC"
+    }
+  },
+  {
+    "id": "galaxy-watch-6-classic",
+    "name": "Galaxy Watch 6 Classic",
+    "icon": "mdi:watch",
+    "specs": {
+      "OS": "Wear OS 6",
+      "SoC": "Exynos W930",
+      "RAM": "2GB",
+      "Storage": "16GB"
     }
   }
 ]
