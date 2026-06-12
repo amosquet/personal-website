@@ -1,5 +1,13 @@
 [
   {
+    "name": "emailtoprint",
+    "caption": "Automated Print Service",
+    "description": "A cross-platform Python service that monitors an IMAP email inbox and automatically prints any attachments it receives using CUPS.\nIt runs continuously in the background using launchd on macOS or systemd on Linux. It features two-sided printing, automatic nightly updates via cron, and optional Sentry integration for error tracking.",
+    "githubUrl": "https://github.com/amosquet/emailtoprint",
+    "language": "Python",
+    "techStack": ["Python", "CUPS", "IMAP", "Sentry"]
+  },
+  {
     "name": "shisho",
     "caption": "Personal Discord Bot",
     "description": "Named after the Japanese word for \"Librarian\", Shisho is a personal Discord bot built to manage my reading list and handle various automated tasks.\nIt works by connecting directly to my PocketBase book database to add and manage books on my reading list, automatically handling start and end dates. It can also receive and execute commands remotely via email and text messages. It's built with Python, managed via uv, and monitored with Sentry.",
