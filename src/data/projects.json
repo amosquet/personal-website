@@ -1,10 +1,11 @@
 [
   {
-    "name": "RCCG",
-    "caption": "custom encryption",
-    "description": "A custom encryption algorithm written in Python. Designed to explore cryptography concepts.",
-    "techStack": ["Python", "Cryptography", "Security"],
-    "githubUrl": "https://github.com/amosquet/RCCG"
+    "name": "shisho",
+    "caption": "Personal Discord Bot",
+    "description": "Named after the Japanese word for \"Librarian\", Shisho is a personal Discord bot built to manage my reading list and handle various automated tasks.\nIt works by connecting directly to my PocketBase book database to add and manage books on my reading list, automatically handling start and end dates. It can also receive and execute commands remotely via email and text messages. It's built with Python, managed via uv, and monitored with Sentry.",
+    "githubUrl": "https://github.com/amosquet/shisho",
+    "language": "Python",
+    "techStack": ["Python", "Discord.py", "PocketBase", "Sentry"]
   },
   {
     "name": "comfibeats",
@@ -23,11 +24,10 @@
     "techStack": ["Python", "LLMs", "Anki"]
   },
   {
-    "name": "shisho",
-    "caption": "Personal Discord Bot",
-    "description": "Named after the Japanese word for \"Librarian\", Shisho is a personal Discord bot built to manage my reading list and handle various automated tasks.\nIt works by connecting directly to my PocketBase book database to add and manage books on my reading list, automatically handling start and end dates. It can also receive and execute commands remotely via email and text messages. It's built with Python, managed via uv, and monitored with Sentry.",
-    "githubUrl": "https://github.com/amosquet/shisho",
-    "language": "Python",
-    "techStack": ["Python", "Discord.py", "PocketBase", "Sentry"]
+    "name": "RCCG",
+    "caption": "custom encryption",
+    "description": "A custom encryption algorithm written in Python. Designed to explore cryptography concepts.",
+    "techStack": ["Python", "Cryptography", "Security"],
+    "githubUrl": "https://github.com/amosquet/RCCG"
   }
 ]
