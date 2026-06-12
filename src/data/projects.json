@@ -1,6 +1,6 @@
 [
   {
-    "name": "emailtoprint",
+    "name": "Email to Print",
     "caption": "Automated Print Service",
     "description": "A cross-platform Python service that monitors an IMAP email inbox and automatically prints any attachments it receives using CUPS.\nIt runs continuously in the background using launchd on macOS or systemd on Linux. It features two-sided printing, automatic nightly updates via cron, and optional Sentry integration for error tracking.",
     "githubUrl": "https://github.com/amosquet/emailtoprint",
