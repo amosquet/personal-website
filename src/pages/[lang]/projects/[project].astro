@@ -1,0 +1,76 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { useTranslations } from "@/i18n/utils";
+import projects from "@/data/projects.json";
+
+export function getStaticPaths() {
+    const langs = ["en", "fr", "jp"] as const;
+    return langs.flatMap((lang) => {
+        return projects.map((project) => ({
+            params: { lang, project: project.name },
+            props: { project },
+        }));
+    });
+}
+
+const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+const { project } = Astro.props;
+const t = useTranslations(lang);
+
+const mainFields = ["name", "caption", "description"];
+const additionalFields = Object.entries(project).filter(([key]) => !mainFields.includes(key));
+---
+
+<Layout title={project.name}>
+    <div class="max-w-3xl mx-auto px-4 py-12">
+        <a
+            href={`/${lang}/projects`}
+            class="text-gray-500 hover:text-gray-900 mb-10 inline-flex items-center gap-2 transition-colors font-medium"
+        >
+            &larr; {t("navProjects")}
+        </a>
+
+        <article>
+            <header class="mb-10">
+                <h1 class="text-4xl font-bold text-gray-900 mb-2 tracking-tight">
+                    {project.name}
+                </h1>
+                {project.caption && (
+                    <p class="text-xl text-gray-500 font-normal">
+                        {project.caption}
+                    </p>
+                )}
+            </header>
+
+            <div class="text-lg text-gray-800 leading-relaxed space-y-5">
+                {project.description ? project.description.split('\n').map((paragraph: string) => (
+                    <p>{paragraph}</p>
+                )) : null}
+            </div>
+
+            {additionalFields.length > 0 && (
+                <div class="mt-16 pt-8 border-t border-gray-200">
+                    <h2 class="text-lg font-bold text-gray-900 mb-6">Details</h2>
+                    <dl class="divide-y divide-gray-100">
+                        {additionalFields.map(([key, value]) => (
+                            <div class="py-3 flex flex-col sm:flex-row sm:gap-4">
+                                <dt class="text-gray-500 font-medium capitalize sm:w-1/3 shrink-0">
+                                    {key.replace(/([A-Z])/g, ' $1').trim()}
+                                </dt>
+                                <dd class="text-gray-900 sm:w-2/3 mt-1 sm:mt-0">
+                                    {Array.isArray(value) ? (
+                                        value.join(', ')
+                                    ) : (typeof value === 'string' && value.startsWith('http')) ? (
+                                        <a href={value} class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">{value}</a>
+                                    ) : (
+                                        value
+                                    )}
+                                </dd>
+                            </div>
+                        ))}
+                    </dl>
+                </div>
+            )}
+        </article>
+    </div>
+</Layout>

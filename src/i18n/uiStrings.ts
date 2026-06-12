@@ -17,6 +17,11 @@ export const uiStrings: TypeUIStrings = {
     fr: "Accueil",
     jp: "主要", //fix?
   },
+  navProjects: {
+    en: "Projects",
+    fr: "Projets",
+    jp: "プロジェクト",
+  },
   navBlog: {
     en: "Blog",
     fr: "Blog",
@@ -136,5 +141,30 @@ export const uiStrings: TypeUIStrings = {
     en: "FAQ",
     fr: "FAQ",
     jp: "よくある質問",
+  },
+  projectAbout: {
+    en: "About the Project",
+    fr: "À propos du projet",
+    jp: "プロジェクトについて",
+  },
+  projectTech: {
+    en: "Technologies",
+    fr: "Technologies",
+    jp: "テクノロジー",
+  },
+  projectLinks: {
+    en: "Links",
+    fr: "Liens",
+    jp: "リンク",
+  },
+  projectSourceCode: {
+    en: "View Source Code",
+    fr: "Voir le code source",
+    jp: "ソースコードを表示",
+  },
+  projectLiveSite: {
+    en: "Visit Live Site",
+    fr: "Visiter le site en direct",
+    jp: "ライブサイトにアクセス",
   },
 };

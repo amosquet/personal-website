@@ -1,0 +1,33 @@
+[
+  {
+    "name": "RCCG",
+    "caption": "custom encryption",
+    "description": "A custom encryption algorithm written in Python. Designed to explore cryptography concepts.",
+    "techStack": ["Python", "Cryptography", "Security"],
+    "githubUrl": "https://github.com/amosquet/RCCG"
+  },
+  {
+    "name": "comfibeats",
+    "caption": "24/7 Music Bot",
+    "description": "A reliable, custom Discord music bot designed to run 24/7 playing Comfi Beats for LilyPichu.\nIt is built with Bun and discord.js and focuses on easy self-hosting. It features the ability to automatically join designated voice channels, play JSON-based playlists generated from local audio files, and manage per-server settings. It also includes an automatic self-updating script that pulls the latest changes from GitHub directly via Discord commands.",
+    "githubUrl": "https://github.com/amosquet/comfibeats",
+    "language": "JavaScript",
+    "techStack": ["Bun", "Discord.js", "JavaScript"]
+  },
+  {
+    "name": "LJOtoAnki",
+    "caption": "Flashcard Automation",
+    "description": "A Python framework for automating the creation of Anki flashcards from Purdue's \"Learn Japanese Online\" (LJO) course materials.\nIt works by processing vocabulary PDFs using LLM clients (such as Gemini) to intelligently parse the Japanese learning words and output them into clean text files. These files can then be directly imported into Anki, saving countless hours of manual data entry.",
+    "githubUrl": "https://github.com/amosquet/LJOtoAnki",
+    "language": "Python",
+    "techStack": ["Python", "LLMs", "Anki"]
+  },
+  {
+    "name": "shisho",
+    "caption": "Personal Discord Bot",
+    "description": "Named after the Japanese word for \"Librarian\", Shisho is a personal Discord bot built to manage my reading list and handle various automated tasks.\nIt works by connecting directly to my PocketBase book database to add and manage books on my reading list, automatically handling start and end dates. It can also receive and execute commands remotely via email and text messages. It's built with Python, managed via uv, and monitored with Sentry.",
+    "githubUrl": "https://github.com/amosquet/shisho",
+    "language": "Python",
+    "techStack": ["Python", "Discord.py", "PocketBase", "Sentry"]
+  }
+]

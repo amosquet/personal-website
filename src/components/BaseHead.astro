@@ -97,7 +97,12 @@ const currentPath = Astro.url.pathname;
         <div class="links">
             <a href={"/" + locale + "/"}>{uiStrings["navHome"]![locale]}</a>
             <!-- <a href={"/" + locale + "/blog/"}>{uiStrings["navBlog"]![locale]}</a> -->
-            <a href={"/" + locale + "/about/"}>{uiStrings["navAbout"]![locale]}</a>
+            <a href={"/" + locale + "/about/"}
+                >{uiStrings["navAbout"]![locale]}</a
+            >
+            <a href={"/" + locale + "/projects/"}
+                >{uiStrings["navProjects"]![locale]}</a
+            >
             <!-- <a href={"/" + locale + "/contact/"}
                 >{uiStrings["navContact"]![locale]}</a
             > -->
