@@ -10,7 +10,6 @@ export function getStaticPaths() {
 const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
 
 import Layout from "@/layouts/Layout.astro";
-import readingData from "@/data/reading.json";
 import { useTranslations } from "@/i18n/utils";
 import pb, { authenticate } from "@/lib/pocketbase";
 import type { RecordModel } from "pocketbase";
@@ -24,6 +23,10 @@ interface BookRecord extends RecordModel {
     description: string;
     cover: string;
     publishDate: string;
+    status: string;
+    startDate?: string;
+    endDate?: string;
+    completed?: string;
 }
 
 interface EnrichedBook {
@@ -44,42 +47,50 @@ let enrichedBooks: EnrichedBook[] = [];
 try {
     await authenticate();
     const pbBooks = await pb.collection("books").getFullList<BookRecord>();
-    const pbBooksByIsbn = Object.fromEntries(pbBooks.map((b) => [b.isbn, b]));
 
-    enrichedBooks = readingData.map((book: any) => {
-        const pbBook = pbBooksByIsbn[book.isbn];
-        const baseBook = {
-            ...book,
-            publishDate: pbBook?.publishDate || book.publishDate || "",
-        };
-
-        if (pbBook) {
-            const coverUrl = pbBook.cover ? pb.files.getURL(pbBook, pbBook.cover) : null;
-            // if (coverUrl) {
-            //     console.log(`[DEBUG] Generated cover URL for ${book.title}: ${coverUrl}`);
-            // }
-            return {
-                ...baseBook,
-                title: pbBook.title || book.title,
-                author: pbBook.author || book.author,
-                cover: coverUrl,
-                description: pbBook.description || "No description available.",
-            } as EnrichedBook;
-        }
+    enrichedBooks = pbBooks.map((pbBook) => {
+        const coverUrl = pbBook.cover ? pb.files.getURL(pbBook, pbBook.cover) : null;
         return {
-            ...baseBook,
-            cover: null,
-            description: "No description available.",
+            isbn: pbBook.isbn,
+            title: pbBook.title,
+            author: pbBook.author,
+            status: pbBook.status,
+            startDate: pbBook.startDate,
+            endDate: pbBook.endDate,
+            completed: pbBook.completed,
+            publishDate: pbBook.publishDate || "",
+            cover: coverUrl,
+            description: pbBook.description || "No description available.",
         } as EnrichedBook;
     });
+
+    enrichedBooks.sort((a, b) => {
+        // 1. "reading" status first
+        if (a.status === "reading" && b.status !== "reading") return -1;
+        if (a.status !== "reading" && b.status === "reading") return 1;
+
+        // 2. Sort by endDate or completed date descending
+        const dateA = a.endDate || (a.status === "read" && a.completed) || "";
+        const dateB = b.endDate || (b.status === "read" && b.completed) || "";
+
+        if (dateA && dateB) {
+            const timeA = new Date(dateA).getTime();
+            const timeB = new Date(dateB).getTime();
+            if (timeA !== timeB) return timeB - timeA;
+        } else if (dateA) {
+            return -1;
+        } else if (dateB) {
+            return 1;
+        }
+
+        // 3. Fallback: Sort by publishDate descending
+        const pubA = a.publishDate ? new Date(a.publishDate).getTime() : 0;
+        const pubB = b.publishDate ? new Date(b.publishDate).getTime() : 0;
+        return pubB - pubA;
+    });
+
 } catch (error) {
     console.error("Error fetching from PocketBase:", error);
-    enrichedBooks = readingData.map((book: any) => ({
-        ...book,
-        publishDate: book.publishDate || "",
-        cover: null,
-        description: "No description available.",
-    } as EnrichedBook));
 }
 ---
 

@@ -1,6 +1,5 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import readingData from "@/data/reading.json";
 import { useTranslations } from "@/i18n/utils";
 import pb, { authenticate } from "@/lib/pocketbase";
 import type { RecordModel } from "pocketbase";
@@ -12,6 +11,10 @@ interface BookRecord extends RecordModel {
     description: string;
     cover: string;
     publishDate: string;
+    status: string;
+    startDate?: string;
+    endDate?: string;
+    completed?: string;
 }
 
 interface EnrichedBook {
@@ -36,33 +39,25 @@ export async function getStaticPaths() {
     } catch (error) {
         console.error("Error fetching from PocketBase in getStaticPaths:", error);
     }
-    const pbBooksByIsbn = Object.fromEntries(pbBooks.map((b) => [b.isbn, b]));
 
     const paths = [];
     for (const lang of locales) {
-        for (const book of readingData as any[]) {
-            const pbBook = pbBooksByIsbn[book.isbn];
-            const baseBook = {
-                ...book,
-                publishDate: pbBook?.publishDate || book.publishDate || "",
+        for (const pbBook of pbBooks) {
+            const enrichedBook: EnrichedBook = {
+                isbn: pbBook.isbn,
+                title: pbBook.title,
+                author: pbBook.author,
+                status: pbBook.status,
+                startDate: pbBook.startDate,
+                endDate: pbBook.endDate,
+                completed: pbBook.completed,
+                publishDate: pbBook.publishDate || "",
+                cover: pbBook.cover ? pb.files.getURL(pbBook, pbBook.cover) : null,
+                description: pbBook.description || "No description available.",
             };
 
-            const enrichedBook: EnrichedBook = pbBook
-                ? {
-                      ...baseBook,
-                      title: pbBook.title || book.title,
-                      author: pbBook.author || book.author,
-                      cover: pbBook.cover ? pb.files.getURL(pbBook, pbBook.cover) : null,
-                      description: pbBook.description || "No description available.",
-                  }
-                : {
-                      ...baseBook,
-                      cover: null,
-                      description: "No description available.",
-                  };
-
             paths.push({
-                params: { lang, isbn: book.isbn },
+                params: { lang, isbn: pbBook.isbn },
                 props: { book: enrichedBook },
             });
         }
