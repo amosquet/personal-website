@@ -142,4 +142,29 @@ export const uiStrings: TypeUIStrings = {
     fr: "FAQ",
     jp: "よくある質問",
   },
+  projectAbout: {
+    en: "About the Project",
+    fr: "À propos du projet",
+    jp: "プロジェクトについて",
+  },
+  projectTech: {
+    en: "Technologies",
+    fr: "Technologies",
+    jp: "テクノロジー",
+  },
+  projectLinks: {
+    en: "Links",
+    fr: "Liens",
+    jp: "リンク",
+  },
+  projectSourceCode: {
+    en: "View Source Code",
+    fr: "Voir le code source",
+    jp: "ソースコードを表示",
+  },
+  projectLiveSite: {
+    en: "Visit Live Site",
+    fr: "Visiter le site en direct",
+    jp: "ライブサイトにアクセス",
+  },
 };
