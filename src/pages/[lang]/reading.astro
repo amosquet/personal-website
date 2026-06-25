@@ -132,15 +132,15 @@ try {
                                         <div class="text-[10px] text-gray-400 uppercase tracking-wider text-right font-bold">
                                             {book.endDate ? (
                                                 <>
-                                                    {t("finished")}: {book.endDate}
+                                                    {t("finished")}: {book.endDate.substring(0, 10)}
                                                 </>
                                             ) : book.status === "read" && book.completed ? (
                                                 <>
-                                                    {t("finished")}: {book.completed}
+                                                    {t("finished")}: {book.completed.substring(0, 10)}
                                                 </>
                                             ) : (
                                                 <>
-                                                    {t("started")}: {book.startDate}
+                                                    {t("started")}: {book.startDate?.substring(0, 10)}
                                                 </>
                                             )}
                                         </div>

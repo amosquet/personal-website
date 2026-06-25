@@ -105,10 +105,10 @@ const coverHiRes = book.cover;
                     <span class="text-blue-700 uppercase">{book.status}</span>
                     <span>PUB: {book.publishDate}</span>
                     {book.startDate && (
-                        <span>START: {book.startDate}</span>
+                        <span>START: {book.startDate.substring(0, 10)}</span>
                     )}
                     {(book.endDate || (book.status === "read" && book.completed)) && (
-                        <span>END: {book.endDate || book.completed}</span>
+                        <span>END: {(book.endDate || book.completed)?.substring(0, 10)}</span>
                     )}
                 </div>
 
