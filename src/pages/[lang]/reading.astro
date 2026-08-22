@@ -69,8 +69,8 @@ try {
     enrichedBooks.sort((a, b) => {
         const getSortKey = (item: EnrichedBook) => {
             if (item.endDate) return item.endDate;
+            if (item.completed && item.completed !== "true") return item.completed;
             if (item.startDate) return item.startDate;
-            if (item.completed && item.publishDate) return item.publishDate;
             return item.created;
         };
 

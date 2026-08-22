@@ -6,17 +6,22 @@ const pb = new PocketBase(url);
 const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
 
 async function syncBooks() {
+    if (!process.env.POCKETBASE_USER || !process.env.POCKETBASE_PASSWORD) {
+        console.log("PocketBase credentials not configured. Skipping sync.");
+        return;
+    }
+
     await pb.collection("users").authWithPassword(
         process.env.POCKETBASE_USER as string,
         process.env.POCKETBASE_PASSWORD as string
     );
 
     const booksToSync = await pb.collection("books").getFullList({
-        filter: 'title = "" || cover = ""',
+        filter: 'title = "" || cover = "" || publishDate = "" || description = ""',
     });
 
     if (booksToSync.length === 0) {
-        console.log("All books have titles and covers. Nothing to sync.");
+        console.log("All books have complete metadata. Nothing to sync.");
         return;
     }
 
@@ -94,7 +99,13 @@ async function syncBooks() {
     }
 }
 
-syncBooks().then(() => {
-    console.log("Synchronisation complete.");
-    process.exit(0);
-});
+syncBooks()
+    .then(() => {
+        console.log("Synchronisation complete.");
+        process.exit(0);
+    })
+    .catch((err) => {
+        console.error("Warning: Sync books script encountered an error:", err);
+        // Do not crash the static build if PocketBase is unreachable
+        process.exit(0);
+    });
