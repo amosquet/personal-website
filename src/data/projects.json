@@ -1,5 +1,11 @@
 [
   {
+    "name": "Shisho Companion (Android)",
+    "caption": "view and create reading lists, notes, and reminders",
+    "description": "An app that interfaces directly with the databases behind Shisho for your reading list, notes, and reminders.",
+    "language": "Kotlin"
+  },
+  {
     "name": "Email to Print",
     "caption": "Automated Print Service",
     "description": "A cross-platform Python service that monitors an IMAP email inbox and automatically prints any attachments it receives using CUPS.\nIt runs continuously in the background using launchd on macOS or systemd on Linux. It features two-sided printing, automatic nightly updates via cron, and optional Sentry integration for error tracking.",
