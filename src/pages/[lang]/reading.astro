@@ -67,6 +67,13 @@ try {
     });
 
     enrichedBooks.sort((a, b) => {
+        // 1. Planned books always appear at the bottom of the list
+        const aIsPlanned = a.status?.toLowerCase() === "planned";
+        const bIsPlanned = b.status?.toLowerCase() === "planned";
+
+        if (aIsPlanned && !bIsPlanned) return 1;
+        if (!aIsPlanned && bIsPlanned) return -1;
+
         const getSortKey = (item: EnrichedBook) => {
             if (item.endDate) return item.endDate;
             if (item.completed && item.completed !== "true") return item.completed;
