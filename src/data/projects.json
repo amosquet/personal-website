@@ -1,9 +1,11 @@
 [
   {
     "name": "Shisho Companion (Android)",
-    "caption": "view and create reading lists, notes, and reminders",
-    "description": "An app that interfaces directly with the databases behind Shisho for your reading list, notes, and reminders.",
-    "language": "Kotlin"
+    "caption": "Android Reading & Task Companion",
+    "description": "A native Android app to manage reading lists, notes, and reminders with Shisho.\nIt features offline-first caching with SQLCipher encryption, two-way PocketBase sync, Google Books integration, and scheduled notifications.",
+    "githubUrl": "https://github.com/amosquet/shisho-companion-android",
+    "language": "Kotlin",
+    "techStack": ["Kotlin", "Jetpack Compose", "Material 3", "Room", "SQLCipher", "Hilt", "Ktor", "PocketBase"]
   },
   {
     "name": "Email to Print",
