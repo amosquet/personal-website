@@ -5,12 +5,21 @@
     "description": "A native Android app to manage reading lists, notes, and reminders with Shisho.\nIt features offline-first caching with SQLCipher encryption, two-way PocketBase sync, Google Books integration, and scheduled notifications.",
     "githubUrl": "https://github.com/amosquet/shisho-companion-android",
     "language": "Kotlin",
-    "techStack": ["Kotlin", "Jetpack Compose", "Material 3", "Room", "SQLCipher", "Hilt", "Ktor", "PocketBase"]
+    "techStack": [
+      "Kotlin",
+      "Jetpack Compose",
+      "Material 3",
+      "Room",
+      "SQLCipher",
+      "Hilt",
+      "Ktor",
+      "PocketBase"
+    ]
   },
   {
     "name": "Email to Print",
     "caption": "Automated Print Service",
-    "description": "A cross-platform Python service that monitors an IMAP email inbox and automatically prints any attachments it receives using CUPS.\nIt runs continuously in the background using launchd on macOS or systemd on Linux. It features two-sided printing, automatic nightly updates via cron, and optional Sentry integration for error tracking.",
+    "description": "A cross-platform Python service that monitors an IMAP email inbox and automatically prints any attachments it receives using CUPS.\nIt runs continuously in the background using launchd on macOS or systemd on Linux. It features two-sided printing, automatic nightly updates via cron, and optional Sentry integration for error tracking.\n\nThis service is currently being used by me and running 24/7, you can try it out be emailing an attachment to emailtoprint at amcloud.dev",
     "githubUrl": "https://github.com/amosquet/emailtoprint",
     "language": "Python",
     "techStack": ["Python", "CUPS", "IMAP", "Sentry"]
