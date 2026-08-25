@@ -115,7 +115,7 @@ try {
                         href={`/${lang}/reading/${book.isbn}`}
                         class="block group"
                     >
-                        <div class="border border-gray-200 p-6 bg-white shadow-sm hover:border-blue-400 transition-colors h-full">
+                        <div class="border border-gray-200 p-6 bg-white shadow-sm hover:border-blue-400 transition-colors h-full flex flex-col">
                             {book.cover && (
                                 <img
                                     src={book.cover}
@@ -127,11 +127,6 @@ try {
                                 {book.title}
                             </h2>
                             <p class="text-gray-600 mb-4">{book.author}</p>
-
-                            <div
-                                class="text-sm text-gray-700 line-clamp-3 mb-4"
-                                set:html={book.description}
-                            />
 
                             <div class="flex flex-col gap-2 mt-auto">
                                 <div class="flex items-center justify-between text-xs font-bold">
