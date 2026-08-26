@@ -11,95 +11,10 @@ const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
 
 import Layout from "@/layouts/Layout.astro";
 import { useTranslations } from "@/i18n/utils";
-import pb, { authenticate } from "@/lib/pocketbase";
-import type { RecordModel } from "pocketbase";
+import { getBooks, type EnrichedBook } from "@/lib/books";
 
 const t = useTranslations(lang);
-
-interface BookRecord extends RecordModel {
-    isbn: string;
-    title: string;
-    author: string;
-    description: string;
-    cover: string;
-    publishDate: string;
-    status: string;
-    startDate?: string;
-    endDate?: string;
-    completed?: string;
-}
-
-interface EnrichedBook {
-    isbn: string;
-    title: string;
-    author: string;
-    status: string;
-    startDate?: string;
-    endDate?: string;
-    completed?: string;
-    publishDate: string;
-    created: string;
-    cover: string | null;
-    description: string;
-}
-
-// Fetch data from PocketBase at build time
-let enrichedBooks: EnrichedBook[] = [];
-try {
-    await authenticate();
-    const pbBooks = await pb.collection("books").getFullList<BookRecord>();
-
-    enrichedBooks = pbBooks.map((pbBook) => {
-        const coverUrl = pbBook.cover ? pb.files.getURL(pbBook, pbBook.cover) : null;
-        return {
-            isbn: pbBook.isbn,
-            title: pbBook.title,
-            author: pbBook.author,
-            status: pbBook.status,
-            startDate: pbBook.startDate,
-            endDate: pbBook.endDate,
-            completed: pbBook.completed,
-            publishDate: pbBook.publishDate || "",
-            created: pbBook.created,
-            cover: coverUrl,
-            description: pbBook.description || "No description available.",
-        } as EnrichedBook;
-    });
-
-    enrichedBooks.sort((a, b) => {
-        // 1. Planned books always appear at the bottom of the list
-        const aIsPlanned = a.status?.toLowerCase() === "planned";
-        const bIsPlanned = b.status?.toLowerCase() === "planned";
-
-        if (aIsPlanned && !bIsPlanned) return 1;
-        if (!aIsPlanned && bIsPlanned) return -1;
-
-        const getSortKey = (item: EnrichedBook) => {
-            if (item.endDate) return item.endDate;
-            if (item.completed && item.completed !== "true") return item.completed;
-            if (item.startDate) return item.startDate;
-            return item.created;
-        };
-
-        const keyA = getSortKey(a);
-        const keyB = getSortKey(b);
-
-        if (keyA < keyB) return 1;
-        if (keyA > keyB) return -1;
-
-        // Secondary tie-breaker: publishDate descending (newest published first)
-        const pubA = a.publishDate || "";
-        const pubB = b.publishDate || "";
-        if (pubA < pubB) return 1;
-        if (pubA > pubB) return -1;
-
-        // Tertiary tie-breaker: title ascending
-        return a.title.localeCompare(b.title);
-    });
-
-} catch (error) {
-    console.error("Error fetching from PocketBase:", error);
-}
+const enrichedBooks: EnrichedBook[] = await getBooks();
 ---
 
 <Layout>
