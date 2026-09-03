@@ -1,0 +1,268 @@
+---
+import { defaultLocale, type Locale } from "@/i18n/i18n";
+import { useTranslations } from "@/i18n/utils";
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang } = Astro.props;
+const locale = lang || (Astro.currentLocale as Locale) || defaultLocale;
+const t = useTranslations(locale);
+const apiUrl = import.meta.env.PUBLIC_SHISHO_API_URL || "https://shisho.amcloud.dev";
+---
+
+<dialog
+  id="book-suggest-modal"
+  closedby="any"
+  aria-labelledby="suggest-dialog-title"
+  class="m-auto max-w-xl w-[92vw] sm:w-full bg-white p-6 sm:p-8 border border-gray-300 shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-xs text-gray-900 focus:outline-none"
+>
+  <div class="flex items-start justify-between pb-4 mb-4 border-b border-gray-100">
+    <div>
+      <h2 id="suggest-dialog-title" class="text-2xl font-bold text-gray-900">
+        {t("suggestBook")}
+      </h2>
+      <p class="text-sm text-gray-600 mt-1">
+        {t("suggestBookDesc")}
+      </p>
+    </div>
+    <button
+      type="button"
+      id="close-modal-btn"
+      class="text-gray-400 hover:text-gray-700 p-1.5 transition-colors cursor-pointer"
+      aria-label={t("close")}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-6 h-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <div id="suggest-alert-box" class="hidden p-3.5 text-sm mb-5 transition-all" role="alert"></div>
+
+  <form id="suggest-book-form" class="space-y-4">
+    <div>
+      <label for="suggest-title" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+        {t("bookTitle")} <span class="text-gray-400 font-normal">({t("bookIsbn")} {locale === "jp" ? "があれば省略可" : "optional if ISBN provided"})</span>
+      </label>
+      <input
+        type="text"
+        id="suggest-title"
+        name="title"
+        class="w-full bg-white p-2.5 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+        placeholder={t("bookTitlePlaceholder")}
+      />
+    </div>
+
+    <div>
+      <label for="suggest-author" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+        {t("bookAuthor")}
+      </label>
+      <input
+        type="text"
+        id="suggest-author"
+        name="author"
+        class="w-full bg-white p-2.5 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+        placeholder={t("bookAuthorPlaceholder")}
+      />
+    </div>
+
+    <div>
+      <label for="suggest-isbn" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+        {t("bookIsbn")}
+      </label>
+      <input
+        type="text"
+        id="suggest-isbn"
+        name="isbn"
+        class="w-full bg-white p-2.5 border border-gray-300 text-gray-900 text-sm font-mono focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+        placeholder={t("bookIsbnPlaceholder")}
+      />
+    </div>
+
+    <div>
+      <label for="suggest-reason" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+        {t("bookReason")}
+      </label>
+      <textarea
+        id="suggest-reason"
+        name="reason"
+        rows="3"
+        class="w-full bg-white p-2.5 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+        placeholder={t("bookReasonPlaceholder")}
+      ></textarea>
+    </div>
+
+    <div>
+      <label for="suggest-submitter" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+        {t("yourName")}
+      </label>
+      <input
+        type="text"
+        id="suggest-submitter"
+        name="submitter"
+        class="w-full bg-white p-2.5 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+        placeholder={t("yourNamePlaceholder")}
+      />
+    </div>
+
+    <div class="pt-2 flex justify-end gap-3">
+      <button
+        type="button"
+        id="cancel-modal-btn"
+        class="px-4 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-semibold transition-colors cursor-pointer"
+      >
+        {t("close")}
+      </button>
+      <button
+        type="submit"
+        id="suggest-submit-btn"
+        class="px-6 py-2 bg-black text-white hover:bg-gray-800 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center gap-2"
+      >
+        <span id="submit-btn-text">{t("submitSuggestion")}</span>
+        <svg id="submit-spinner" class="hidden animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </button>
+    </div>
+  </form>
+</dialog>
+
+<script is:inline define:vars={{ apiUrl, validationMsg: t("suggestValidationError"), errorMsg: t("suggestNetworkError"), successPrefix: t("suggestSuccess"), submittingText: t("submitting"), submitText: t("submitSuggestion") }}>
+  (() => {
+    const dialog = document.getElementById("book-suggest-modal");
+    const closeBtn = document.getElementById("close-modal-btn");
+    const cancelBtn = document.getElementById("cancel-modal-btn");
+    const form = document.getElementById("suggest-book-form");
+    const submitBtn = document.getElementById("suggest-submit-btn");
+    const submitTextEl = document.getElementById("submit-btn-text");
+    const spinnerEl = document.getElementById("submit-spinner");
+    const alertBox = document.getElementById("suggest-alert-box");
+
+    if (!dialog) return;
+
+    // Light-dismiss fallback for browsers that don't support closedby attribute
+    if (!("closedBy" in HTMLDialogElement.prototype)) {
+      dialog.addEventListener("click", (event) => {
+        if (event.target !== dialog) return;
+        const rect = dialog.getBoundingClientRect();
+        const isInside = (
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width
+        );
+        if (!isInside) {
+          dialog.close();
+        }
+      });
+    }
+
+    const closeModal = () => dialog.close();
+    closeBtn?.addEventListener("click", closeModal);
+    cancelBtn?.addEventListener("click", closeModal);
+
+    // Allow opening via custom event or global function
+    window.openBookSuggestModal = () => {
+      alertBox.className = "hidden";
+      alertBox.textContent = "";
+      dialog.showModal();
+    };
+
+    // Listen for any elements with data-open-suggest-modal
+    document.addEventListener("click", (e) => {
+      const trigger = e.target.closest("[data-open-suggest-modal]");
+      if (trigger) {
+        e.preventDefault();
+        window.openBookSuggestModal();
+      }
+    });
+
+    form?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      alertBox.className = "hidden";
+      alertBox.textContent = "";
+
+      const titleInput = document.getElementById("suggest-title");
+      const authorInput = document.getElementById("suggest-author");
+      const isbnInput = document.getElementById("suggest-isbn");
+      const reasonInput = document.getElementById("suggest-reason");
+      const submitterInput = document.getElementById("suggest-submitter");
+
+      const title = titleInput ? titleInput.value.trim() : "";
+      const author = authorInput ? authorInput.value.trim() : "";
+      const isbn = isbnInput ? isbnInput.value.trim() : "";
+      const reason = reasonInput ? reasonInput.value.trim() : "";
+      const submitter = submitterInput ? submitterInput.value.trim() : "";
+
+      if (!title && !isbn) {
+        alertBox.className = "p-3 text-sm mb-4 border border-red-200 bg-red-50 text-red-700";
+        alertBox.textContent = validationMsg;
+        return;
+      }
+
+      // UI loading state
+      submitBtn.disabled = true;
+      spinnerEl.classList.remove("hidden");
+      submitTextEl.textContent = submittingText;
+
+      const payload = {
+        title,
+        author,
+        isbn,
+        reason,
+        submitter: submitter || undefined,
+      };
+
+      try {
+        const baseUrl = apiUrl.replace(/\/$/, "");
+        const res = await fetch(`${baseUrl}/api/books/suggest`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data.success) {
+          alertBox.className = "p-3 text-sm mb-4 border border-green-200 bg-green-50 text-green-800";
+          const displayName = data.display_name ? data.display_name.replace(/\*\*/g, "") : (title || isbn);
+          alertBox.textContent = `${successPrefix}: ${displayName}!`;
+          form.reset();
+
+          // Dispatch event so the suggestions list can refresh dynamically
+          document.dispatchEvent(new CustomEvent("book-suggested", { detail: data }));
+
+          // Automatically close modal after 2.5 seconds on success
+          setTimeout(() => {
+            if (dialog.open) {
+              dialog.close();
+            }
+          }, 2500);
+        } else {
+          alertBox.className = "p-3 text-sm mb-4 border border-red-200 bg-red-50 text-red-700";
+          alertBox.textContent = data.error || errorMsg;
+        }
+      } catch (err) {
+        console.error("Error submitting book suggestion:", err);
+        alertBox.className = "p-3 text-sm mb-4 border border-red-200 bg-red-50 text-red-700";
+        alertBox.textContent = errorMsg;
+      } finally {
+        submitBtn.disabled = false;
+        spinnerEl.classList.add("hidden");
+        submitTextEl.textContent = submitText;
+      }
+    });
+  })();
+</script>

@@ -167,4 +167,134 @@ export const uiStrings: TypeUIStrings = {
     fr: "Visiter le site en direct",
     jp: "ライブサイトにアクセス",
   },
+  tabMyReading: {
+    en: "My Reading List",
+    fr: "Ma liste de lecture",
+    jp: "私の読書リスト",
+  },
+  tabSuggestions: {
+    en: "Community Suggestions",
+    fr: "Suggestions de la communauté",
+    jp: "コミュニティのおすすめ",
+  },
+  suggestBook: {
+    en: "Suggest a Book",
+    fr: "Suggérer un livre",
+    jp: "本を提案する",
+  },
+  suggestBookDesc: {
+    en: "Recommend a book for my reading list.",
+    fr: "Recommandez un livre pour ma liste de lecture.",
+    jp: "私の読書リストに追加する本を推薦してください。",
+  },
+  bookTitle: {
+    en: "Book Title",
+    fr: "Titre du livre",
+    jp: "本のタイトル",
+  },
+  bookTitlePlaceholder: {
+    en: "e.g., The Martian",
+    fr: "ex. : Le Problème à trois corps",
+    jp: "例：三体",
+  },
+  bookAuthor: {
+    en: "Author",
+    fr: "Auteur",
+    jp: "著者",
+  },
+  bookAuthorPlaceholder: {
+    en: "e.g., Andy Weir",
+    fr: "ex. : Liu Cixin",
+    jp: "例：劉慈欣",
+  },
+  bookIsbn: {
+    en: "ISBN (Optional)",
+    fr: "ISBN (Facultatif)",
+    jp: "ISBN（任意）",
+  },
+  bookIsbnPlaceholder: {
+    en: "e.g., 9780804139038",
+    fr: "ex. : 9780804139038",
+    jp: "例：9780804139038",
+  },
+  bookReason: {
+    en: "Why should I read it?",
+    fr: "Pourquoi devrais-je le lire ?",
+    jp: "おすすめの理由は？",
+  },
+  bookReasonPlaceholder: {
+    en: "Optional, but appreciated...",
+    fr: "Facultatif, mais apprécié...",
+    jp: "任意ですが、教えていただけると嬉しいです...",
+  },
+  yourName: {
+    en: "Your Name (Optional)",
+    fr: "Votre nom (Facultatif)",
+    jp: "お名前（任意）",
+  },
+  yourNamePlaceholder: {
+    en: "e.g., Alice",
+    fr: "ex. : Alice",
+    jp: "例：アリス",
+  },
+  submitSuggestion: {
+    en: "Submit Suggestion",
+    fr: "Envoyer la suggestion",
+    jp: "提案を送信する",
+  },
+  submitting: {
+    en: "Submitting...",
+    fr: "Envoi en cours...",
+    jp: "送信中...",
+  },
+  suggestSuccess: {
+    en: "Successfully suggested",
+    fr: "Suggestion enregistrée avec succès",
+    jp: "提案を受け付けました",
+  },
+  suggestValidationError: {
+    en: "Please provide a Book Title or an ISBN.",
+    fr: "Veuillez fournir un titre de livre ou un ISBN.",
+    jp: "本のタイトルまたはISBNを入力してください。",
+  },
+  suggestNetworkError: {
+    en: "Unable to connect to Shisho API. Please try again later.",
+    fr: "Impossible de se connecter à l'API Shisho. Veuillez réessayer plus tard.",
+    jp: "Shisho APIに接続できませんでした。後でもう一度お試しください。",
+  },
+  loadingSuggestions: {
+    en: "Loading suggestions...",
+    fr: "Chargement des suggestions...",
+    jp: "おすすめを読み込み中...",
+  },
+  noSuggestions: {
+    en: "No books have been suggested yet. Be the first!",
+    fr: "Aucun livre n'a encore été suggéré. Soyez le premier !",
+    jp: "まだ提案された本はありません。最初の推薦者になりましょう！",
+  },
+  retry: {
+    en: "Retry",
+    fr: "Réessayer",
+    jp: "再試行",
+  },
+  close: {
+    en: "Close",
+    fr: "Fermer",
+    jp: "閉じる",
+  },
+  suggestedBy: {
+    en: "Suggested by",
+    fr: "Suggéré par",
+    jp: "提案者",
+  },
+  suggestedOn: {
+    en: "Suggested on",
+    fr: "Suggéré le",
+    jp: "提案日",
+  },
+  viaSource: {
+    en: "via",
+    fr: "via",
+    jp: "経由：",
+  },
 };

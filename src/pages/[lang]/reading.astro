@@ -12,6 +12,8 @@ const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
 import Layout from "@/layouts/Layout.astro";
 import { useTranslations } from "@/i18n/utils";
 import { getBooks, type EnrichedBook } from "@/lib/books";
+import BookSuggestModal from "@/components/BookSuggestModal.astro";
+import CommunitySuggestions from "@/components/CommunitySuggestions.astro";
 
 const t = useTranslations(lang);
 const enrichedBooks: EnrichedBook[] = await getBooks();
@@ -19,67 +21,182 @@ const enrichedBooks: EnrichedBook[] = await getBooks();
 
 <Layout>
     <div class="max-w-5xl mx-auto px-4 py-12">
-        <h1 class="text-3xl font-bold mb-8 text-gray-900">
-            <Fragment set:html={t("navReading")} />
-        </h1>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {
-                enrichedBooks.map((book) => (
-                    <a
-                        href={`/${lang}/reading/${book.isbn}`}
-                        class="block group"
-                    >
-                        <div class="border border-gray-200 p-6 bg-white shadow-sm hover:border-blue-400 transition-colors h-full flex flex-col">
-                            {book.cover && (
-                                <img
-                                    src={book.cover}
-                                    alt={`Cover of ${book.title}`}
-                                    class="w-full h-48 object-contain mb-4 group-hover:scale-105 transition-transform"
-                                />
-                            )}
-                            <h2 class="text-xl font-bold text-gray-900 mb-1">
-                                {book.title}
-                            </h2>
-                            <p class="text-gray-600 mb-4">{book.author}</p>
-
-                            <div class="flex flex-col gap-2 mt-auto">
-                                <div class="flex items-center justify-between text-xs font-bold">
-                                    <span class="px-2.5 py-1 bg-blue-50 text-blue-700 capitalize">
-                                        {book.status}
-                                    </span>
-                                    <span class="text-gray-500">
-                                        {book.publishDate}
-                                    </span>
-                                </div>
-                                {
-                                    (book.startDate || book.endDate || (book.status === "read" && book.completed)) && (
-                                        <div class="text-[10px] text-gray-400 uppercase tracking-wider text-right font-bold">
-                                            {book.endDate ? (
-                                                <>
-                                                    {t("finished")}: {book.endDate.substring(0, 10)}
-                                                </>
-                                            ) : book.status === "read" && book.completed ? (
-                                                <>
-                                                    {t("finished")}: {book.completed.substring(0, 10)}
-                                                </>
-                                            ) : (
-                                                <>
-                                                    {t("started")}: {book.startDate?.substring(0, 10)}
-                                                </>
-                                            )}
-                                        </div>
-                                    )
-                                }
-                            </div>
-                        </div>
-                    </a>
-                ))
-            }
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <h1 class="text-3xl font-bold text-gray-900">
+                <Fragment set:html={t("navReading")} />
+            </h1>
+            <button
+                type="button"
+                data-open-suggest-modal
+                class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-black text-white hover:bg-gray-800 text-sm font-semibold transition-colors cursor-pointer self-start sm:self-auto shadow-sm"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                </svg>
+                <span>{t("suggestBook")}</span>
+            </button>
         </div>
 
-        <p class="text-xs text-gray-400 italic mt-12 text-center">
-            {t("googleBooksCredit")}
-        </p>
+        <!-- Accessible Tabs -->
+        <div class="border-b border-gray-200 mb-8" role="tablist" aria-label="Reading list views">
+            <div class="flex gap-8">
+                <button
+                    id="tab-my-books"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="panel-my-books"
+                    class="pb-3 text-sm font-bold border-b-2 border-black text-gray-900 transition-colors cursor-pointer"
+                >
+                    {t("tabMyReading")}
+                    <span class="ml-1.5 px-2 py-0.5 text-xs bg-gray-100 text-gray-700 font-normal">
+                        {enrichedBooks.length}
+                    </span>
+                </button>
+                <button
+                    id="tab-suggestions"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="panel-suggestions"
+                    class="pb-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
+                >
+                    {t("tabSuggestions")}
+                </button>
+            </div>
+        </div>
+
+        <!-- Tab 1: Personal Reading List (Static Build) -->
+        <div id="panel-my-books" role="tabpanel" aria-labelledby="tab-my-books">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {
+                    enrichedBooks.map((book) => (
+                        <a
+                            href={`/${lang}/reading/${book.isbn}`}
+                            class="block group"
+                        >
+                            <div class="border border-gray-200 p-6 bg-white shadow-sm hover:border-blue-400 transition-colors h-full flex flex-col">
+                                {book.cover && (
+                                    <img
+                                        src={book.cover}
+                                        alt={`Cover of ${book.title}`}
+                                        class="w-full h-48 object-contain mb-4 group-hover:scale-105 transition-transform"
+                                    />
+                                )}
+                                <h2 class="text-xl font-bold text-gray-900 mb-1">
+                                    {book.title}
+                                </h2>
+                                <p class="text-gray-600 mb-4">{book.author}</p>
+
+                                <div class="flex flex-col gap-2 mt-auto">
+                                    <div class="flex items-center justify-between text-xs font-bold">
+                                        <span class="px-2.5 py-1 bg-blue-50 text-blue-700 capitalize">
+                                            {book.status}
+                                        </span>
+                                        <span class="text-gray-500">
+                                            {book.publishDate}
+                                        </span>
+                                    </div>
+                                    {
+                                        (book.startDate || book.endDate || (book.status === "read" && book.completed)) && (
+                                            <div class="text-[10px] text-gray-400 uppercase tracking-wider text-right font-bold">
+                                                {book.endDate ? (
+                                                    <>
+                                                        {t("finished")}: {book.endDate.substring(0, 10)}
+                                                    </>
+                                                ) : book.status === "read" && book.completed ? (
+                                                    <>
+                                                        {t("finished")}: {book.completed.substring(0, 10)}
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        {t("started")}: {book.startDate?.substring(0, 10)}
+                                                    </>
+                                                )}
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            </div>
+                        </a>
+                    ))
+                }
+            </div>
+
+            <p class="text-xs text-gray-400 italic mt-12 text-center">
+                {t("googleBooksCredit")}
+            </p>
+        </div>
+
+        <!-- Tab 2: Community Suggestions (Live Client-Side) -->
+        <div id="panel-suggestions" role="tabpanel" aria-labelledby="tab-suggestions" class="hidden">
+            <CommunitySuggestions lang={lang} />
+        </div>
     </div>
+
+    <!-- Suggestion Dialog Modal -->
+    <BookSuggestModal lang={lang} />
 </Layout>
+
+<script is:inline>
+    (() => {
+        const tabMyBooks = document.getElementById("tab-my-books");
+        const tabSuggestions = document.getElementById("tab-suggestions");
+        const panelMyBooks = document.getElementById("panel-my-books");
+        const panelSuggestions = document.getElementById("panel-suggestions");
+
+        if (!tabMyBooks || !tabSuggestions || !panelMyBooks || !panelSuggestions) return;
+
+        function setTab(activeTab) {
+            if (activeTab === "suggestions") {
+                tabMyBooks.setAttribute("aria-selected", "false");
+                tabMyBooks.className = "pb-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition-colors cursor-pointer";
+
+                tabSuggestions.setAttribute("aria-selected", "true");
+                tabSuggestions.className = "pb-3 text-sm font-bold border-b-2 border-black text-gray-900 transition-colors cursor-pointer";
+
+                panelMyBooks.classList.add("hidden");
+                panelSuggestions.classList.remove("hidden");
+
+                if (window.location.hash !== "#suggestions") {
+                    history.replaceState(null, "", "#suggestions");
+                }
+            } else {
+                tabSuggestions.setAttribute("aria-selected", "false");
+                tabSuggestions.className = "pb-3 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-900 transition-colors cursor-pointer";
+
+                tabMyBooks.setAttribute("aria-selected", "true");
+                tabMyBooks.className = "pb-3 text-sm font-bold border-b-2 border-black text-gray-900 transition-colors cursor-pointer";
+
+                panelSuggestions.classList.add("hidden");
+                panelMyBooks.classList.remove("hidden");
+
+                if (window.location.hash === "#suggestions") {
+                    history.replaceState(null, "", window.location.pathname + window.location.search);
+                }
+            }
+        }
+
+        tabMyBooks.addEventListener("click", () => setTab("my-books"));
+        tabSuggestions.addEventListener("click", () => setTab("suggestions"));
+
+        // Support direct linking to #suggestions
+        if (window.location.hash === "#suggestions") {
+            setTab("suggestions");
+        }
+
+        window.addEventListener("hashchange", () => {
+            if (window.location.hash === "#suggestions") {
+                setTab("suggestions");
+            } else {
+                setTab("my-books");
+            }
+        });
+    })();
+</script>
