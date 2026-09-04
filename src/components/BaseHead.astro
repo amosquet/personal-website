@@ -69,25 +69,73 @@ const currentPath = Astro.url.pathname;
         display: none;
         position: absolute;
         background-color: black;
-        min-width: 50px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
+        min-width: 90px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+        z-index: 10;
         right: 0;
         border: 1px solid #333;
-        border-radius: 4px;
+        border-radius: 6px;
+        overflow: hidden;
     }
 
     /* Links inside the dropdown */
     .language-dropdown-content a {
-        padding: 12px 16px;
+        padding: 8px 14px;
         display: block;
         text-align: left;
         text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+
+    .language-dropdown-content a:hover {
+        background-color: #1a1a1a;
+        text-decoration: none;
     }
 
     /* Show the dropdown menu on hover */
     .language-dropdown:hover .language-dropdown-content {
         display: block;
+    }
+
+    .dropdown-divider {
+        height: 1px;
+        background-color: #262626;
+        margin: 2px 0;
+    }
+
+    /* Furigana toggle button inside dropdown */
+    .dropdown-furigana-btn {
+        width: 100%;
+        background: transparent;
+        border: none;
+        color: #e5e5e5;
+        padding: 8px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        font-family: inherit;
+        font-size: 0.8rem;
+        cursor: pointer;
+        text-align: left;
+        white-space: nowrap;
+        transition: background-color 0.15s ease;
+    }
+
+    .dropdown-furigana-btn:hover {
+        background-color: #1a1a1a;
+        color: #ffffff;
+    }
+
+    .furigana-prefix {
+        color: #888;
+        font-size: 0.75rem;
+    }
+
+    .furigana-state {
+        font-weight: 600;
+        color: #60a5fa;
+        font-size: 0.75rem;
     }
 </style>
 
@@ -160,8 +208,74 @@ const currentPath = Astro.url.pathname;
                             return <a href={newPath}>{otherLocale}</a>;
                         })
                     }
+                    {
+                        locale === "jp" && (
+                            <div class="dropdown-divider" />
+                            <button
+                                id="furigana-toggle"
+                                class="dropdown-furigana-btn"
+                                type="button"
+                                title="ルビ表示切替: 現在【OFF】 (クリックで変更)"
+                                aria-label="Toggle Furigana display mode"
+                            >
+                                <span class="furigana-prefix">ルビ:</span>
+                                <span id="furigana-state" class="furigana-state">OFF</span>
+                            </button>
+                        )
+                    }
                 </div>
             </div>
         </div>
     </div>
 </nav>
+
+<script>
+    function initFuriganaToggle() {
+        const btn = document.getElementById("furigana-toggle");
+        const stateEl = document.getElementById("furigana-state");
+        if (!btn || !stateEl) return;
+
+        const cycle: Record<string, string> = {
+            off: "hover",
+            hover: "on",
+            on: "off",
+        };
+
+        const labels: Record<string, string> = {
+            off: "OFF",
+            hover: "ホバー",
+            on: "ON",
+        };
+
+        function updateUI(mode: string) {
+            const label = labels[mode] || labels.off;
+            stateEl!.textContent = label;
+            btn!.setAttribute("aria-pressed", mode !== "off" ? "true" : "false");
+            btn!.setAttribute(
+                "title",
+                `ルビ表示切替: 現在【${label}】 (クリックで変更)`
+            );
+        }
+
+        const currentMode = document.documentElement.dataset.furigana || "off";
+        updateUI(currentMode);
+
+        btn.onclick = () => {
+            const current = document.documentElement.dataset.furigana || "off";
+            const next = cycle[current] || "off";
+            document.documentElement.dataset.furigana = next;
+            try {
+                localStorage.setItem("furigana", next);
+            } catch (_) {}
+            updateUI(next);
+        };
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initFuriganaToggle);
+    } else {
+        initFuriganaToggle();
+    }
+    document.addEventListener("astro:page-load", initFuriganaToggle);
+</script>
+

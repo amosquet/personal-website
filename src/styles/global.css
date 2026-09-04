@@ -12,3 +12,28 @@ html {
 body {
     color: #000;
 }
+
+/* Furigana Display Modes */
+html[data-furigana="off"] rt,
+html[data-furigana="off"] rp {
+    display: none;
+}
+
+html[data-furigana="hover"] ruby {
+    cursor: help;
+}
+
+html[data-furigana="hover"] rt,
+html[data-furigana="hover"] rp {
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+}
+
+html[data-furigana="hover"] ruby:hover rt,
+html[data-furigana="hover"] ruby:hover rp,
+html[data-furigana="hover"] ruby:active rt,
+html[data-furigana="hover"] ruby:active rp,
+html[data-furigana="hover"] ruby:focus-within rt,
+html[data-furigana="hover"] ruby:focus-within rp {
+    opacity: 1;
+}
