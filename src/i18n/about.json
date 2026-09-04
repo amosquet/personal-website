@@ -18,6 +18,16 @@
       "title": "Experience",
       "items": [
         {
+          "role": "Research & Development Intern",
+          "company": "Comau",
+          "date": "Summer 2026",
+          "bullets": [
+            "Conducted root-cause failure analysis on Plasma Transferred Wire Arc (PTWA) thermal spray torches to diagnose failure modes and improve hardware reliability.",
+            "Engineered internal software solutions for remanufacturing and finance workflows, cutting data collection time by ~60% and quote generation turnaround by 70%.",
+            "Designed a remanufacturing framework to reduce turnaround times, elevate product quality, boost profit margins, and support process scalability."
+          ]
+        },
+        {
           "role": "Software Engineer Intern",
           "company": "Valeo",
           "date": "Summer 2025",
@@ -44,6 +54,16 @@
       "title": "Expérience",
       "items": [
         {
+          "role": "Stagiaire Recherche & Développement",
+          "company": "Comau",
+          "date": "Été 2026",
+          "bullets": [
+            "Réalisation d'analyses des causes profondes (RCA) sur des torches de projection thermique PTWA afin d'identifier les modes de défaillance et d'améliorer la fiabilité des équipements.",
+            "Développement d'outils logiciels internes réduisant le temps de collecte de données de l'équipe de reconditionnement de ~60 % et le temps d'établissement des devis pour la finance de 70 %.",
+            "Conception d'un cadre de reconditionnement visant à réduire les délais d'exécution, améliorer la qualité des produits, accroître les marges et soutenir la montée en échelle des processus."
+          ]
+        },
+        {
           "role": "Stagiaire Ingénieur Logiciel",
           "company": "Valeo",
           "date": "Été 2025",
@@ -69,6 +89,16 @@
     "jp": {
       "title": "<ruby>経験<rt>けいけん</rt></ruby>",
       "items": [
+        {
+          "role": "<ruby>研究開発<rt>けんきゅうかいはつ</rt></ruby>インターン",
+          "company": "Comau",
+          "date": "2026<ruby>年<rt>ねん</rt></ruby> <ruby>夏<rt>なつ</rt></ruby>",
+          "bullets": [
+            "PTWA（プラズマ<ruby>移行式<rt>いこうしき</rt></ruby>ワイヤーアーク）<ruby>溶射<rt>ようしゃ</rt></ruby>トーチの<ruby>根本原因分析<rt>こんぽんげんいんぶんせき</rt></ruby>（RCA）を<ruby>実施<rt>じっし</rt></ruby>し、<ruby>故障<rt>こしょう</rt></ruby>メカニズムの<ruby>特定<rt>とくてい</rt></ruby>と<ruby>信頼性向上<rt>しんらいせいこうじょう</rt></ruby>を<ruby>実現<rt>じつげん</rt></ruby>。",
+            "<ruby>再製造<rt>さいせいぞう</rt></ruby>チームのデータ<ruby>収集時間<rt>しゅうしゅうじかん</rt></ruby>を<ruby>約<rt>やく</rt></ruby>60%<ruby>削減<rt>さくげん</rt></ruby>するソフトウェアおよび、<ruby>財務<rt>ざいむ</rt></ruby>チームの<ruby>見積<rt>みつもり</rt></ruby>もり<ruby>作成時間<rt>さくせいじかん</rt></ruby>を70%<ruby>短縮<rt>たんしゅく</rt></ruby>するツールを<ruby>開発<rt>かいはつ</rt></ruby>。",
+            "<ruby>納期<rt>のうき</rt></ruby>の<ruby>短縮<rt>たんしゅく</rt></ruby>、<ruby>製品品質<rt>せいひんひんしつ</rt></ruby>の<ruby>向上<rt>こうじょう</rt></ruby>、<ruby>利益率<rt>りえきりつ</rt></ruby>の<ruby>改善<rt>かいぜん</rt></ruby>、およびプロセスのスケーラビリティを<ruby>支援<rt>しえん</rt></ruby>する<ruby>再製造<rt>さいせいぞう</rt></ruby>フレームワークを<ruby>設計<rt>せっけい</rt></ruby>。"
+          ]
+        },
         {
           "role": "ソフトウェアエンジニア・インターン",
           "company": "Valeo",
@@ -138,7 +168,10 @@
     "en": {
       "title": "Skills",
       "categories": [
-        { "name": "Programming", "list": "Python, C, C++, Java, MATLAB, SystemVerilog" },
+        {
+          "name": "Programming",
+          "list": "Python, C, C++, Java, MATLAB, SystemVerilog"
+        },
         {
           "name": "Infrastructure",
           "list": "Linux, Proxmox, Active Directory, Ubiquiti, Network Administration"
@@ -152,7 +185,10 @@
     "fr": {
       "title": "Compétences",
       "categories": [
-        { "name": "Programmation", "list": "Python, C, C++, Java, MATLAB, SystemVerilog" },
+        {
+          "name": "Programmation",
+          "list": "Python, C, C++, Java, MATLAB, SystemVerilog"
+        },
         {
           "name": "Infrastructure",
           "list": "Linux, Proxmox, Active Directory, Ubiquiti, Administration Réseau"
@@ -166,7 +202,10 @@
     "jp": {
       "title": "スキル",
       "categories": [
-        { "name": "プログラミング", "list": "Python, C, C++, Java, MATLAB, SystemVerilog" },
+        {
+          "name": "プログラミング",
+          "list": "Python, C, C++, Java, MATLAB, SystemVerilog"
+        },
         {
           "name": "インフラ",
           "list": "Linux, Proxmox, Active Directory, Ubiquiti, <ruby>ネットワーク<rt>ネットワーク</rt></ruby><ruby>管理<rt>かんり</rt></ruby>"

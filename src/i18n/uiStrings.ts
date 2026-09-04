@@ -167,4 +167,19 @@ export const uiStrings: TypeUIStrings = {
     fr: "Visiter le site en direct",
     jp: "ライブサイトにアクセス",
   },
+  backToBlog: {
+    en: "Back to Blog",
+    fr: "Retour au blog",
+    jp: "ブログに戻る",
+  },
+  noPostsFound: {
+    en: "No posts published yet in this language.",
+    fr: "Aucun article publié pour le moment dans cette langue.",
+    jp: "この言語で公開された記事はまだありません。",
+  },
+  allPosts: {
+    en: "All Posts",
+    fr: "Tous les articles",
+    jp: "すべての記事",
+  },
 };
