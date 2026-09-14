@@ -16,7 +16,11 @@ const t = useTranslations(lang);
 import projects from "@/data/projects.json";
 ---
 
-<Layout title={t("navProjects")} description={t("siteDescription")}>
+<Layout
+    title={t("navProjects")}
+    description={t("siteDescription")}
+    image={`/${lang}/projects/og.png`}
+>
     <div class="max-w-5xl mx-auto px-4 py-12">
         <h1 class="text-3xl font-bold mb-8 text-gray-900">
             {t("navProjects")}

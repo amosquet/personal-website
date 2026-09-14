@@ -2,13 +2,17 @@ import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 
-interface OgImageOptions {
+export interface OgImageOptions {
   title: string;
   description?: string;
+  subtitle?: string;
   pubDate?: Date | string;
   tags?: string[];
   lang?: string;
   author?: string;
+  badge?: string;
+  section?: string;
+  footerRightText?: string;
 }
 
 let cachedAvatarB64: string | null = null;
@@ -81,14 +85,16 @@ function wrapText(text: string, maxCharsPerLine: number, maxLines: number): stri
   return lines;
 }
 
-export async function generateOgImageForPost(options: OgImageOptions): Promise<Buffer> {
+export async function generateOgImage(options: OgImageOptions): Promise<Buffer> {
   const width = 1200;
   const height = 630;
 
   const author = escapeXml(options.author || "Artus Mosquet");
-  const rawTitle = options.title || "Blog Post";
+  const rawTitle = options.title || "Page";
   const rawDesc = options.description || "";
   const lang = options.lang || "en";
+  const badge = options.badge || "POST";
+  const section = options.section || "BLOG";
   const avatarB64 = getAvatarBase64();
 
   // Date formatting
@@ -105,9 +111,11 @@ export async function generateOgImageForPost(options: OgImageOptions): Promise<B
     }
   }
 
-  // Wrap title (max 3 lines)
-  const titleLines = wrapText(rawTitle, 30, 3);
-  const titleFontSize = titleLines.length > 2 ? 48 : titleLines.length === 2 ? 54 : 60;
+  const subtitleText = options.subtitle || formattedDate;
+
+  // Wrap title (max 2-3 lines)
+  const titleLines = wrapText(rawTitle, 28, 2);
+  const titleFontSize = titleLines.length > 1 ? 52 : 60;
   const titleLineHeight = titleFontSize * 1.25;
 
   // Title start Y position
@@ -118,25 +126,29 @@ export async function generateOgImageForPost(options: OgImageOptions): Promise<B
   const descStartY =
     titleStartY + (titleLines.length - 1) * titleLineHeight + (titleFontSize > 50 ? 55 : 45);
 
-  // Tags (max 4)
-  const tags = (options.tags || []).slice(0, 4);
-
-  // Measure tag pill positions
+  // Tags (max 5, ensuring they don't exceed container width)
+  const rawTags = (options.tags || []).slice(0, 5);
   let currentTagX = 86;
-  const renderedTags = tags
-    .map((tag) => {
-      const cleanTag = escapeXml(tag);
-      const approxWidth = Math.max(86, cleanTag.length * 11 + 36);
-      const tagElement = `
-        <g transform="translate(${currentTagX}, 440)">
-          <rect x="0" y="0" width="${approxWidth}" height="34" rx="17" fill="#f4f4f5" stroke="#e4e4e7" stroke-width="1" />
-          <text x="${approxWidth / 2}" y="22" text-anchor="middle" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#52525b">#${cleanTag}</text>
-        </g>
-      `;
-      currentTagX += approxWidth + 12;
-      return tagElement;
-    })
-    .join("\n");
+  const renderedTagsArray: string[] = [];
+
+  for (const tag of rawTags) {
+    const cleanTag = escapeXml(tag);
+    const approxWidth = Math.max(80, cleanTag.length * 11 + 36);
+    if (currentTagX + approxWidth > 1114) break;
+
+    renderedTagsArray.push(`
+      <g transform="translate(${currentTagX}, 440)">
+        <rect x="0" y="0" width="${approxWidth}" height="34" rx="17" fill="#f4f4f5" stroke="#e4e4e7" stroke-width="1" />
+        <text x="${approxWidth / 2}" y="22" text-anchor="middle" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#52525b">#${cleanTag}</text>
+      </g>
+    `);
+    currentTagX += approxWidth + 12;
+  }
+
+  const renderedTags = renderedTagsArray.join("\n");
+
+  const badgeWidth = Math.max(68, badge.length * 9 + 24);
+  const footerRight = options.footerRightText || (formattedDate ? formattedDate : `© ${author}`);
 
   const svg = `
 <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
@@ -176,24 +188,24 @@ export async function generateOgImageForPost(options: OgImageOptions): Promise<B
     <!-- Navbar Breadcrumb / Navigation indicator -->
     <g transform="translate(1114, 81)">
       <text x="0" y="0" text-anchor="end" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#a1a1aa" letter-spacing="1">
-        <tspan fill="#71717a">HOME</tspan>   /   <tspan fill="#ffffff" font-weight="700">BLOG</tspan>
+        <tspan fill="#71717a">HOME</tspan>   /   <tspan fill="#ffffff" font-weight="700">${escapeXml(section)}</tspan>
       </text>
     </g>
 
-    <!-- Post Badge & Publish Date -->
+    <!-- Badge & Subtitle -->
     <g transform="translate(86, 164)">
-      <rect x="0" y="0" width="68" height="26" rx="4" fill="#f4f4f5" stroke="#e4e4e7" stroke-width="1" />
-      <text x="34" y="17" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#18181b" letter-spacing="1.2">POST</text>
+      <rect x="0" y="0" width="${badgeWidth}" height="26" rx="4" fill="#f4f4f5" stroke="#e4e4e7" stroke-width="1" />
+      <text x="${badgeWidth / 2}" y="17" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#18181b" letter-spacing="1.2">${escapeXml(badge)}</text>
       ${
-        formattedDate
+        subtitleText
           ? `
-      <text x="84" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#a1a1aa">•</text>
-      <text x="98" y="18" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#71717a">${escapeXml(formattedDate)}</text>`
+      <text x="${badgeWidth + 14}" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#a1a1aa">•</text>
+      <text x="${badgeWidth + 28}" y="18" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#52525b">${escapeXml(subtitleText)}</text>`
           : ""
       }
     </g>
 
-    <!-- Post Title -->
+    <!-- Title -->
     <text x="86" y="${titleStartY}" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="${titleFontSize}" font-weight="800" fill="#09090b" letter-spacing="-0.8">
       ${titleLines
         .map(
@@ -230,7 +242,7 @@ export async function generateOgImageForPost(options: OgImageOptions): Promise<B
       <text x="18" y="0" font-family="'SF Mono', Menlo, Monaco, Consolas, monospace" font-size="17" font-weight="600" fill="#18181b">artusmosquet.com</text>
     </g>
 
-    <text x="1114" y="554" text-anchor="end" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#71717a">© ${author}</text>
+    <text x="1114" y="554" text-anchor="end" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#71717a">${escapeXml(footerRight)}</text>
   </g>
 </svg>
 `;
@@ -239,3 +251,6 @@ export async function generateOgImageForPost(options: OgImageOptions): Promise<B
     .png({ quality: 95, compressionLevel: 9 })
     .toBuffer();
 }
+
+// Retain backwards compatibility for existing imports
+export const generateOgImageForPost = generateOgImage;
