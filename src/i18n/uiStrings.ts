@@ -20,7 +20,7 @@ export const uiStrings: TypeUIStrings = {
   navHome: {
     en: "Home",
     fr: "Accueil",
-    jp: "主要", //fix?
+    jp: "トップ",
   },
   navProjects: {
     en: "Projects",
@@ -35,12 +35,12 @@ export const uiStrings: TypeUIStrings = {
   navAbout: {
     en: "About",
     fr: "À propos",
-    jp: "約", //fix?
+    jp: "プロフィール",
   },
   navContact: {
     en: "Contact",
     fr: "Contact",
-    jp: "連絡先", //fix 接触?
+    jp: "コンタクト",
   },
   navReading: {
     en: "Reading List",
