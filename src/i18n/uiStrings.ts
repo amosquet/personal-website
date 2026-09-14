@@ -327,4 +327,104 @@ export const uiStrings: TypeUIStrings = {
     fr: "Politique de confidentialité",
     jp: "プライバシーポリシー",
   },
+  nowTitle: {
+    en: "What I'm Doing Now",
+    fr: "En ce moment",
+    jp: "<ruby>現在<rt>げんざい</rt></ruby>の<ruby>活動<rt>かつどう</rt></ruby>",
+  },
+  nowStatus: {
+    en: "Now",
+    fr: "Actuel",
+    jp: "NOW",
+  },
+  nowPurdue: {
+    en: "Studying Electrical Engineering at Purdue University",
+    fr: "Étudiant en ingénierie électrique à l'Université Purdue",
+    jp: "パデュー<ruby>大学<rt>だいがく</rt></ruby>で<ruby>電気工学<rt>でんきこうがく</rt></ruby>を<ruby>専攻<rt>せんこう</rt></ruby>",
+  },
+  nowOrganiser: {
+    en: "Organising workshops and data archiving at Purdue Hackers",
+    fr: "Organisation d'ateliers et archivage technique chez Purdue Hackers",
+    jp: "Purdue Hackersでワークショップとアーカイブを<ruby>主導<rt>しゅどう</rt></ruby>",
+  },
+  nowHomelab: {
+    en: "Maintaining homelab infrastructure, Shisho & open source tools",
+    fr: "Maintenance de l'infrastructure homelab, Shisho et outils open source",
+    jp: "ホームラボインフラ、Shisho、OSSツールの<ruby>開発<rt>かいはつ</rt></ruby>と<ruby>保守<rt>ほしゅ</rt></ruby>",
+  },
+  featuredProjectTitle: {
+    en: "Featured Project",
+    fr: "Projet à la une",
+    jp: "<ruby>注目<rt>ちゅうもく</rt></ruby>のプロジェクト",
+  },
+  latestPostTitle: {
+    en: "Latest Article",
+    fr: "Dernier article",
+    jp: "<ruby>最新<rt>さいしん</rt></ruby>の<ruby>記事<rt>きじ</rt></ruby>",
+  },
+  currentlyReadingTitle: {
+    en: "Currently Reading",
+    fr: "Lecture en cours",
+    jp: "<ruby>現在<rt>げんざい</rt></ruby><ruby>読書中<rt>どくしょちゅう</rt></ruby>",
+  },
+  noActiveBook: {
+    en: "No active book right now. Check my reading list!",
+    fr: "Pas de lecture active en ce moment. Découvrez ma liste !",
+    jp: "<ruby>現在<rt>げんざい</rt></ruby><ruby>読書中<rt>どくしょちゅう</rt></ruby>の本はありません。<ruby>読書<rt>どくしょ</rt></ruby>リストをチェック！",
+  },
+  exploreHardware: {
+    en: "Full setup →",
+    fr: "Configuration complète →",
+    jp: "<ruby>全構成<rt>ぜんこうせい</rt></ruby> →",
+  },
+  hardwarePageTitle: {
+    en: "Daily Drivers & Hardware",
+    fr: "Appareils & Matériel",
+    jp: "<ruby>使用<rt>しよう</rt></ruby>デバイス & ハードウェア",
+  },
+  hardwarePageSubtitle: {
+    en: "The machines, devices, and systems I use daily for engineering, software development, and daily life.",
+    fr: "Les machines, stations de travail et appareils mobiles que j'utilise au quotidien pour l'ingénierie et le développement.",
+    jp: "<ruby>工学<rt>こうがく</rt></ruby>、ソフトウェア<ruby>開発<rt>かいはつ</rt></ruby>、<ruby>日常<rt>にちじょう</rt></ruby><ruby>生活<rt>せいかつ</rt></ruby>で<ruby>毎日<rt>まいにち</rt></ruby><ruby>使用<rt>しよう</rt></ruby>しているシステムとスペック。",
+  },
+  hardwarePhilosophyTitle: {
+    en: "Setup & Philosophy",
+    fr: "Philosophie & Configuration",
+    jp: "こだわりと<ruby>構成<rt>こうせい</rt></ruby>",
+  },
+  hardwarePhilosophyText: {
+    en: "I prioritize repairability, modular hardware, and open operating systems. My primary workstations run Arch Linux, and I actively support Right to Repair principles.",
+    fr: "Je privilégie la réparabilité, le matériel modulaire et les systèmes d'exploitation ouverts. Mes machines principales tournent sous Arch Linux et je soutiens activement le droit à la réparation.",
+    jp: "<ruby>修理<rt>しゅうり</rt></ruby>のしやすさ、モジュール<ruby>性<rt>せい</rt></ruby>、オープンなOSを<ruby>重視<rt>じゅうし</rt></ruby>しています。メインマシンではArch Linuxを<ruby>運用<rt>うんよう</rt></ruby>し、「<ruby>修理<rt>しゅうり</rt></ruby>する<ruby>権利<rt>けんり</rt></ruby>」を<ruby>支持<rt>しじ</rt></ruby>しています。",
+  },
+  viewAllProjects: {
+    en: "All projects →",
+    fr: "Tous les projets →",
+    jp: "すべてのプロジェクト →",
+  },
+  readArticle: {
+    en: "Read article →",
+    fr: "Lire l'article →",
+    jp: "記事を読む →",
+  },
+  viewReadingList: {
+    en: "View reading list →",
+    fr: "Voir la liste de lecture →",
+    jp: "読書リストを見る →",
+  },
+  allSystemsOperational: {
+    en: "All systems operational",
+    fr: "Systèmes opérationnels",
+    jp: "<ruby>全<rt>ぜん</rt></ruby>システム<ruby>正常<rt>せいじょう</rt></ruby><ruby>稼働中<rt>かどうちゅう</rt></ruby>",
+  },
+  homelabTitle: {
+    en: "Homelab Infrastructure",
+    fr: "Infrastructure Homelab",
+    jp: "ホームラボインフラ",
+  },
+  navHardware: {
+    en: "Hardware",
+    fr: "Matériel",
+    jp: "ハードウェア",
+  },
 };
