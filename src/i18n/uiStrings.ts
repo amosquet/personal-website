@@ -322,4 +322,9 @@ export const uiStrings: TypeUIStrings = {
     fr: "via",
     jp: "経由：",
   },
+  privacyPolicy: {
+    en: "Privacy Policy",
+    fr: "Politique de confidentialité",
+    jp: "プライバシーポリシー",
+  },
 };
