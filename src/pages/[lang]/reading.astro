@@ -17,7 +17,7 @@ const t = useTranslations(lang);
 const enrichedBooks: EnrichedBook[] = await getBooks();
 ---
 
-<Layout>
+<Layout title={t("navReading")} description={t("siteDescription")}>
     <div class="max-w-5xl mx-auto px-4 py-12">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <h1 class="text-3xl font-bold text-gray-900">

@@ -40,9 +40,23 @@ const formattedUpdatedDate =
         : frontmatter.updatedDate
           ? String(frontmatter.updatedDate)
           : null;
+
+const isoPublishedTime = !isNaN(dateObj.getTime()) ? dateObj.toISOString() : undefined;
+const isoModifiedTime = updatedDateObj && !isNaN(updatedDateObj.getTime()) ? updatedDateObj.toISOString() : undefined;
 ---
 
-<Layout title={frontmatter.title}>
+<Layout
+    title={frontmatter.title}
+    description={frontmatter.description}
+    image={frontmatter.heroImage}
+    type="article"
+    article={{
+        publishedTime: isoPublishedTime,
+        modifiedTime: isoModifiedTime,
+        author: t("siteTitle"),
+        tags: frontmatter.tags,
+    }}
+>
     <div class="max-w-3xl mx-auto px-4 py-12">
         <a
             href={`/${currentLang}/blog`}

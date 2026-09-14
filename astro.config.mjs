@@ -35,6 +35,7 @@ function bookCoversSync() {
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://artusmosquet.com",
   output: "static",
 
   i18n: {
