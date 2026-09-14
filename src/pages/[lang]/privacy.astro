@@ -1,0 +1,90 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { useTranslations } from "@/i18n/utils";
+import * as privacyEn from "@/data/privacy/en.md";
+import * as privacyFr from "@/data/privacy/fr.md";
+import * as privacyJp from "@/data/privacy/jp.md";
+
+export function getStaticPaths() {
+    return [
+        { params: { lang: "en" } },
+        { params: { lang: "fr" } },
+        { params: { lang: "jp" } },
+    ];
+}
+
+const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+const t = useTranslations(lang);
+
+const policies = {
+    en: privacyEn,
+    fr: privacyFr,
+    jp: privacyJp,
+};
+
+const policy = policies[lang] || privacyEn;
+const Content = policy.Content;
+---
+
+<Layout title={t("privacyPolicy")}>
+    <div class="max-w-3xl mx-auto py-16 px-6">
+        <article class="privacy-prose">
+            <Content />
+        </article>
+    </div>
+</Layout>
+
+<style>
+    .privacy-prose :global(h1) {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid #e5e7eb;
+        color: #111827;
+        line-height: 1.25;
+    }
+
+    .privacy-prose :global(h2) {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+        color: #1f2937;
+    }
+
+    .privacy-prose :global(p) {
+        margin-bottom: 1rem;
+        line-height: 1.75;
+        color: #374151;
+    }
+
+    .privacy-prose :global(ul) {
+        list-style-type: disc;
+        list-style-position: outside;
+        margin-left: 1.25rem;
+        margin-bottom: 1.25rem;
+        color: #374151;
+        line-height: 1.75;
+    }
+
+    .privacy-prose :global(li) {
+        margin-bottom: 0.35rem;
+    }
+
+    .privacy-prose :global(a) {
+        color: #2563eb;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        transition: color 0.15s ease;
+    }
+
+    .privacy-prose :global(a:hover) {
+        color: #1d4ed8;
+    }
+
+    .privacy-prose :global(strong) {
+        font-weight: 600;
+        color: #111827;
+    }
+</style>

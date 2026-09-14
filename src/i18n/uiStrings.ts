@@ -132,4 +132,9 @@ export const uiStrings: TypeUIStrings = {
     fr: "Données fournies par l'API Google Books",
     jp: "Google Books APIのデータを使用しています",
   },
+  privacyPolicy: {
+    en: "Privacy Policy",
+    fr: "Politique de confidentialité",
+    jp: "プライバシーポリシー",
+  },
 };
