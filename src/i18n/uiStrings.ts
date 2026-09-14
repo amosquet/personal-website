@@ -72,6 +72,11 @@ export const uiStrings: TypeUIStrings = {
     fr: "Publié le:",
     jp: "公開日:", //fix?
   },
+  updatedDate: {
+    en: "Updated on:",
+    fr: "Mis à jour le:",
+    jp: "更新日:",
+  },
   writtenBy: {
     en: "Written by:",
     fr: "Écrit par:",

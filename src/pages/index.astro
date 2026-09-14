@@ -1,31 +1,35 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Redirecting...</title>
-    <script>
-        const supportedLocales = ['en', 'fr', 'jp'];
-        const defaultLocale = 'en';
+    <head>
+        <meta charset="UTF-8" />
+        <title>Redirecting...</title>
+        <script>
+            const supportedLocales = ["en", "fr", "jp"];
+            const defaultLocale = "en";
 
-        // Extract the primary language tag (e.g., 'ja-JP' becomes 'ja')
-        const browserLang = navigator.language.split('-')[0];
+            // Extract the primary language tag (e.g., 'ja-JP' becomes 'ja')
+            const browserLang = navigator.language.split("-")[0];
 
-        // Map standard browser language codes to your internal route names
-        const langMapping: Record<string, string> = {
-            'ja': 'jp'
-        };
+            // Map standard browser language codes to internal route names
+            const langMapping: Record<string, string> = {
+                ja: "jp",
+            };
 
-        // Apply the mapping if it exists, otherwise use the raw browser language
-        const mappedLang = langMapping[browserLang] || browserLang;
+            // Apply the mapping if it exists, otherwise use the raw browser language
+            const mappedLang = langMapping[browserLang] || browserLang;
 
-        const targetLocale = supportedLocales.includes(mappedLang) ? mappedLang : defaultLocale;
+            const targetLocale = supportedLocales.includes(mappedLang)
+                ? mappedLang
+                : defaultLocale;
 
-        window.location.replace(`/${targetLocale}/`);
-    </script>
-</head>
-<body>
-    <noscript>
-        <meta http-equiv="refresh" content="0;url=/en/" />
-        <p>Redirecting to <a href="/en/">the default site</a>...</p>
-    </noscript>
-</body>
+            window.location.replace(`/${targetLocale}/`);
+        </script>
+    </head>
+    <body>
+        <noscript>
+            <meta http-equiv="refresh" content="0;url=/en/" />
+            <p>
+                Redirecting to <a href="/en/">the default site</a>...
+            </p>
+        </noscript>
+    </body>
 </html>

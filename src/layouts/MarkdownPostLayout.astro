@@ -28,6 +28,18 @@ const formattedDate = !isNaN(dateObj.getTime())
           day: "numeric",
       }).format(dateObj)
     : String(frontmatter.pubDate);
+
+const updatedDateObj = frontmatter.updatedDate ? new Date(frontmatter.updatedDate) : null;
+const formattedUpdatedDate =
+    updatedDateObj && !isNaN(updatedDateObj.getTime())
+        ? new Intl.DateTimeFormat(dateLocale, {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+          }).format(updatedDateObj)
+        : frontmatter.updatedDate
+          ? String(frontmatter.updatedDate)
+          : null;
 ---
 
 <Layout title={frontmatter.title}>
@@ -46,9 +58,25 @@ const formattedDate = !isNaN(dateObj.getTime())
                 </h1>
 
                 <div class="flex flex-wrap items-center gap-3 text-sm text-gray-500 mb-4">
-                    <time datetime={new Date(frontmatter.pubDate).toISOString()}>
+                    <time datetime={!isNaN(dateObj.getTime()) ? dateObj.toISOString() : undefined}>
                         {t("publishDate")} {formattedDate}
                     </time>
+                    {
+                        formattedUpdatedDate && (
+                            <>
+                                <span>&bull;</span>
+                                <time
+                                    datetime={
+                                        updatedDateObj && !isNaN(updatedDateObj.getTime())
+                                            ? updatedDateObj.toISOString()
+                                            : undefined
+                                    }
+                                >
+                                    {t("updatedDate")} {formattedUpdatedDate}
+                                </time>
+                            </>
+                        )
+                    }
                     <span>&bull;</span>
                     <span>{t("writtenBy")} {t("siteTitle")}</span>
                 </div>
@@ -73,7 +101,7 @@ const formattedDate = !isNaN(dateObj.getTime())
                     <img
                         src={frontmatter.heroImage}
                         alt={`Hero for ${frontmatter.title}`}
-                        class="w-full h-auto rounded-lg mt-6 shadow-sm border border-gray-200"
+                        class="w-full h-auto mt-6 shadow-sm border border-gray-200"
                     />
                 )}
             </header>
@@ -171,7 +199,6 @@ const formattedDate = !isNaN(dateObj.getTime())
     .prose-content :global(img) {
         max-width: 100%;
         height: auto;
-        border-radius: 0.375rem;
         margin: 1.5rem 0;
     }
 </style>
