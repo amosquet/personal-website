@@ -208,9 +208,14 @@ export const uiStrings: TypeUIStrings = {
     jp: "例：劉慈欣",
   },
   bookIsbn: {
-    en: "ISBN (Optional)",
-    fr: "ISBN (Facultatif)",
-    jp: "ISBN（任意）",
+    en: "ISBN",
+    fr: "ISBN",
+    jp: "ISBN",
+  },
+  optional: {
+    en: "Optional",
+    fr: "Facultatif",
+    jp: "任意",
   },
   bookIsbnPlaceholder: {
     en: "e.g., 9780804139038",
@@ -228,9 +233,9 @@ export const uiStrings: TypeUIStrings = {
     jp: "任意ですが、教えていただけると嬉しいです...",
   },
   yourName: {
-    en: "Your Name (Optional)",
-    fr: "Votre nom (Facultatif)",
-    jp: "お名前（任意）",
+    en: "Your Name",
+    fr: "Votre nom",
+    jp: "お名前",
   },
   yourNamePlaceholder: {
     en: "e.g., Alice",
@@ -253,9 +258,14 @@ export const uiStrings: TypeUIStrings = {
     jp: "提案を受け付けました",
   },
   suggestValidationError: {
-    en: "Please provide a Book Title or an ISBN.",
-    fr: "Veuillez fournir un titre de livre ou un ISBN.",
-    jp: "本のタイトルまたはISBNを入力してください。",
+    en: "Please provide an ISBN, or both the Book Title and Author.",
+    fr: "Veuillez fournir un ISBN, ou à la fois le titre du livre et l'auteur.",
+    jp: "ISBN、または本のタイトルと著者の両方を入力してください。",
+  },
+  optionalIfIsbn: {
+    en: "Optional if ISBN provided",
+    fr: "Facultatif si l'ISBN est fourni",
+    jp: "ISBNがあれば省略可",
   },
   suggestNetworkError: {
     en: "Unable to connect to Shisho API. Please try again later.",
