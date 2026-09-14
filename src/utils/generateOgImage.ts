@@ -113,137 +113,125 @@ export async function generateOgImage(options: OgImageOptions): Promise<Buffer> 
 
   const subtitleText = options.subtitle || formattedDate;
 
-  // Wrap title (max 2-3 lines)
-  const titleLines = wrapText(rawTitle, 28, 2);
-  const titleFontSize = titleLines.length > 1 ? 52 : 60;
-  const titleLineHeight = titleFontSize * 1.25;
+  // Wrap title (max 2 lines for punchy presentation)
+  const titleLines = wrapText(rawTitle, 26, 2);
+  const titleFontSize = titleLines.length > 1 ? 56 : 70;
+  const titleLineHeight = titleFontSize * 1.22;
 
   // Title start Y position
-  const titleStartY = 245;
+  const titleStartY = 248;
 
   // Wrap description (max 2 lines, up to ~62 chars per line)
   const descLines = rawDesc ? wrapText(rawDesc, 62, 2) : [];
   const descStartY =
-    titleStartY + (titleLines.length - 1) * titleLineHeight + (titleFontSize > 50 ? 55 : 45);
+    titleStartY + (titleLines.length - 1) * titleLineHeight + (titleFontSize > 50 ? 58 : 46);
 
-  // Tags (max 5, ensuring they don't exceed container width)
+  // Tags (max 5)
   const rawTags = (options.tags || []).slice(0, 5);
-  let currentTagX = 86;
+  let currentTagX = 80;
   const renderedTagsArray: string[] = [];
 
   for (const tag of rawTags) {
     const cleanTag = escapeXml(tag);
-    const approxWidth = Math.max(80, cleanTag.length * 11 + 36);
-    if (currentTagX + approxWidth > 1114) break;
+    const approxWidth = Math.max(80, cleanTag.length * 12 + 40);
+    if (currentTagX + approxWidth > 1120) break;
 
     renderedTagsArray.push(`
       <g transform="translate(${currentTagX}, 440)">
-        <rect x="0" y="0" width="${approxWidth}" height="34" rx="17" fill="#f4f4f5" stroke="#e4e4e7" stroke-width="1" />
-        <text x="${approxWidth / 2}" y="22" text-anchor="middle" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#52525b">#${cleanTag}</text>
+        <rect x="0" y="0" width="${approxWidth}" height="38" rx="19" fill="#f4f4f5" stroke="#e4e4e7" stroke-width="1" />
+        <text x="${approxWidth / 2}" y="24" text-anchor="middle" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="600" fill="#52525b">#${cleanTag}</text>
       </g>
     `);
-    currentTagX += approxWidth + 12;
+    currentTagX += approxWidth + 14;
   }
 
   const renderedTags = renderedTagsArray.join("\n");
-
   const badgeWidth = Math.max(68, badge.length * 9 + 24);
   const footerRight = options.footerRightText || (formattedDate ? formattedDate : `© ${author}`);
 
   const svg = `
 <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="cardShadow" x="-3%" y="-3%" width="106%" height="110%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="6" stdDeviation="14" flood-color="#000000" flood-opacity="0.05" />
-    </filter>
-    <clipPath id="cardClip">
-      <rect x="36" y="36" width="1128" height="558" rx="8" />
-    </clipPath>
     <clipPath id="avatarClip">
-      <circle cx="110" cy="74" r="22" />
+      <circle cx="104" cy="44" r="22" />
     </clipPath>
   </defs>
 
-  <!-- Clean canvas background -->
-  <rect width="${width}" height="${height}" fill="#f4f4f5" />
+  <!-- Full canvas pure white -->
+  <rect width="${width}" height="${height}" fill="#ffffff" />
 
-  <!-- Main Website Styled Card Container -->
-  <rect x="36" y="36" width="1128" height="558" rx="8" fill="#ffffff" stroke="#e4e4e7" stroke-width="1.5" filter="url(#cardShadow)" />
+  <!-- Edge-to-Edge Black Navbar -->
+  <rect x="0" y="0" width="${width}" height="88" fill="#000000" />
 
-  <g clip-path="url(#cardClip)">
-    <!-- Website Signature Black Navbar -->
-    <rect x="36" y="36" width="1128" height="76" fill="#000000" />
-    
-    <!-- Navbar Site Title with Mascot Avatar -->
-    ${
-      avatarB64
-        ? `
-    <circle cx="110" cy="74" r="23" fill="#ffffff" />
-    <image href="data:image/png;base64,${avatarB64}" x="88" y="52" width="44" height="44" clip-path="url(#avatarClip)" />
-    <text x="146" y="81" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" fill="#ffffff" letter-spacing="-0.3">${author}</text>`
-        : `
-    <text x="86" y="83" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" fill="#ffffff" letter-spacing="-0.3">${author}</text>`
-    }
-    
-    <!-- Navbar Breadcrumb / Navigation indicator -->
-    <g transform="translate(1114, 81)">
-      <text x="0" y="0" text-anchor="end" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#a1a1aa" letter-spacing="1">
-        <tspan fill="#71717a">HOME</tspan>   /   <tspan fill="#ffffff" font-weight="700">${escapeXml(section)}</tspan>
-      </text>
-    </g>
+  <!-- Navbar Avatar and Site Title -->
+  ${
+    avatarB64
+      ? `
+  <circle cx="104" cy="44" r="23" fill="#ffffff" />
+  <image href="data:image/png;base64,${avatarB64}" x="82" y="22" width="44" height="44" clip-path="url(#avatarClip)" />
+  <text x="142" y="52" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="23" font-weight="700" fill="#ffffff" letter-spacing="-0.3">${author}</text>`
+      : `
+  <text x="80" y="52" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="23" font-weight="700" fill="#ffffff" letter-spacing="-0.3">${author}</text>`
+  }
 
-    <!-- Badge & Subtitle -->
-    <g transform="translate(86, 164)">
-      <rect x="0" y="0" width="${badgeWidth}" height="26" rx="4" fill="#f4f4f5" stroke="#e4e4e7" stroke-width="1" />
-      <text x="${badgeWidth / 2}" y="17" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#18181b" letter-spacing="1.2">${escapeXml(badge)}</text>
-      ${
-        subtitleText
-          ? `
-      <text x="${badgeWidth + 14}" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#a1a1aa">•</text>
-      <text x="${badgeWidth + 28}" y="18" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#52525b">${escapeXml(subtitleText)}</text>`
-          : ""
-      }
-    </g>
-
-    <!-- Title -->
-    <text x="86" y="${titleStartY}" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="${titleFontSize}" font-weight="800" fill="#09090b" letter-spacing="-0.8">
-      ${titleLines
-        .map(
-          (line, idx) =>
-            `<tspan x="86" dy="${idx === 0 ? 0 : titleLineHeight}">${escapeXml(line)}</tspan>`
-        )
-        .join("\n      ")}
+  <!-- Navbar Breadcrumb Navigation -->
+  <g transform="translate(1120, 52)">
+    <text x="0" y="0" text-anchor="end" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#a1a1aa" letter-spacing="1">
+      <tspan fill="#71717a">HOME</tspan>   /   <tspan fill="#ffffff" font-weight="700">${escapeXml(section)}</tspan>
     </text>
+  </g>
 
-    <!-- Description -->
+  <!-- Badge & Subtitle -->
+  <g transform="translate(80, 160)">
+    <rect x="0" y="0" width="${badgeWidth}" height="26" rx="4" fill="#f4f4f5" stroke="#e4e4e7" stroke-width="1" />
+    <text x="${badgeWidth / 2}" y="17" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#18181b" letter-spacing="1.2">${escapeXml(badge)}</text>
     ${
-      descLines.length > 0
+      subtitleText
         ? `
-    <text x="86" y="${descStartY}" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="400" fill="#52525b">
-      ${descLines
-        .map(
-          (line, idx) =>
-            `<tspan x="86" dy="${idx === 0 ? 0 : 34}">${escapeXml(line)}</tspan>`
-        )
-        .join("\n      ")}
-    </text>`
+    <text x="${badgeWidth + 14}" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#a1a1aa">•</text>
+    <text x="${badgeWidth + 28}" y="18" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#52525b">${escapeXml(subtitleText)}</text>`
         : ""
     }
-
-    <!-- Tags -->
-    ${renderedTags}
-
-    <!-- Divider Line -->
-    <line x1="86" y1="514" x2="1114" y2="514" stroke="#f4f4f5" stroke-width="1.5" />
-
-    <!-- Footer -->
-    <g transform="translate(86, 554)">
-      <circle cx="5" cy="-5" r="4.5" fill="#22c55e" />
-      <text x="18" y="0" font-family="'SF Mono', Menlo, Monaco, Consolas, monospace" font-size="17" font-weight="600" fill="#18181b">artusmosquet.com</text>
-    </g>
-
-    <text x="1114" y="554" text-anchor="end" font-family="'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#71717a">${escapeXml(footerRight)}</text>
   </g>
+
+  <!-- Title -->
+  <text x="80" y="${titleStartY}" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="${titleFontSize}" font-weight="800" fill="#09090b" letter-spacing="-0.8">
+    ${titleLines
+      .map(
+        (line, idx) =>
+          `<tspan x="80" dy="${idx === 0 ? 0 : titleLineHeight}">${escapeXml(line)}</tspan>`
+      )
+      .join("\n    ")}
+  </text>
+
+  <!-- Description -->
+  ${
+    descLines.length > 0
+      ? `
+  <text x="80" y="${descStartY}" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="400" fill="#52525b">
+    ${descLines
+      .map(
+        (line, idx) =>
+          `<tspan x="80" dy="${idx === 0 ? 0 : 36}">${escapeXml(line)}</tspan>`
+      )
+      .join("\n    ")}
+  </text>`
+      : ""
+  }
+
+  <!-- Tags -->
+  ${renderedTags}
+
+  <!-- Divider -->
+  <line x1="80" y1="525" x2="1120" y2="525" stroke="#f4f4f5" stroke-width="1.5" />
+
+  <!-- Footer -->
+  <g transform="translate(80, 570)">
+    <circle cx="5" cy="-5" r="4.5" fill="#22c55e" />
+    <text x="18" y="0" font-family="'SF Mono', Menlo, Monaco, Consolas, monospace" font-size="17" font-weight="600" fill="#18181b">artusmosquet.com</text>
+  </g>
+
+  <text x="1120" y="570" text-anchor="end" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#71717a">${escapeXml(footerRight)}</text>
 </svg>
 `;
 
@@ -252,5 +240,4 @@ export async function generateOgImage(options: OgImageOptions): Promise<Buffer> 
     .toBuffer();
 }
 
-// Retain backwards compatibility for existing imports
 export const generateOgImageForPost = generateOgImage;
