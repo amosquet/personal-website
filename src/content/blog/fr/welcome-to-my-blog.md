@@ -2,6 +2,7 @@
 title: "Lancement de mon blog"
 description: "Pourquoi j'ai décidé de commencer à écrire, comment ce blog est construit avec Astro et Markdown, et ce qui arrive par la suite."
 pubDate: 2026-09-03
+location: "West Lafayette, États-Unis"
 tags: ["webdev", "astro", "ingénierie"]
 draft: false
 ---

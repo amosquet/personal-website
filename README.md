@@ -23,7 +23,7 @@ The codebase follows this directory structure, where dynamic routing is handled 
 ```text
 /
 ├── public/
-│   └── favicon.svg
+│   └── favicon.ico
 ├── src/
 │   ├── assets/
 │   ├── components/
@@ -41,5 +41,16 @@ The codebase follows this directory structure, where dynamic routing is handled 
 │       └── index.astro
 ├── astro.config.mjs
 ├── bun.lock
+├── LICENSE
 └── package.json
 ```
+
+## License & Copyright
+
+This repository defines terms specifically for media, assets, and content:
+
+* **Assets & Original Media:** All files located in the `src/assets/` and `public/` directories (including personal photos, artwork, graphics, favicons, and branding media) and original written content are owned by Artus Mosquet (© 2025–2026 Artus Mosquet. All rights reserved). Re-use, modification, or redistribution of these assets is not permitted without prior written consent.
+* **Third-Party Media:** Any third-party logos, icons, brand assets, or external media belong to their respective owners and remain under their own copyrights.
+
+See the [LICENSE](LICENSE) file for the full terms.
+

@@ -2,6 +2,7 @@
 title: "Starting Up My Blog"
 description: "Why I decided to start writing, how this blog is built with Astro and Markdown, and what's coming next."
 pubDate: 2026-09-03
+location: "West Lafayette, IN"
 tags: ["webdev", "astro", "engineering"]
 draft: false
 ---

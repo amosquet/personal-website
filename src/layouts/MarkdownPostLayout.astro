@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
 import { defaultLocale, type Locale } from "@/i18n/i18n";
 import { useTranslations } from "@/i18n/utils";
 
@@ -10,14 +11,18 @@ interface Props {
         pubDate: Date | string;
         updatedDate?: Date | string;
         heroImage?: string;
+        location?: string;
         tags?: string[];
     };
     lang?: Locale;
+    slug?: string;
 }
 
-const { frontmatter, lang } = Astro.props;
+const { frontmatter, lang, slug } = Astro.props;
 const currentLang = lang || Astro.currentLocale || defaultLocale;
 const t = useTranslations(currentLang);
+
+const ogImage = frontmatter.heroImage || (slug ? `/${currentLang}/blog/${slug}/og.png` : undefined);
 
 const dateLocale = currentLang === "jp" ? "ja-JP" : currentLang === "fr" ? "fr-FR" : "en-US";
 const dateObj = new Date(frontmatter.pubDate);
@@ -48,7 +53,7 @@ const isoModifiedTime = updatedDateObj && !isNaN(updatedDateObj.getTime()) ? upd
 <Layout
     title={frontmatter.title}
     description={frontmatter.description}
-    image={frontmatter.heroImage}
+    image={ogImage}
     type="article"
     article={{
         publishedTime: isoPublishedTime,
@@ -88,6 +93,17 @@ const isoModifiedTime = updatedDateObj && !isNaN(updatedDateObj.getTime()) ? upd
                                 >
                                     {t("updatedDate")} {formattedUpdatedDate}
                                 </time>
+                            </>
+                        )
+                    }
+                    {
+                        frontmatter.location && (
+                            <>
+                                <span>&bull;</span>
+                                <span class="inline-flex items-center gap-1">
+                                    <Icon name="mdi:map-marker-outline" class="w-4 h-4 text-gray-400" />
+                                    <span>{frontmatter.location}</span>
+                                </span>
                             </>
                         )
                     }
