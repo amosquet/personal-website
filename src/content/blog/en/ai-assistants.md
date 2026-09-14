@@ -3,7 +3,7 @@ title: "AI Assistants"
 description: "A Discord bot that spiraled into an AI Assistant"
 pubDate: 2026-09-14
 tags: ["ai", "self-hosted", "discord", "automation", "obsidian", "productivity"]
-draft: true
+draft: false
 ---
 
 ## The Origins of ししょ
