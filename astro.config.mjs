@@ -7,6 +7,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import sitemap from "@astrojs/sitemap";
+
 function bookCoversSync() {
   return {
     name: "book-covers-sync",
@@ -21,7 +23,10 @@ function bookCoversSync() {
             fs.cpSync(coversSrc, coversDest, { recursive: true });
           }
         } catch (err) {
-          console.error("[covers-sync] Error copying book covers to dist:", err);
+          console.error(
+            "[covers-sync] Error copying book covers to dist:",
+            err,
+          );
         }
       },
     },
@@ -54,5 +59,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [icon(), bookCoversSync()],
+  site: "https://artusmosquet.com",
+  integrations: [icon(), bookCoversSync(), sitemap()],
 });
