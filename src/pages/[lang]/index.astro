@@ -6,6 +6,7 @@ import { getCollection } from "astro:content";
 import { getBooks, type EnrichedBook } from "@/lib/books";
 import projects from "@/data/projects.json";
 import hardwareData from "@/data/hardware.json";
+import { getProjectSlug } from "@/utils/slugify";
 
 export function getStaticPaths() {
     return [
@@ -169,7 +170,7 @@ const previewDevices = hardwareData.slice(0, 3);
                             <Fragment set:html={t("featuredProjectTitle")} />
                         </span>
                     </div>
-                    <a href={`/${lang}/projects/${featuredProject.name}`} class="block">
+                    <a href={`/${lang}/projects/${getProjectSlug(featuredProject)}`} class="block">
                         <h2 class="text-lg font-bold text-gray-900 group-hover:text-black mb-1 transition-colors">
                             {featuredProject.name}
                         </h2>

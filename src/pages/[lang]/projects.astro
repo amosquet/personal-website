@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import { useTranslations } from "@/i18n/utils";
+import { getProjectSlug } from "@/utils/slugify";
 
 export function getStaticPaths() {
     return [
@@ -29,7 +30,7 @@ import projects from "@/data/projects.json";
             {
                 projects.map((project) => (
                     <a
-                        href={`/${lang}/projects/${project.name}`}
+                        href={`/${lang}/projects/${getProjectSlug(project)}`}
                         class="block group"
                     >
                         <div class="border border-gray-200 p-6 bg-white shadow-sm hover:border-blue-400 transition-colors h-full">

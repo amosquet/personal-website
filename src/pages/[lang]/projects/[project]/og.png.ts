@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import projects from "@/data/projects.json";
 import { generateOgImage } from "@/utils/generateOgImage";
 import { uiStrings } from "@/i18n/uiStrings";
+import { getProjectSlug } from "@/utils/slugify";
 
 export const prerender = true;
 
@@ -9,7 +10,7 @@ export function getStaticPaths() {
   const langs = ["en", "fr", "jp"] as const;
   return langs.flatMap((lang) => {
     return projects.map((project) => ({
-      params: { lang, project: project.name },
+      params: { lang, project: getProjectSlug(project) },
       props: { project },
     }));
   });

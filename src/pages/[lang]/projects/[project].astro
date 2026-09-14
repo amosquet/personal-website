@@ -2,12 +2,13 @@
 import Layout from "@/layouts/Layout.astro";
 import { useTranslations } from "@/i18n/utils";
 import projects from "@/data/projects.json";
+import { getProjectSlug } from "@/utils/slugify";
 
 export function getStaticPaths() {
     const langs = ["en", "fr", "jp"] as const;
     return langs.flatMap((lang) => {
         return projects.map((project) => ({
-            params: { lang, project: project.name },
+            params: { lang, project: getProjectSlug(project) },
             props: { project },
         }));
     });
@@ -17,9 +18,9 @@ const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
 const { project } = Astro.props;
 const t = useTranslations(lang);
 
-const mainFields = ["name", "caption", "description"];
+const mainFields = ["name", "caption", "description", "slug"];
 const additionalFields = Object.entries(project).filter(([key]) => !mainFields.includes(key));
-const ogImage = `/${lang}/projects/${encodeURIComponent(project.name)}/og.png`;
+const ogImage = `/${lang}/projects/${getProjectSlug(project)}/og.png`;
 ---
 
 <Layout
