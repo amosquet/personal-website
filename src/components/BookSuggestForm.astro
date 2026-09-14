@@ -1,0 +1,181 @@
+---
+import { defaultLocale, type Locale } from "@/i18n/i18n";
+import { useTranslations } from "@/i18n/utils";
+
+interface Props {
+  lang?: Locale;
+}
+
+const { lang } = Astro.props;
+const locale = lang || (Astro.currentLocale as Locale) || defaultLocale;
+const t = useTranslations(locale);
+const apiUrl = import.meta.env.PUBLIC_SHISHO_API_URL || "https://shisho.amcloud.dev";
+---
+
+<div class="border border-gray-200 p-6 sm:p-8 bg-white shadow-sm max-w-2xl mx-auto">
+  <div id="suggest-alert-box" class="hidden p-3.5 text-sm mb-5 transition-all" role="alert"></div>
+
+  <form id="suggest-book-form" class="space-y-5">
+    <div>
+      <label for="suggest-title" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+        {t("bookTitle")} <span class="text-gray-400 font-normal">({t("optionalIfIsbn")})</span>
+      </label>
+      <input
+        type="text"
+        id="suggest-title"
+        name="title"
+        class="w-full bg-white p-3 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+        placeholder={t("bookTitlePlaceholder")}
+      />
+    </div>
+
+    <div>
+      <label for="suggest-author" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+        {t("bookAuthor")} <span class="text-gray-400 font-normal">({t("optionalIfIsbn")})</span>
+      </label>
+      <input
+        type="text"
+        id="suggest-author"
+        name="author"
+        class="w-full bg-white p-3 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+        placeholder={t("bookAuthorPlaceholder")}
+      />
+    </div>
+
+    <div>
+      <label for="suggest-isbn" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+        {t("bookIsbn")} <span class="text-gray-400 font-normal">({t("optional")})</span>
+      </label>
+      <input
+        type="text"
+        id="suggest-isbn"
+        name="isbn"
+        class="w-full bg-white p-3 border border-gray-300 text-gray-900 text-sm font-mono focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+        placeholder={t("bookIsbnPlaceholder")}
+      />
+    </div>
+
+    <div>
+      <label for="suggest-reason" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+        {t("bookReason")} <span class="text-gray-400 font-normal">({t("optional")})</span>
+      </label>
+      <textarea
+        id="suggest-reason"
+        name="reason"
+        rows="3"
+        class="w-full bg-white p-3 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+        placeholder={t("bookReasonPlaceholder")}
+      ></textarea>
+    </div>
+
+    <div>
+      <label for="suggest-submitter" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+        {t("yourName")} <span class="text-gray-400 font-normal">({t("optional")})</span>
+      </label>
+      <input
+        type="text"
+        id="suggest-submitter"
+        name="submitter"
+        class="w-full bg-white p-3 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+        placeholder={t("yourNamePlaceholder")}
+      />
+    </div>
+
+    <div class="pt-2">
+      <button
+        type="submit"
+        id="suggest-submit-btn"
+        class="w-full sm:w-auto px-8 py-3 bg-black text-white hover:bg-gray-800 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
+      >
+        <span id="submit-btn-text">{t("submitSuggestion")}</span>
+        <svg id="submit-spinner" class="hidden animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>
+
+<script is:inline define:vars={{ apiUrl, validationMsg: t("suggestValidationError"), errorMsg: t("suggestNetworkError"), successPrefix: t("suggestSuccess"), submittingText: t("submitting"), submitText: t("submitSuggestion") }}>
+  (() => {
+    const form = document.getElementById("suggest-book-form");
+    const submitBtn = document.getElementById("suggest-submit-btn");
+    const submitTextEl = document.getElementById("submit-btn-text");
+    const spinnerEl = document.getElementById("submit-spinner");
+    const alertBox = document.getElementById("suggest-alert-box");
+
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      alertBox.className = "hidden";
+      alertBox.textContent = "";
+
+      const titleInput = document.getElementById("suggest-title");
+      const authorInput = document.getElementById("suggest-author");
+      const isbnInput = document.getElementById("suggest-isbn");
+      const reasonInput = document.getElementById("suggest-reason");
+      const submitterInput = document.getElementById("suggest-submitter");
+
+      const title = titleInput ? titleInput.value.trim() : "";
+      const author = authorInput ? authorInput.value.trim() : "";
+      const isbn = isbnInput ? isbnInput.value.trim() : "";
+      const reason = reasonInput ? reasonInput.value.trim() : "";
+      const submitter = submitterInput ? submitterInput.value.trim() : "";
+
+      if (!isbn && (!title || !author)) {
+        alertBox.className = "p-3 text-sm mb-4 border border-red-200 bg-red-50 text-red-700";
+        alertBox.textContent = validationMsg;
+        return;
+      }
+
+      // UI loading state
+      submitBtn.disabled = true;
+      spinnerEl.classList.remove("hidden");
+      submitTextEl.textContent = submittingText;
+
+      const payload = {
+        title,
+        author,
+        isbn,
+        reason,
+        submitter: submitter || undefined,
+      };
+
+      try {
+        const baseUrl = apiUrl.replace(/\/$/, "");
+        const res = await fetch(`${baseUrl}/api/books/suggest`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data.success) {
+          alertBox.className = "p-3 text-sm mb-4 border border-green-200 bg-green-50 text-green-800";
+          const displayName = data.display_name ? data.display_name.replace(/\*\*/g, "") : (title || isbn);
+          alertBox.textContent = `${successPrefix}: ${displayName}!`;
+          form.reset();
+
+          // Dispatch event so the community suggestions list can refresh dynamically
+          document.dispatchEvent(new CustomEvent("book-suggested", { detail: data }));
+        } else {
+          alertBox.className = "p-3 text-sm mb-4 border border-red-200 bg-red-50 text-red-700";
+          alertBox.textContent = data.error || errorMsg;
+        }
+      } catch (err) {
+        console.error("Error submitting book suggestion:", err);
+        alertBox.className = "p-3 text-sm mb-4 border border-red-200 bg-red-50 text-red-700";
+        alertBox.textContent = errorMsg;
+      } finally {
+        submitBtn.disabled = false;
+        spinnerEl.classList.add("hidden");
+        submitTextEl.textContent = submitText;
+      }
+    });
+  })();
+</script>
