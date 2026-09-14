@@ -1,8 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-
-import AboutLayout from "@/layouts/AboutLayout.astro";
-import translations from "@/i18n/about.json";
+import { useTranslations } from "@/i18n/utils";
 
 export function getStaticPaths() {
     return [
@@ -13,14 +11,9 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
-
-import { defaultLocale, locales } from "@/i18n/i18n";
-import { uiStrings } from "@/i18n/uiStrings";
-const locale = Astro.currentLocale || defaultLocale;
-
-const pageTitle = "About Me";
+const t = useTranslations(lang);
 ---
 
-<Layout>
+<Layout title={t("navContact")} description={t("siteDescription")}>
     <p>Here</p>
 </Layout>

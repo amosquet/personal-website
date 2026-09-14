@@ -21,7 +21,7 @@ const mainFields = ["name", "caption", "description"];
 const additionalFields = Object.entries(project).filter(([key]) => !mainFields.includes(key));
 ---
 
-<Layout title={project.name}>
+<Layout title={project.name} description={project.caption || project.description}>
     <div class="max-w-3xl mx-auto px-4 py-12">
         <a
             href={`/${lang}/projects`}

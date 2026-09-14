@@ -12,6 +12,11 @@ export const uiStrings: TypeUIStrings = {
     fr: "Artus Mosquet",
     jp: "モスケ アルテゥス",
   },
+  siteDescription: {
+    en: "Personal website of Artus Mosquet, Full-Time ECE Student at Purdue University.",
+    fr: "Site personnel d'Artus Mosquet, étudiant en ECE à l'Université de Purdue.",
+    jp: "パデュー大学電気工学専攻、モスケ アルテゥスの個人ウェブサイト。",
+  },
   navHome: {
     en: "Home",
     fr: "Accueil",

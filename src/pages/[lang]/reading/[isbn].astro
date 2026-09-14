@@ -78,7 +78,16 @@ const fullDescription = book.description;
 const coverHiRes = book.cover;
 ---
 
-<Layout>
+<Layout
+    title={`${book.title} - ${book.author}`}
+    description={book.description}
+    image={book.cover || undefined}
+    type="book"
+    book={{
+        author: book.author,
+        isbn: book.isbn,
+    }}
+>
     <div class="max-w-5xl mx-auto px-4 py-12">
         <a
             href={`/${lang}/reading`}

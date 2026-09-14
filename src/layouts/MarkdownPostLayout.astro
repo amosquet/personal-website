@@ -8,10 +8,22 @@ import { useTranslations } from '@/i18n/utils';
 const t = useTranslations(locale);
 
 // Format the date in ISO8601 format
-const formattedDate = new Date(frontmatter.pubDate).toISOString();
+const formattedDate = frontmatter.pubDate ? new Date(frontmatter.pubDate).toISOString() : undefined;
+const modifiedDate = frontmatter.updatedDate ? new Date(frontmatter.updatedDate).toISOString() : undefined;
 ---
 
-<Layout>
+<Layout
+    title={frontmatter.title}
+    description={frontmatter.description}
+    image={frontmatter.image?.url || frontmatter.image}
+    type="article"
+    article={{
+        publishedTime: formattedDate,
+        modifiedTime: modifiedDate,
+        author: frontmatter.author || t("siteTitle"),
+        tags: frontmatter.tags,
+    }}
+>
     <style>
         h1 {
             text-align: center;
