@@ -38,8 +38,8 @@ The codebase follows this directory structure, where dynamic routing is handled 
 │       │   ├── blog.astro
 │       │   ├── contact.astro
 │       │   └── index.astro
-│       ├── index.astro
-│       └── noChrome.ts
+│       └── index.astro
 ├── astro.config.mjs
 ├── bun.lock
 └── package.json
+```
