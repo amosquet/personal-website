@@ -32,7 +32,7 @@ const svg = `
   <!-- Subtitle Badge -->
   <g transform="translate(80, 160)">
     <rect x="0" y="0" width="144" height="26" rx="4" fill="#f4f4f5" stroke="#e4e4e7" stroke-width="1" />
-    <text x="72" y="17" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#18181b" letter-spacing="1.2">PORTFOLIO &amp; BLOG</text>
+    <text x="72" y="17" text-anchor="middle" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#18181b" letter-spacing="1.2">PORTFOLIO &amp; BLOG</text>
   </g>
 
   <text x="80" y="245" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="64" font-weight="800" fill="#09090b" letter-spacing="-1">

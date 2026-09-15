@@ -241,11 +241,11 @@ export async function generateOgImage(options: OgImageOptions): Promise<Buffer> 
   <!-- Badge & Subtitle -->
   <g transform="translate(80, 160)">
     <rect x="0" y="0" width="${badgeWidth}" height="26" rx="4" fill="#f4f4f5" stroke="#e4e4e7" stroke-width="1" />
-    <text x="${badgeWidth / 2}" y="17" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#18181b" letter-spacing="1.2">${escapeXml(badge)}</text>
+    <text x="${badgeWidth / 2}" y="17" text-anchor="middle" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="700" fill="#18181b" letter-spacing="1.2">${escapeXml(badge)}</text>
     ${
       !hasHeadline && subtitleText
         ? `
-    <text x="${badgeWidth + 14}" y="18" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#a1a1aa">•</text>
+    <text x="${badgeWidth + 14}" y="18" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#a1a1aa">•</text>
     <text x="${badgeWidth + 28}" y="18" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#52525b">${escapeXml(subtitleText)}</text>`
         : ""
     }
