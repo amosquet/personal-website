@@ -22,7 +22,11 @@ const allPosts = await getCollection("blog", ({ id, data }) => {
 const posts = allPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
-<Layout title={t("navBlog")} description={t("siteDescription")}>
+<Layout
+    title={t("navBlog")}
+    description={t("siteDescription")}
+    image={`/${lang}/blog/og.png`}
+>
     <div class="max-w-4xl mx-auto px-4 py-12">
         <header class="mb-10">
             <h1 class="text-3xl font-bold text-gray-900 tracking-tight mb-2">

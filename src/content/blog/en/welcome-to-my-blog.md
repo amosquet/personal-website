@@ -42,7 +42,7 @@ const blog = defineCollection({
 
 Moving forward, I will be posting notes and write-ups about:
 
-1. Hardware projects and computer engineering topics
+1. Hardware projects and electrical engineering topics
 2. Server infrastructure, self-hosting, and automation
 3. Software architecture and personal experiments
 

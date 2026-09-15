@@ -26,7 +26,10 @@ const policy = policies[lang] || privacyEn;
 const Content = policy.Content;
 ---
 
-<Layout title={t("privacyPolicy")}>
+<Layout
+    title={t("privacyPolicy")}
+    image={`/${lang}/privacy/og.png`}
+>
     <div class="max-w-3xl mx-auto py-16 px-6">
         <article class="privacy-prose">
             <Content />

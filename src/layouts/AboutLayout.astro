@@ -71,9 +71,11 @@ const themeStyles = {
         desc: "text-orange-600",
     },
 };
+
+const ogImage = `/${locale}/about/og.png`;
 ---
 
-<Layout title={intro.title} description={intro.description}>
+<Layout title={intro.title} description={intro.description} image={ogImage}>
     <div class="max-w-4xl mx-auto py-8 px-4 flex flex-col gap-12">
         {/* Introduction Section */}
         <section>
