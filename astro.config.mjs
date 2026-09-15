@@ -38,6 +38,11 @@ export default defineConfig({
   site: "https://artusmosquet.com",
   output: "static",
 
+  redirects: {
+    "/resume": "/Artus_Mosquet_Resume.pdf",
+    "/cv": "/Artus_Mosquet_Resume.pdf",
+  },
+
   i18n: {
     locales: ["en", "fr", "jp"],
     defaultLocale: "en",
@@ -60,6 +65,5 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  site: "https://artusmosquet.com",
   integrations: [icon(), bookCoversSync(), sitemap()],
 });

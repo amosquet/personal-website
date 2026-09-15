@@ -437,4 +437,14 @@ export const uiStrings: TypeUIStrings = {
     fr: "Matériel",
     jp: "ハードウェア",
   },
+  resume: {
+    en: "Resume",
+    fr: "CV",
+    jp: "<ruby>履歴書<rt>りれきしょ</rt></ruby>",
+  },
+  viewResume: {
+    en: "Resume (PDF)",
+    fr: "CV (PDF)",
+    jp: "<ruby>履歴書<rt>りれきしょ</rt></ruby> (PDF)",
+  },
 };

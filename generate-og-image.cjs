@@ -1,12 +1,17 @@
-const fs = require('fs');
-const path = require('path');
-const sharp = require('sharp');
+const fs = require("fs");
+const path = require("path");
+const sharp = require("sharp");
 
 const width = 1200;
 const height = 630;
 
-const chibiPath = path.join(__dirname, 'src', 'assets', 'almond_chibi_transp.png');
-const chibiB64 = fs.readFileSync(chibiPath).toString('base64');
+const chibiPath = path.join(
+  __dirname,
+  "src",
+  "assets",
+  "almond_chibi_transp.png",
+);
+const chibiB64 = fs.readFileSync(chibiPath).toString("base64");
 
 const svg = `
 <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
@@ -38,7 +43,7 @@ const svg = `
   </text>
 
   <text x="80" y="360" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="21" font-weight="400" fill="#52525b">
-    <tspan x="80" dy="0">Computer engineering, Linux systems, self-hosting,</tspan>
+    <tspan x="80" dy="0">Elec engineering, Linux systems, self-hosting,</tspan>
     <tspan x="80" dy="30">homelab experiments, and open-source software.</tspan>
   </text>
 
@@ -74,19 +79,19 @@ const svg = `
     <text x="18" y="0" font-family="'SF Mono', Menlo, Monaco, Consolas, monospace" font-size="17" font-weight="600" fill="#18181b">artusmosquet.com</text>
   </g>
 
-  <text x="1120" y="570" text-anchor="end" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#71717a">West Lafayette, IN</text>
+  // <text x="1120" y="570" text-anchor="end" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#71717a">West Lafayette, IN</text>
 </svg>
 `;
 
 async function generate() {
-  const outputPath = path.join(__dirname, 'public', 'og-image.png');
+  const outputPath = path.join(__dirname, "public", "og-image.png");
   await sharp(Buffer.from(svg))
     .png({ quality: 95, compressionLevel: 9 })
     .toFile(outputPath);
   console.log(`Open Graph image generated at: ${outputPath}`);
 }
 
-generate().catch(err => {
+generate().catch((err) => {
   console.error(err);
   process.exit(1);
 });
