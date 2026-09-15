@@ -23,7 +23,7 @@ export const GET: APIRoute = async ({ params }) => {
       description:
         "Electrical engineering, Linux systems, self-hosting, homelab experiments, and open-source software.",
       tags: ["purdue", "engineering", "homelab", "open-source"],
-      footerRightText: "West Lafayette, IN",
+      footerRightText: "© Artus Mosquet",
     },
     fr: {
       badge: "À PROPOS & BIO",
@@ -32,7 +32,7 @@ export const GET: APIRoute = async ({ params }) => {
       description:
         "Ingénierie électrique, systèmes Linux, auto-hébergement, homelab et projets open-source.",
       tags: ["purdue", "ingénierie", "homelab", "open-source"],
-      footerRightText: "West Lafayette, IN",
+      footerRightText: "© Artus Mosquet",
     },
     jp: {
       badge: "プロフィール",
@@ -41,7 +41,7 @@ export const GET: APIRoute = async ({ params }) => {
       description:
         "電気工学、Linuxシステム、\nセルフホスティング、ホームラボ、オープンソース。",
       tags: ["purdue", "engineering", "homelab", "open-source"],
-      footerRightText: "West Lafayette, IN",
+      footerRightText: "© Artus Mosquet",
     },
   }[lang];
 

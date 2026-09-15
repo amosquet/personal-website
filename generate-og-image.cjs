@@ -80,7 +80,7 @@ const svg = `
     <text x="18" y="0" font-family="'SF Mono', Menlo, Monaco, Consolas, monospace" font-size="17" font-weight="600" fill="#18181b">artusmosquet.com</text>
   </g>
 
-  <text x="1120" y="570" text-anchor="end" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#71717a">West Lafayette, IN</text>
+  <text x="1120" y="570" text-anchor="end" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#71717a">© Artus Mosquet</text>
 </svg>
 `;
 
