@@ -17,7 +17,11 @@ const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
 const t = useTranslations(lang);
 ---
 
-<Layout title={t("faq")} description={t("siteDescription")}>
+<Layout
+    title={t("faq")}
+    description={t("siteDescription")}
+    image={`/${lang}/faq/og.png`}
+>
     <div class="max-w-2xl mx-auto py-16 px-6 font-mono text-sm leading-relaxed">
         <h1 class="text-xl font-bold mb-12 border-b border-black pb-2 uppercase tracking-tight">FAQ / Random Info</h1>
 

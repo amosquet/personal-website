@@ -42,7 +42,7 @@ const blog = defineCollection({
 
 À l'avenir, je publierai des notes et des retours d'expérience sur :
 
-1. Des projets matériels et d'ingénierie informatique
+1. Des projets matériels et d'ingénierie électrique
 2. L'infrastructure serveur, l'auto-hébergement et l'automatisation
 3. L'architecture logicielle et mes projets personnels
 

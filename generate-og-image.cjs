@@ -17,9 +17,10 @@ const svg = `
   <rect x="0" y="0" width="${width}" height="88" fill="#000000" />
   <text x="80" y="52" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="23" font-weight="700" fill="#ffffff" letter-spacing="-0.3">Artus Mosquet</text>
 
+  <!-- Navbar Breadcrumb Navigation -->
   <g transform="translate(1120, 52)">
-    <text x="0" y="0" text-anchor="end" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="14" font-weight="600" fill="#a1a1aa" letter-spacing="1">
-      <tspan fill="#ffffff">HOME</tspan>   •   <tspan fill="#a1a1aa">BLOG</tspan>   •   <tspan fill="#a1a1aa">ABOUT</tspan>   •   <tspan fill="#a1a1aa">PROJECTS</tspan>
+    <text x="0" y="0" text-anchor="end" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="500" fill="#a1a1aa" letter-spacing="1">
+      <tspan fill="#ffffff" font-weight="700">HOME</tspan>
     </text>
   </g>
 
@@ -38,7 +39,7 @@ const svg = `
   </text>
 
   <text x="80" y="360" font-family="'Noto Sans JP', 'Noto Sans CJK JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="21" font-weight="400" fill="#52525b">
-    <tspan x="80" dy="0">Computer engineering, Linux systems, self-hosting,</tspan>
+    <tspan x="80" dy="0">Electrical engineering, Linux systems, self-hosting,</tspan>
     <tspan x="80" dy="30">homelab experiments, and open-source software.</tspan>
   </text>
 

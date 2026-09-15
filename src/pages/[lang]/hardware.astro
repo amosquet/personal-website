@@ -16,7 +16,10 @@ const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
 const t = useTranslations(lang);
 ---
 
-<Layout title={t("hardwarePageTitle")}>
+<Layout
+    title={t("hardwarePageTitle")}
+    image={`/${lang}/hardware/og.png`}
+>
     <div class="max-w-5xl mx-auto px-4 py-12">
         <nav class="mb-6">
             <a
