@@ -110,7 +110,7 @@ const ogImage = `/${locale}/about/og.png`;
             <div class="flex flex-col gap-6">
                 {experience.items.map((item) => (
                     <div class="bg-white p-6 shadow-sm border border-gray-100">
-                        <div class="flex justify-between items-start mb-2 flex-wrap gap-2">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-2">
                             <h3
                                 class="text-xl font-medium"
                                 set:html={item.role}

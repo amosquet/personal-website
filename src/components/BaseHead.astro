@@ -21,13 +21,13 @@ const currentPath = Astro.url.pathname;
         width: 100%;
         max-width: 64rem; /* 5xl */
         margin: 0 auto;
-        padding: 20px 16px; /* Keeps consistent padding */
+        padding: 20px 16px;
     }
     .name {
         color: white;
         font-size: 1.25rem;
         font-weight: bold;
-        margin-right: auto; /* Pushes the links to the right */
+        margin-right: auto;
     }
     a {
         color: white;
@@ -36,19 +36,138 @@ const currentPath = Astro.url.pathname;
     a:hover {
         text-decoration: underline;
     }
+
+    /* ---- Desktop links (hidden on mobile) ---- */
     .links {
-        display: flex;
-        gap: 16px; /* Keeps consistent spacing between links */
+        display: none;
+        gap: 16px;
         align-items: center;
     }
 
-    /* Dropdown container */
+    /* ---- Hamburger button (mobile only) ---- */
+    .hamburger-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 4px;
+    }
+    .hamburger-btn:hover {
+        background-color: #1a1a1a;
+    }
+
+    /* ---- Mobile drawer ---- */
+    .mobile-menu {
+        display: none;
+        flex-direction: column;
+        background-color: black;
+        border-top: 1px solid #222;
+        padding: 4px 16px 20px;
+        max-width: 64rem;
+        margin: 0 auto;
+    }
+    .mobile-menu.open {
+        display: flex;
+    }
+    .mobile-menu a {
+        color: white;
+        text-decoration: none;
+        padding: 13px 0;
+        border-bottom: 1px solid #1c1c1c;
+        font-size: 1rem;
+        display: block;
+        width: 100%;
+    }
+    .mobile-menu a:last-of-type {
+        border-bottom: none;
+    }
+    .mobile-menu a:hover {
+        text-decoration: underline;
+    }
+
+    /* Language row inside mobile drawer */
+    .mobile-lang-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 13px 0;
+        border-bottom: 1px solid #1c1c1c;
+    }
+    .mobile-lang-label {
+        color: #888;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-right: 2px;
+    }
+    .mobile-lang-link {
+        color: white !important;
+        text-decoration: none !important;
+        text-transform: uppercase;
+        font-size: 0.82rem;
+        padding: 3px 9px;
+        border: 1px solid #444;
+        border-radius: 4px;
+        display: inline-block !important;
+        width: auto !important;
+    }
+    .mobile-lang-link:hover {
+        background-color: #1a1a1a;
+        text-decoration: none !important;
+    }
+
+    /* Furigana toggle inside mobile drawer */
+    .mobile-furigana-btn {
+        background: none;
+        border: none;
+        color: #e5e5e5;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.9rem;
+        padding: 13px 0;
+        border-bottom: 1px solid #1c1c1c;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        text-align: left;
+    }
+    .mobile-furigana-btn:hover {
+        color: white;
+    }
+    .mobile-furigana-prefix {
+        color: #888;
+        font-size: 0.75rem;
+    }
+    .mobile-furigana-state {
+        font-weight: 600;
+        color: #60a5fa;
+        font-size: 0.75rem;
+    }
+
+    /* ---- Desktop breakpoint ---- */
+    @media (min-width: 640px) {
+        .links {
+            display: flex;
+        }
+        .hamburger-btn {
+            display: none;
+        }
+        /* Force-hide mobile elements on desktop */
+        .mobile-menu {
+            display: none !important;
+        }
+    }
+
+    /* ---- Desktop dropdown ---- */
     .language-dropdown {
         position: relative;
         display: inline-block;
     }
-
-    /* Dropdown button */
     .dropbtn {
         background: none;
         border: none;
@@ -59,12 +178,9 @@ const currentPath = Astro.url.pathname;
         cursor: pointer;
         text-transform: uppercase;
     }
-
     .dropbtn:hover {
         text-decoration: underline;
     }
-
-    /* Dropdown content (hidden by default) */
     .language-dropdown-content {
         display: none;
         position: absolute;
@@ -77,8 +193,6 @@ const currentPath = Astro.url.pathname;
         border-radius: 6px;
         overflow: hidden;
     }
-
-    /* Links inside the dropdown */
     .language-dropdown-content a {
         padding: 8px 14px;
         display: block;
@@ -86,24 +200,20 @@ const currentPath = Astro.url.pathname;
         text-transform: uppercase;
         font-size: 0.9rem;
     }
-
     .language-dropdown-content a:hover {
         background-color: #1a1a1a;
         text-decoration: none;
     }
-
-    /* Show the dropdown menu on hover */
-    .language-dropdown:hover .language-dropdown-content {
+    /* Works on hover (desktop mouse) AND on tap (focus-within after click) */
+    .language-dropdown:hover .language-dropdown-content,
+    .language-dropdown:focus-within .language-dropdown-content {
         display: block;
     }
-
     .dropdown-divider {
         height: 1px;
         background-color: #262626;
         margin: 2px 0;
     }
-
-    /* Furigana toggle button inside dropdown */
     .dropdown-furigana-btn {
         width: 100%;
         background: transparent;
@@ -121,17 +231,14 @@ const currentPath = Astro.url.pathname;
         white-space: nowrap;
         transition: background-color 0.15s ease;
     }
-
     .dropdown-furigana-btn:hover {
         background-color: #1a1a1a;
         color: #ffffff;
     }
-
     .furigana-prefix {
         color: #888;
         font-size: 0.75rem;
     }
-
     .furigana-state {
         font-weight: 600;
         color: #60a5fa;
@@ -142,21 +249,14 @@ const currentPath = Astro.url.pathname;
 <nav>
     <div class="nav-container">
         <div class="name">{t("siteTitle")}</div>
+
+        {/* Desktop links */}
         <div class="links">
             <a href={"/" + locale + "/"}>{uiStrings["navHome"]![locale]}</a>
-            <a href={"/" + locale + "/blog/"}>
-                {uiStrings["navBlog"]![locale]}
-            </a>
-            <a href={"/" + locale + "/about/"}>
-                {uiStrings["navAbout"]![locale]}
-            </a>
-            <a href={"/" + locale + "/projects/"}>
-                {uiStrings["navProjects"]![locale]}
-            </a>
-            <a href={"/" + locale + "/reading/"}>
-                {uiStrings["navReading"]![locale]}
-            </a>
-
+            <a href={"/" + locale + "/blog/"}>{uiStrings["navBlog"]![locale]}</a>
+            <a href={"/" + locale + "/about/"}>{uiStrings["navAbout"]![locale]}</a>
+            <a href={"/" + locale + "/projects/"}>{uiStrings["navProjects"]![locale]}</a>
+            <a href={"/" + locale + "/reading/"}>{uiStrings["navReading"]![locale]}</a>
             <a
                 href="https://status.amcloud.dev"
                 target="_blank"
@@ -187,10 +287,7 @@ const currentPath = Astro.url.pathname;
                                 aria-label="Toggle Furigana display mode"
                             >
                                 <span class="furigana-prefix">ルビ:</span>
-                                <span
-                                    id="furigana-state"
-                                    class="furigana-state"
-                                >
+                                <span id="furigana-state" class="furigana-state">
                                     OFF
                                 </span>
                             </button>
@@ -199,58 +296,167 @@ const currentPath = Astro.url.pathname;
                 </div>
             </div>
         </div>
+
+        {/* Hamburger button — visible on mobile only */}
+        <button
+            id="mobile-menu-toggle"
+            class="hamburger-btn"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            type="button"
+        >
+            {/* Hamburger icon */}
+            <svg
+                id="hamburger-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            {/* Close icon (hidden until menu opens) */}
+            <svg
+                id="close-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+                style="display: none;"
+            >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+
+    {/* Mobile drawer */}
+    <div
+        id="mobile-menu"
+        class="mobile-menu"
+        role="navigation"
+        aria-label="Mobile navigation"
+    >
+        <a href={"/" + locale + "/"}>{uiStrings["navHome"]![locale]}</a>
+        <a href={"/" + locale + "/blog/"}>{uiStrings["navBlog"]![locale]}</a>
+        <a href={"/" + locale + "/about/"}>{uiStrings["navAbout"]![locale]}</a>
+        <a href={"/" + locale + "/projects/"}>{uiStrings["navProjects"]![locale]}</a>
+        <a href={"/" + locale + "/reading/"}>{uiStrings["navReading"]![locale]}</a>
+        <a
+            href="https://status.amcloud.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            {uiStrings["status"]![locale]}
+        </a>
+
+        {/* Language switcher row */}
+        <div class="mobile-lang-row">
+            <span class="mobile-lang-label">Lang:</span>
+            {locales.map((otherLocale) => {
+                if (otherLocale === locale) return null;
+                const newPath = currentPath.replace(
+                    `/${locale}/`,
+                    `/${otherLocale}/`,
+                );
+                return (
+                    <a href={newPath} class="mobile-lang-link">
+                        {otherLocale}
+                    </a>
+                );
+            })}
+        </div>
+
+        {/* Furigana toggle — JP locale only */}
+        {locale === "jp" && (
+            <button
+                id="furigana-toggle-mobile"
+                class="mobile-furigana-btn"
+                type="button"
+                aria-label="Toggle Furigana display mode"
+            >
+                <span class="mobile-furigana-prefix">ルビ:</span>
+                <span id="furigana-state-mobile" class="mobile-furigana-state">OFF</span>
+            </button>
+        )}
     </div>
 </nav>
 
 <script>
-    function initFuriganaToggle() {
-        const btn = document.getElementById("furigana-toggle");
-        const stateEl = document.getElementById("furigana-state");
-        if (!btn || !stateEl) return;
+    function initNav() {
+        // ---- Hamburger toggle ----
+        const toggle = document.getElementById("mobile-menu-toggle");
+        const menu = document.getElementById("mobile-menu");
+        const hamburgerIcon = document.getElementById("hamburger-icon");
+        const closeIcon = document.getElementById("close-icon");
 
-        const cycle: Record<string, string> = {
-            off: "hover",
-            hover: "on",
-            on: "off",
-        };
-
-        const labels: Record<string, string> = {
-            off: "OFF",
-            hover: "ホバー",
-            on: "ON",
-        };
-
-        function updateUI(mode: string) {
-            const label = labels[mode] || labels.off;
-            stateEl!.textContent = label;
-            btn!.setAttribute(
-                "aria-pressed",
-                mode !== "off" ? "true" : "false",
-            );
-            btn!.setAttribute(
-                "title",
-                `ルビ表示切替: 現在【${label}】 (クリックで変更)`,
-            );
+        if (toggle && menu) {
+            toggle.addEventListener("click", () => {
+                const isOpen = menu.classList.toggle("open");
+                toggle.setAttribute("aria-expanded", String(isOpen));
+                if (hamburgerIcon) hamburgerIcon.style.display = isOpen ? "none" : "block";
+                if (closeIcon) closeIcon.style.display = isOpen ? "block" : "none";
+            });
         }
 
-        const currentMode = document.documentElement.dataset.furigana || "off";
-        updateUI(currentMode);
+        // ---- Furigana toggle ----
+        const cycle: Record<string, string> = { off: "hover", hover: "on", on: "off" };
+        const labels: Record<string, string> = { off: "OFF", hover: "ホバー", on: "ON" };
 
-        btn.onclick = () => {
-            const current = document.documentElement.dataset.furigana || "off";
-            const next = cycle[current] || "off";
-            document.documentElement.dataset.furigana = next;
-            try {
-                localStorage.setItem("furigana", next);
-            } catch (_) {}
-            updateUI(next);
-        };
+        function applyFuriganaMode(mode: string) {
+            document.documentElement.dataset.furigana = mode;
+            try { localStorage.setItem("furigana", mode); } catch (_) {}
+
+            const label = labels[mode] || labels.off;
+
+            // Desktop state label + aria
+            const desktopState = document.getElementById("furigana-state");
+            if (desktopState) desktopState.textContent = label;
+            const desktopBtn = document.getElementById("furigana-toggle");
+            if (desktopBtn) {
+                desktopBtn.setAttribute("aria-pressed", mode !== "off" ? "true" : "false");
+                desktopBtn.setAttribute("title", `ルビ表示切替: 現在【${label}】 (クリックで変更)`);
+            }
+
+            // Mobile state label
+            const mobileState = document.getElementById("furigana-state-mobile");
+            if (mobileState) mobileState.textContent = label;
+        }
+
+        // Sync state on load
+        applyFuriganaMode(document.documentElement.dataset.furigana || "off");
+
+        // Desktop button
+        const desktopBtn = document.getElementById("furigana-toggle");
+        if (desktopBtn) {
+            desktopBtn.onclick = () => {
+                const next = cycle[document.documentElement.dataset.furigana || "off"] || "off";
+                applyFuriganaMode(next);
+            };
+        }
+
+        // Mobile button
+        const mobileBtn = document.getElementById("furigana-toggle-mobile");
+        if (mobileBtn) {
+            mobileBtn.onclick = () => {
+                const next = cycle[document.documentElement.dataset.furigana || "off"] || "off";
+                applyFuriganaMode(next);
+            };
+        }
     }
 
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", initFuriganaToggle);
+        document.addEventListener("DOMContentLoaded", initNav);
     } else {
-        initFuriganaToggle();
+        initNav();
     }
-    document.addEventListener("astro:page-load", initFuriganaToggle);
+    document.addEventListener("astro:page-load", initNav);
 </script>
