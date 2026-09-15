@@ -80,19 +80,22 @@ const ogImage = `/${locale}/about/og.png`;
         {/* Introduction Section */}
         <section>
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-                <h2
-                    class="text-3xl font-bold text-blue-600"
-                    set:html={intro.title}
-                />
+                <h2 class="text-3xl font-bold" set:html={intro.title} />
                 <a
                     href="/Artus_Mosquet_Resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="inline-flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 rounded-lg border border-gray-200 shadow-2xs hover:border-gray-300 transition-colors w-fit shrink-0"
+                    class="inline-flex items-center gap-2 px-3.5 py-2 text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 border border-gray-200 shadow-2xs hover:border-gray-300 transition-colors w-fit shrink-0"
                 >
-                    <Icon name="mdi:file-document-outline" class="w-4 h-4 text-blue-600" />
+                    <Icon
+                        name="mdi:file-document-outline"
+                        class="w-4 h-4 text-blue-600"
+                    />
                     <span set:html={t("viewResume")} />
-                    <Icon name="mdi:arrow-top-right" class="w-3.5 h-3.5 text-gray-400" />
+                    <Icon
+                        name="mdi:arrow-top-right"
+                        class="w-3.5 h-3.5 text-gray-400"
+                    />
                 </a>
             </div>
             <p class="text-lg text-gray-700" set:html={intro.description} />
@@ -105,34 +108,32 @@ const ogImage = `/${locale}/about/og.png`;
                 set:html={experience.title}
             />
             <div class="flex flex-col gap-6">
-                {
-                    experience.items.map((item) => (
-                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-                            <div class="flex justify-between items-start mb-2 flex-wrap gap-2">
-                                <h3
-                                    class="text-xl font-medium"
-                                    set:html={item.role}
-                                />
-                                <span
-                                    class="text-sm bg-blue-100 text-blue-800 py-1 px-3 rounded-full"
-                                    set:html={`${item.company} | ${item.date}`}
-                                />
-                            </div>
-                            {item.bullets ? (
-                                <ul class="list-disc list-inside text-gray-600 space-y-1">
-                                    {item.bullets.map((bullet) => (
-                                        <li set:html={bullet} />
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p
-                                    class="text-gray-600"
-                                    set:html={item.description}
-                                />
-                            )}
+                {experience.items.map((item) => (
+                    <div class="bg-white p-6 shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-start mb-2 flex-wrap gap-2">
+                            <h3
+                                class="text-xl font-medium"
+                                set:html={item.role}
+                            />
+                            <span
+                                class="text-sm bg-blue-100 text-blue-800 py-1 px-3"
+                                set:html={`${item.company} | ${item.date}`}
+                            />
                         </div>
-                    ))
-                }
+                        {item.bullets ? (
+                            <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                {item.bullets.map((bullet) => (
+                                    <li set:html={bullet} />
+                                ))}
+                            </ul>
+                        ) : (
+                            <p
+                                class="text-gray-600"
+                                set:html={item.description}
+                            />
+                        )}
+                    </div>
+                ))}
             </div>
         </section>
 
@@ -144,23 +145,19 @@ const ogImage = `/${locale}/about/og.png`;
                         class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
                         set:html={education.title}
                     />
-                    <div
-                        class="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
-                    >
-                        {
-                            education.items.map((item) => (
-                                <div class="mb-4 last:mb-0">
-                                    <h3
-                                        class="font-medium text-lg"
-                                        set:html={item.institution}
-                                    />
-                                    <p
-                                        class="text-gray-600"
-                                        set:html={item.details}
-                                    />
-                                </div>
-                            ))
-                        }
+                    <div class="bg-white p-6 shadow-sm border border-gray-100">
+                        {education.items.map((item) => (
+                            <div class="mb-4 last:mb-0">
+                                <h3
+                                    class="font-medium text-lg"
+                                    set:html={item.institution}
+                                />
+                                <p
+                                    class="text-gray-600"
+                                    set:html={item.details}
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
 
@@ -169,23 +166,19 @@ const ogImage = `/${locale}/about/og.png`;
                         class="text-2xl font-semibold mb-6 border-b-2 border-gray-200 pb-2"
                         set:html={skills.title}
                     />
-                    <div
-                        class="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
-                    >
-                        {
-                            skills.categories.map((category) => (
-                                <div class="mb-4 last:mb-0">
-                                    <h4
-                                        class="font-medium text-gray-800"
-                                        set:html={category.name}
-                                    />
-                                    <p
-                                        class="text-gray-600 text-sm"
-                                        set:html={category.list}
-                                    />
-                                </div>
-                            ))
-                        }
+                    <div class="bg-white p-6 shadow-sm border border-gray-100">
+                        {skills.categories.map((category) => (
+                            <div class="mb-4 last:mb-0">
+                                <h4
+                                    class="font-medium text-gray-800"
+                                    set:html={category.name}
+                                />
+                                <p
+                                    class="text-gray-600 text-sm"
+                                    set:html={category.list}
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -198,22 +191,20 @@ const ogImage = `/${locale}/about/og.png`;
                 set:html={projects.title}
             />
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {
-                    projects.items.map((project) => (
-                        <div
-                            class={`p-4 rounded border hover:shadow-md transition-shadow ${themeStyles[project.theme].wrapper}`}
-                        >
-                            <h3
-                                class={`font-medium ${themeStyles[project.theme].title}`}
-                                set:html={project.name}
-                            />
-                            <p
-                                class={`text-sm mt-1 ${themeStyles[project.theme].desc}`}
-                                set:html={project.description}
-                            />
-                        </div>
-                    ))
-                }
+                {projects.items.map((project) => (
+                    <div
+                        class={`p-4 border hover:shadow-md transition-shadow ${themeStyles[project.theme].wrapper}`}
+                    >
+                        <h3
+                            class={`font-medium ${themeStyles[project.theme].title}`}
+                            set:html={project.name}
+                        />
+                        <p
+                            class={`text-sm mt-1 ${themeStyles[project.theme].desc}`}
+                            set:html={project.description}
+                        />
+                    </div>
+                ))}
             </div>
         </section>
     </div>
