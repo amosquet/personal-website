@@ -45,7 +45,7 @@ export const uiStrings: TypeUIStrings = {
   navReading: {
     en: "Reading List",
     fr: "Liste de lecture",
-    jp: "<ruby>読書<rt>どくしょ</rt></ruby>リスト",
+    jp: "読書リスト",
   },
   myCountry: {
     en: "United States",
