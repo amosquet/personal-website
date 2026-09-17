@@ -24,12 +24,12 @@ const enrichedBooks: EnrichedBook[] = await getBooks();
 >
     <div class="max-w-5xl mx-auto px-4 py-12">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-50">
                 <Fragment set:html={t("navReading")} />
             </h1>
             <a
                 href={`/${lang}/reading/suggest`}
-                class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-black text-white hover:bg-gray-800 text-sm font-semibold transition-colors self-start sm:self-auto shadow-sm"
+                class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-black dark:bg-gray-700 text-white hover:bg-gray-800 dark:hover:bg-gray-600 text-sm font-semibold transition-colors self-start sm:self-auto shadow-sm"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@ const enrichedBooks: EnrichedBook[] = await getBooks();
                         href={`/${lang}/reading/${book.isbn}`}
                         class="block group"
                     >
-                        <div class="border border-gray-200 p-6 bg-white shadow-sm hover:border-blue-400 transition-colors h-full flex flex-col">
+                        <div class="border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-800 shadow-sm hover:border-blue-400 dark:hover:border-blue-500 transition-colors h-full flex flex-col">
                             {book.cover && (
                                 <img
                                     src={book.cover}
@@ -61,23 +61,23 @@ const enrichedBooks: EnrichedBook[] = await getBooks();
                                     class="w-full h-48 object-contain mb-4 group-hover:scale-105 transition-transform"
                                 />
                             )}
-                            <h2 class="text-xl font-bold text-gray-900 mb-1">
+                            <h2 class="text-xl font-bold text-gray-900 dark:text-gray-50 mb-1">
                                 {book.title}
                             </h2>
-                            <p class="text-gray-600 mb-4">{book.author}</p>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">{book.author}</p>
 
                             <div class="flex flex-col gap-2 mt-auto">
                                 <div class="flex items-center justify-between text-xs font-bold">
-                                    <span class="px-2.5 py-1 bg-blue-50 text-blue-700 capitalize">
+                                    <span class="px-2.5 py-1 bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200 capitalize">
                                         {book.status}
                                     </span>
-                                    <span class="text-gray-500">
+                                    <span class="text-gray-500 dark:text-gray-400">
                                         {book.publishDate}
                                     </span>
                                 </div>
                                 {
                                     (book.startDate || book.endDate || (book.status === "read" && book.completed)) && (
-                                        <div class="text-[10px] text-gray-400 uppercase tracking-wider text-right font-bold">
+                                        <div class="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-wider text-right font-bold">
                                             {book.endDate ? (
                                                 <>
                                                     {t("finished")}: {book.endDate.substring(0, 10)}
@@ -101,7 +101,7 @@ const enrichedBooks: EnrichedBook[] = await getBooks();
             }
         </div>
 
-        <p class="text-xs text-gray-400 italic mt-12 text-center">
+        <p class="text-xs text-gray-400 dark:text-gray-500 italic mt-12 text-center">
             {t("googleBooksCredit")}
         </p>
     </div>

@@ -18,14 +18,14 @@ const { Content } = await import("@/content/now.md");
     <div class="max-w-2xl mx-auto py-16 px-6 font-mono text-sm leading-relaxed now-page">
         <Content />
 
-        <div class="mt-16 pt-8 border-t border-gray-200 text-xs text-gray-400">
+        <div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-400 dark:text-gray-500">
             <p>
                 This is a{" "}
                 <a
                     href="https://nownownow.com/about"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="underline hover:text-gray-600 transition-colors"
+                    class="underline hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
                 >
                     now page
                 </a>
@@ -44,6 +44,10 @@ const { Content } = await import("@/content/now.md");
         border-bottom: 1px solid black;
         padding-bottom: 0.5rem;
         margin-bottom: 0.5rem;
+    }
+
+    [data-theme="dark"] .now-page h1 {
+        border-bottom-color: #6b7280;
     }
 
     .now-page h2 {
@@ -69,6 +73,10 @@ const { Content } = await import("@/content/now.md");
         margin: 2.5rem 0;
     }
 
+    [data-theme="dark"] .now-page hr {
+        border-color: #374151;
+    }
+
     .now-page a {
         text-decoration: underline;
         transition: color 0.2s;
@@ -78,8 +86,16 @@ const { Content } = await import("@/content/now.md");
         color: #2563eb;
     }
 
+    [data-theme="dark"] .now-page a:hover {
+        color: #60a5fa;
+    }
+
     .now-page em {
         color: #9ca3af;
+    }
+
+    [data-theme="dark"] .now-page em {
+        color: #6b7280;
     }
 
     .now-page strong {

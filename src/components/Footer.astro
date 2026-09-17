@@ -12,42 +12,42 @@ import purdueHackers from "@/assets/purdue-hackers.svg";
 // import "@/assets/purdue-hackers.svg";
 ---
 
-<footer class="mt-20 border-t border-gray-100 py-8 bg-white">
+<footer class="mt-20 border-t border-gray-100 dark:border-gray-800 py-8 bg-white dark:bg-gray-900">
     <div class="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 items-center gap-6">
         
         <!-- Copyright, FAQ & Privacy Policy -->
-        <div class="text-gray-400 text-xs font-medium order-3 md:order-1 flex flex-wrap justify-center md:justify-start items-center gap-3">
+        <div class="text-gray-400 dark:text-gray-500 text-xs font-medium order-3 md:order-1 flex flex-wrap justify-center md:justify-start items-center gap-3">
             <span>© 2025 {t("siteTitle")}</span>
-            <span class="text-gray-300">•</span>
-            <a href={`/${locale}/faq`} class="hover:text-black transition-colors">
+            <span class="text-gray-300 dark:text-gray-600">•</span>
+            <a href={`/${locale}/faq`} class="hover:text-black dark:hover:text-white transition-colors">
                 {uiStrings.faq[locale]}
             </a>
-            <span class="text-gray-300">•</span>
-            <a href={`/${locale}/privacy`} class="hover:text-black transition-colors">
+            <span class="text-gray-300 dark:text-gray-600">•</span>
+            <a href={`/${locale}/privacy`} class="hover:text-black dark:hover:text-white transition-colors">
                 {t("privacyPolicy")}
             </a>
         </div>
 
         <!-- Purdue Hackers Webring -->
         <div class="order-1 md:order-2 flex justify-center items-center">
-            <div class="flex items-center gap-3 py-1.5 px-4 bg-gray-50 rounded-full border border-gray-100 text-xs text-gray-500">
-                <a href="https://ring.purduehackers.com/previous" class="hover:text-blue-600 transition-colors font-bold">←</a>
+            <div class="flex items-center gap-3 py-1.5 px-4 bg-gray-50 dark:bg-gray-800 rounded-full border border-gray-100 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
+                <a href="https://ring.purduehackers.com/previous" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-bold">←</a>
                 <a href="https://ring.purduehackers.com/" class="flex items-center">
                     <Image src={purdueHackers} alt="Purdue Hackers Webring" class="w-4 h-4 rounded-full" />
                 </a>
-                <a href="https://ring.purduehackers.com/next" class="hover:text-blue-600 transition-colors font-bold">→</a>
+                <a href="https://ring.purduehackers.com/next" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-bold">→</a>
             </div>
         </div>
 
         <!-- Social Links -->
         <div class="order-2 md:order-3 flex justify-center md:justify-end items-center gap-4">
-            <a href="https://github.com/amosquet" aria-label="GitHub" class="text-gray-400 hover:text-black transition-colors">
+            <a href="https://github.com/amosquet" aria-label="GitHub" class="text-gray-400 dark:text-gray-500 hover:text-black dark:hover:text-white transition-colors">
                 <Icon name="simple-icons:github" class="w-5 h-5" />
             </a>
-            <a href="https://twitter.com/almondmanttv" aria-label="Twitter" class="text-gray-400 hover:text-blue-400 transition-colors">
+            <a href="https://twitter.com/almondmanttv" aria-label="Twitter" class="text-gray-400 dark:text-gray-500 hover:text-blue-400 transition-colors">
                 <Icon name="simple-icons:twitter" class="w-5 h-5" />
             </a>
-            <a href="https://twitch.tv/almondmanttv" aria-label="Twitch" class="text-gray-400 hover:text-purple-600 transition-colors">
+            <a href="https://twitch.tv/almondmanttv" aria-label="Twitch" class="text-gray-400 dark:text-gray-500 hover:text-purple-600 transition-colors">
                 <Icon name="simple-icons:twitch" class="w-5 h-5" />
             </a>
         </div>

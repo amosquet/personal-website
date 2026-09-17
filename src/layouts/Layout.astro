@@ -35,6 +35,9 @@ import "@/styles/global.css";
             try {
                 const savedFurigana = localStorage.getItem("furigana") || "off";
                 document.documentElement.dataset.furigana = savedFurigana;
+                const savedTheme = localStorage.getItem("theme");
+                const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                document.documentElement.dataset.theme = savedTheme || (systemDark ? "dark" : "light");
             } catch (_) {}
         </script>
         <title>
@@ -57,7 +60,7 @@ import "@/styles/global.css";
             src="https://umami.purduehackers.com/script.js"
             data-website-id="a4719bd5-323b-424b-a461-1dcd96c98c92"></script>
     </head>
-    <body class="bg-white min-h-screen flex flex-col font-sans">
+    <body class="bg-white dark:bg-gray-900 min-h-screen flex flex-col font-sans">
         <BaseHead title={title} />
         <main class="grow">
             <slot />
