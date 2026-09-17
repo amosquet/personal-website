@@ -24,28 +24,28 @@ const t = useTranslations(lang);
         <nav class="mb-6">
             <a
                 href={`/${lang}/`}
-                class="text-xs font-semibold uppercase tracking-wider text-gray-500 hover:text-black transition-colors inline-flex items-center gap-1.5"
+                class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors inline-flex items-center gap-1.5"
             >
                 <span aria-hidden="true">&larr;</span>
                 {t("navHome")}
             </a>
         </nav>
 
-        <header class="mb-10 pb-6 border-b border-gray-200">
-            <h1 class="text-3xl font-bold text-gray-900 tracking-tight mb-2">
+        <header class="mb-10 pb-6 border-b border-gray-200 dark:border-gray-700">
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-50 tracking-tight mb-2">
                 <Fragment set:html={t("hardwarePageTitle")} />
             </h1>
-            <p class="text-base text-gray-600 max-w-3xl leading-relaxed">
+            <p class="text-base text-gray-600 dark:text-gray-400 max-w-3xl leading-relaxed">
                 <Fragment set:html={t("hardwarePageSubtitle")} />
             </p>
         </header>
 
         {/* Philosophy Card */}
-        <section class="mb-10 border border-gray-200 bg-gray-50 p-6">
-            <h2 class="text-base font-bold text-gray-900 mb-2 flex items-center gap-2">
+        <section class="mb-10 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-6">
+            <h2 class="text-base font-bold text-gray-900 dark:text-gray-50 mb-2 flex items-center gap-2">
                 <Fragment set:html={t("hardwarePhilosophyTitle")} />
             </h2>
-            <p class="text-sm text-gray-700 leading-relaxed">
+            <p class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                 <Fragment set:html={t("hardwarePhilosophyText")} />
             </p>
         </section>
@@ -53,25 +53,25 @@ const t = useTranslations(lang);
         {/* Hardware Devices Grid */}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {hardwareData.map((device) => (
-                <article class="border border-gray-200 p-6 bg-white shadow-xs hover:border-gray-900 transition-colors flex flex-col">
-                    <div class="flex items-center justify-between pb-3 border-b border-gray-100 mb-4">
+                <article class="border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col">
+                    <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-700 mb-4">
                         <div class="flex items-center gap-3">
-                            <span class="p-2 bg-gray-100 text-gray-800 border border-gray-200">
+                            <span class="p-2 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-600">
                                 <Icon name={device.icon} class="w-5 h-5" />
                             </span>
-                            <h2 class="font-bold text-gray-900 text-lg">
+                            <h2 class="font-bold text-gray-900 dark:text-gray-50 text-lg">
                                 {device.name}
                             </h2>
                         </div>
                     </div>
 
-                    <ul class="text-sm text-gray-700 space-y-2 mt-auto divide-y divide-gray-50">
+                    <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-2 mt-auto divide-y divide-gray-50 dark:divide-gray-700">
                         {Object.entries(device.specs).map(([key, value]) => (
                             <li class="flex justify-between items-center gap-4 pt-2 first:pt-0">
-                                <span class="text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                                     {key}
                                 </span>
-                                <span class="font-medium text-gray-900 text-right text-xs sm:text-sm">
+                                <span class="font-medium text-gray-900 dark:text-gray-100 text-right text-xs sm:text-sm">
                                     {value}
                                 </span>
                             </li>

@@ -244,6 +244,45 @@ const currentPath = Astro.url.pathname;
         color: #60a5fa;
         font-size: 0.75rem;
     }
+
+    /* ---- Dark mode toggle button ---- */
+    .theme-toggle-btn {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 0;
+    }
+    .theme-toggle-btn:hover {
+        background-color: #1a1a1a;
+    }
+    .mobile-theme-btn {
+        background: none;
+        border: none;
+        color: #e5e5e5;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.9rem;
+        padding: 13px 0;
+        border-bottom: 1px solid #1c1c1c;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        text-align: left;
+    }
+    .mobile-theme-btn:hover {
+        color: white;
+    }
+    .mobile-theme-prefix {
+        color: #888;
+        font-size: 0.75rem;
+    }
 </style>
 
 <nav>
@@ -264,6 +303,25 @@ const currentPath = Astro.url.pathname;
             >
                 {uiStrings["status"]![locale]}
             </a>
+
+            {/* Dark mode toggle */}
+            <button
+                id="theme-toggle"
+                class="theme-toggle-btn"
+                type="button"
+                aria-label="Toggle dark mode"
+                title="Toggle dark/light mode"
+            >
+                {/* Moon icon — shown in light mode */}
+                <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" />
+                </svg>
+                {/* Sun icon — shown in dark mode */}
+                <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true" style="display:none">
+                    <circle cx="12" cy="12" r="5" />
+                    <path stroke-linecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                </svg>
+            </button>
 
             <div class="language-dropdown">
                 <button class="dropbtn">{locale}</button>
@@ -387,6 +445,17 @@ const currentPath = Astro.url.pathname;
                 <span id="furigana-state-mobile" class="mobile-furigana-state">OFF</span>
             </button>
         )}
+
+        {/* Dark mode toggle */}
+        <button
+            id="theme-toggle-mobile"
+            class="mobile-theme-btn"
+            type="button"
+            aria-label="Toggle dark mode"
+        >
+            <span class="mobile-theme-prefix">Theme:</span>
+            <span id="theme-state-mobile">Light</span>
+        </button>
     </div>
 </nav>
 
@@ -449,6 +518,51 @@ const currentPath = Astro.url.pathname;
             mobileBtn.onclick = () => {
                 const next = cycle[document.documentElement.dataset.furigana || "off"] || "off";
                 applyFuriganaMode(next);
+            };
+        }
+
+        // ---- Dark mode toggle ----
+        function applyTheme(theme: string) {
+            document.documentElement.dataset.theme = theme;
+            try { localStorage.setItem("theme", theme); } catch (_) {}
+
+            const isDark = theme === "dark";
+
+            // Desktop icons
+            const moonIcon = document.getElementById("theme-icon-moon");
+            const sunIcon = document.getElementById("theme-icon-sun");
+            if (moonIcon) moonIcon.style.display = isDark ? "none" : "block";
+            if (sunIcon) sunIcon.style.display = isDark ? "block" : "none";
+
+            // Mobile label
+            const mobileLabel = document.getElementById("theme-state-mobile");
+            if (mobileLabel) mobileLabel.textContent = isDark ? "Dark" : "Light";
+
+            // Update aria on both buttons
+            const btn = document.getElementById("theme-toggle");
+            if (btn) btn.setAttribute("aria-pressed", String(isDark));
+            const mobileThemeBtn = document.getElementById("theme-toggle-mobile");
+            if (mobileThemeBtn) mobileThemeBtn.setAttribute("aria-pressed", String(isDark));
+        }
+
+        // Sync icons on load from current data-theme
+        applyTheme(document.documentElement.dataset.theme || "light");
+
+        // Desktop button
+        const themeBtn = document.getElementById("theme-toggle");
+        if (themeBtn) {
+            themeBtn.onclick = () => {
+                const current = document.documentElement.dataset.theme || "light";
+                applyTheme(current === "dark" ? "light" : "dark");
+            };
+        }
+
+        // Mobile button
+        const mobileThemeBtn = document.getElementById("theme-toggle-mobile");
+        if (mobileThemeBtn) {
+            mobileThemeBtn.onclick = () => {
+                const current = document.documentElement.dataset.theme || "light";
+                applyTheme(current === "dark" ? "light" : "dark");
             };
         }
     }

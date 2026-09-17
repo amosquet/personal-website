@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Configure dark mode to use data-theme="dark" attribute instead of media query */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   --font-sans: "Noto Sans JP", sans-serif;
 }
@@ -11,6 +14,12 @@ html {
 
 body {
     color: #000;
+    background-color: #fff;
+}
+
+[data-theme="dark"] body {
+    color: #f9fafb;
+    background-color: #111827;
 }
 
 /* Furigana Display Modes */
