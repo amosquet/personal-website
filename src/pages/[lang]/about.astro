@@ -7,11 +7,11 @@ export function getStaticPaths() {
     return [
         { params: { lang: "en" } },
         { params: { lang: "fr" } },
-        { params: { lang: "jp" } },
+        { params: { lang: "ja" } },
     ];
 }
 
-const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+const { lang } = Astro.params as { lang: "en" | "fr" | "ja" };
 
 // Reconstruct the object to match the AboutLayout Props interface
 const aboutData = {

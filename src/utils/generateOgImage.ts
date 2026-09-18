@@ -159,7 +159,7 @@ export async function generateOgImage(options: OgImageOptions): Promise<Buffer> 
           .join("");
 
   // Date formatting
-  const dateLocale = lang === "jp" ? "ja-JP" : lang === "fr" ? "fr-FR" : "en-US";
+  const dateLocale = lang === "ja" ? "ja-JP" : lang === "fr" ? "fr-FR" : "en-US";
   let formattedDate = "";
   if (options.pubDate) {
     const d = new Date(options.pubDate);

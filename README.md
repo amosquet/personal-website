@@ -14,7 +14,7 @@ This repository contains the source code for my personal website. It's got my re
 The architecture utilises Astro's routing mechanics to support three locales natively:
 * English (`/en/`)
 * French (`/fr/`)
-* Japanese (`/jp/`)
+* Japanese (`/ja/`)
 
 ## Project Structure
 

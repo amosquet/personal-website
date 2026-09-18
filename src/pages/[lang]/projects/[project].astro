@@ -5,7 +5,7 @@ import projects from "@/data/projects.json";
 import { getProjectSlug } from "@/utils/slugify";
 
 export function getStaticPaths() {
-    const langs = ["en", "fr", "jp"] as const;
+    const langs = ["en", "fr", "ja"] as const;
     return langs.flatMap((lang) => {
         return projects.map((project) => ({
             params: { lang, project: getProjectSlug(project) },
@@ -14,7 +14,7 @@ export function getStaticPaths() {
     });
 }
 
-const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+const { lang } = Astro.params as { lang: "en" | "fr" | "ja" };
 const { project } = Astro.props;
 const t = useTranslations(lang);
 

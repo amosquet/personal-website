@@ -11,13 +11,11 @@ import { defaultLocale } from "@/i18n/i18n";
 import { uiStrings } from "@/i18n/uiStrings";
 
 const locale = Astro.currentLocale || defaultLocale;
-// If the locale is 'jp' (internal/URL), display 'ja' (Japanese) to the browser
-const langAttribute = locale === "jp" ? "ja" : locale;
 
 import "@/styles/global.css";
 ---
 
-<html lang={langAttribute} data-furigana="off">
+<html lang={locale} data-furigana="off">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

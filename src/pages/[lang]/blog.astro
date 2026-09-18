@@ -7,11 +7,11 @@ export function getStaticPaths() {
     return [
         { params: { lang: "en" } },
         { params: { lang: "fr" } },
-        { params: { lang: "jp" } },
+        { params: { lang: "ja" } },
     ];
 }
 
-const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+const { lang } = Astro.params as { lang: "en" | "fr" | "ja" };
 const t = useTranslations(lang);
 
 const allPosts = await getCollection("blog", ({ id, data }) => {
@@ -44,7 +44,7 @@ const posts = allPosts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.
                     {posts.map((post) => {
                         const slug = post.id.replace(`${lang}/`, "");
                         const dateLocale =
-                            lang === "jp" ? "ja-JP" : lang === "fr" ? "fr-FR" : "en-US";
+                            lang === "ja" ? "ja-JP" : lang === "fr" ? "fr-FR" : "en-US";
                         const formattedDate = new Intl.DateTimeFormat(dateLocale, {
                             year: "numeric",
                             month: "long",

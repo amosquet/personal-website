@@ -28,7 +28,7 @@ const {
   book,
 } = Astro.props;
 
-const locale = (Astro.currentLocale || defaultLocale) as "en" | "fr" | "jp";
+const locale = (Astro.currentLocale || defaultLocale) as "en" | "fr" | "ja";
 const siteTitle = uiStrings.siteTitle[locale] || "Artus Mosquet";
 const defaultDescription =
   uiStrings.siteDescription?.[locale] ||
@@ -76,7 +76,7 @@ if (image) {
 const ogLocaleMap: Record<string, string> = {
   en: "en_US",
   fr: "fr_FR",
-  jp: "ja_JP",
+  ja: "ja_JP",
 };
 
 const currentOgLocale = ogLocaleMap[locale] || "en_US";
@@ -88,7 +88,7 @@ const alternateOgLocales = locales
 const hreflangMap: Record<string, string> = {
   en: "en",
   fr: "fr",
-  jp: "ja",
+  ja: "ja",
 };
 
 function getLocalizedPath(targetLocale: string): string {

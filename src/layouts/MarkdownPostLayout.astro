@@ -24,7 +24,7 @@ const t = useTranslations(currentLang);
 
 const ogImage = frontmatter.heroImage || (slug ? `/${currentLang}/blog/${slug}/og.png` : undefined);
 
-const dateLocale = currentLang === "jp" ? "ja-JP" : currentLang === "fr" ? "fr-FR" : "en-US";
+const dateLocale = currentLang === "ja" ? "ja-JP" : currentLang === "fr" ? "fr-FR" : "en-US";
 const dateObj = new Date(frontmatter.pubDate);
 const formattedDate = !isNaN(dateObj.getTime())
     ? new Intl.DateTimeFormat(dateLocale, {

@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://artusmosquet.com/en/" />
         <link rel="alternate" hreflang="en" href="https://artusmosquet.com/en/" />
         <link rel="alternate" hreflang="fr" href="https://artusmosquet.com/fr/" />
-        <link rel="alternate" hreflang="ja" href="https://artusmosquet.com/jp/" />
+        <link rel="alternate" hreflang="ja" href="https://artusmosquet.com/ja/" />
         <link rel="alternate" hreflang="x-default" href="https://artusmosquet.com/en/" />
         <meta property="og:site_name" content="Artus Mosquet" />
         <meta property="og:title" content="Artus Mosquet" />
@@ -26,27 +26,6 @@
         <meta name="twitter:title" content="Artus Mosquet" />
         <meta name="twitter:description" content="Personal website of Artus Mosquet, Full-Time ECE Student at Purdue University." />
         <meta name="twitter:image" content="https://artusmosquet.com/og-image.png" />
-        <script>
-            const supportedLocales = ["en", "fr", "jp"];
-            const defaultLocale = "en";
-
-            // Extract the primary language tag (e.g., 'ja-JP' becomes 'ja')
-            const browserLang = navigator.language.split("-")[0];
-
-            // Map standard browser language codes to internal route names
-            const langMapping: Record<string, string> = {
-                ja: "jp",
-            };
-
-            // Apply the mapping if it exists, otherwise use the raw browser language
-            const mappedLang = langMapping[browserLang] || browserLang;
-
-            const targetLocale = supportedLocales.includes(mappedLang)
-                ? mappedLang
-                : defaultLocale;
-
-            window.location.replace(`/${targetLocale}/`);
-        </script>
     </head>
     <body>
         <noscript>

@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { lang, slug } = Astro.params as { lang: "en" | "fr" | "jp"; slug: string };
+const { lang, slug } = Astro.params as { lang: "en" | "fr" | "ja"; slug: string };
 const { Content } = await render(post);
 ---
 

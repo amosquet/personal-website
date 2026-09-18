@@ -8,12 +8,12 @@ export function getStaticPaths() {
   return [
     { params: { lang: "en" } },
     { params: { lang: "fr" } },
-    { params: { lang: "jp" } },
+    { params: { lang: "ja" } },
   ];
 }
 
 export const GET: APIRoute = async ({ params }) => {
-  const lang = (params.lang || "en") as "en" | "fr" | "jp";
+  const lang = (params.lang || "en") as "en" | "fr" | "ja";
 
   const config = {
     en: {
@@ -34,9 +34,9 @@ export const GET: APIRoute = async ({ params }) => {
       tags: ["purdue", "ingénierie", "homelab", "open-source"],
       footerRightText: "© Artus Mosquet",
     },
-    jp: {
+    ja: {
       badge: "プロフィール",
-      title: uiStrings.siteTitle.jp || "モスケ アルテゥス",
+      title: uiStrings.siteTitle.ja || "モスケ アルテゥス",
       headline: "パデュー大学電気工学専攻の学生",
       description:
         "電気工学、Linuxシステム、\nセルフホスティング、ホームラボ、オープンソース。",

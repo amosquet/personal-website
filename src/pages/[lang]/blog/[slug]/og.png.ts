@@ -24,7 +24,7 @@ export async function getStaticPaths() {
 
 export const GET: APIRoute = async ({ props, params }) => {
   const post = props.post as CollectionEntry<"blog">;
-  const lang = (params.lang || "en") as "en" | "fr" | "jp";
+  const lang = (params.lang || "en") as "en" | "fr" | "ja";
   const author = uiStrings.siteTitle[lang] || "Artus Mosquet";
 
   const buffer = await generateOgImageForPost({

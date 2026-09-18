@@ -334,7 +334,7 @@ const currentPath = Astro.url.pathname;
                         );
                         return <a href={newPath}>{otherLocale}</a>;
                     })}
-                    {locale === "jp" && (
+                    {locale === "ja" && (
                         <>
                             <div class="dropdown-divider" />
                             <button
@@ -433,8 +433,8 @@ const currentPath = Astro.url.pathname;
             })}
         </div>
 
-        {/* Furigana toggle — JP locale only */}
-        {locale === "jp" && (
+        {/* Furigana toggle — JA locale only */}
+        {locale === "ja" && (
             <button
                 id="furigana-toggle-mobile"
                 class="mobile-furigana-btn"

@@ -8,12 +8,12 @@ export function getStaticPaths() {
   return [
     { params: { lang: "en" } },
     { params: { lang: "fr" } },
-    { params: { lang: "jp" } },
+    { params: { lang: "ja" } },
   ];
 }
 
 export const GET: APIRoute = async ({ params }) => {
-  const lang = (params.lang || "en") as "en" | "fr" | "jp";
+  const lang = (params.lang || "en") as "en" | "fr" | "ja";
   const author = uiStrings.siteTitle[lang] || "Artus Mosquet";
 
   const buffer = await generateOgImage({

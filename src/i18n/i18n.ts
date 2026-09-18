@@ -1,4 +1,4 @@
-export type Locale = "en" | "fr" | "jp" | string;
+export type Locale = "en" | "fr" | "ja" | string;
 
 interface Fallback {
     [key: string]: string;
@@ -10,17 +10,17 @@ type PathNames = {
 };
 
 export const defaultLocale: string = "en";
-export const locales = ["en", "fr", "jp"];
+export const locales = ["en", "fr", "ja"];
 export const fallback: Fallback = {
     fr: "en",
-    jp: "en",
+    ja: "en",
 };
 
 export const collectionDirectoryNames: PathNames = {
     blog: {
         en: "blog",
         fr: "blog",
-        // jp: "blog",
+        // ja: "blog",
     },
 };
 
@@ -28,6 +28,6 @@ export const directoryNames: PathNames = {
     tags: {
         en: "tags",
         fr: "tags",
-        // jp: "tags",
+        // ja: "tags",
     },
 };

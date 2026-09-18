@@ -8,26 +8,26 @@ export function getStaticPaths() {
   return [
     { params: { lang: "en" } },
     { params: { lang: "fr" } },
-    { params: { lang: "jp" } },
+    { params: { lang: "ja" } },
   ];
 }
 
 export const GET: APIRoute = async ({ params }) => {
-  const lang = (params.lang || "en") as "en" | "fr" | "jp";
+  const lang = (params.lang || "en") as "en" | "fr" | "ja";
   const author = uiStrings.siteTitle[lang] || "Artus Mosquet";
 
   const title = uiStrings.privacyPolicy?.[lang] || "Privacy Policy";
   const subtitle =
     lang === "fr"
       ? "Données & Confidentialité"
-      : lang === "jp"
+      : lang === "ja"
         ? "プライバシーとデータ保護"
         : "Data & Privacy Transparency";
 
   const description =
     lang === "fr"
       ? "Transparence sur l'utilisation des données, l'hébergement et les analyses d'audience sur artusmosquet.com."
-      : lang === "jp"
+      : lang === "ja"
         ? "artusmosquet.comにおけるデータ収集、ホスティング、プライバシー保護方針について。"
         : "Privacy policy and analytics transparency for artusmosquet.com, self-hosting practices, and data handling.";
 

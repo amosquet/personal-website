@@ -8,7 +8,7 @@
       "title": "Bonjour ! Je suis Artus Mosquet",
       "description": "Je suis étudiant en ingénierie électrique à l'Université Purdue. Quand je ne développe pas de logiciels ou ne configure pas des systèmes Linux, j'aime voyager, jouer aux jeux vidéo et contribuer à des projets communautaires matériels et logiciels."
     },
-    "jp": {
+    "ja": {
       "title": "こんにちは！アルテゥス・モスケです",
       "description": "<ruby>私<rt>わたし</rt></ruby>はパデュー<ruby>大学<rt>だいがく</rt></ruby>で<ruby>電気工学<rt>でんきこうがく</rt></ruby>を<ruby>専攻<rt>せんこう</rt></ruby>している<ruby>学生<rt>がくせい</rt></ruby>です。ソフトウェアの<ruby>開発<rt>かいはつ</rt></ruby>やLinuxシステムの<ruby>設定<rt>せってい</rt></ruby>をしていない<ruby>時<rt>とき</rt></ruby>は、<ruby>旅行<rt>りょこう</rt></ruby>、ゲーム、そしてコミュニティのハードウェアおよびソフトウェアプロジェクトへの<ruby>貢献<rt>こうけん</rt></ruby>を<ruby>楽<rt>たの</rt></ruby>しんでいます。"
     }
@@ -86,7 +86,7 @@
         }
       ]
     },
-    "jp": {
+    "ja": {
       "title": "<ruby>経験<rt>けいけん</rt></ruby>",
       "items": [
         {
@@ -150,7 +150,7 @@
         }
       ]
     },
-    "jp": {
+    "ja": {
       "title": "<ruby>学歴<rt>がくれき</rt></ruby>",
       "items": [
         {
@@ -199,7 +199,7 @@
         }
       ]
     },
-    "jp": {
+    "ja": {
       "title": "スキル",
       "categories": [
         {
@@ -268,7 +268,7 @@
         }
       ]
     },
-    "jp": {
+    "ja": {
       "title": "プロジェクトと<ruby>興味<rt>きょうみ</rt></ruby>",
       "items": [
         {

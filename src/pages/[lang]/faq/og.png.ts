@@ -8,26 +8,26 @@ export function getStaticPaths() {
   return [
     { params: { lang: "en" } },
     { params: { lang: "fr" } },
-    { params: { lang: "jp" } },
+    { params: { lang: "ja" } },
   ];
 }
 
 export const GET: APIRoute = async ({ params }) => {
-  const lang = (params.lang || "en") as "en" | "fr" | "jp";
+  const lang = (params.lang || "en") as "en" | "fr" | "ja";
   const author = uiStrings.siteTitle[lang] || "Artus Mosquet";
 
   const title = uiStrings.faq?.[lang] || "FAQ";
   const subtitle =
     lang === "fr"
       ? "Infos Diverses & Détails"
-      : lang === "jp"
+      : lang === "ja"
         ? "よくある質問と詳細情報"
         : "Random Info & Details";
 
   const description =
     lang === "fr"
       ? "Foire aux questions, domaines, configurations matérielles et détails sur Artus Mosquet."
-      : lang === "jp"
+      : lang === "ja"
         ? "よくある質問、保有ドメイン、ハードウェア構成、アルテゥス・モスケについての詳細情報。"
         : "Frequently asked questions, domains, hardware specs, and random details about Artus Mosquet.";
 

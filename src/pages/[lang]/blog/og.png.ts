@@ -8,26 +8,26 @@ export function getStaticPaths() {
   return [
     { params: { lang: "en" } },
     { params: { lang: "fr" } },
-    { params: { lang: "jp" } },
+    { params: { lang: "ja" } },
   ];
 }
 
 export const GET: APIRoute = async ({ params }) => {
-  const lang = (params.lang || "en") as "en" | "fr" | "jp";
+  const lang = (params.lang || "en") as "en" | "fr" | "ja";
   const author = uiStrings.siteTitle[lang] || "Artus Mosquet";
 
   const title = uiStrings.navBlog[lang] || "Blog";
   const subtitle =
     lang === "fr"
       ? "Articles & Billets Techniques"
-      : lang === "jp"
+      : lang === "ja"
         ? "技術記事 & ブログ"
         : "Articles & Technical Writeups";
 
   const description =
     lang === "fr"
       ? "Réflexions, guides et analyses sur l'ingénierie électrique, Linux, l'auto-hébergement et le développement."
-      : lang === "jp"
+      : lang === "ja"
         ? "電気工学、Linuxシステム、セルフホスティング、開発に関する考察と記録。"
         : "Thoughts, writeups, and deep dives on electrical engineering, Linux systems, self-hosting, and development.";
 

@@ -9,12 +9,12 @@ export function getStaticPaths() {
   return [
     { params: { lang: "en" } },
     { params: { lang: "fr" } },
-    { params: { lang: "jp" } },
+    { params: { lang: "ja" } },
   ];
 }
 
 export const GET: APIRoute = async ({ params }) => {
-  const lang = (params.lang || "en") as "en" | "fr" | "jp";
+  const lang = (params.lang || "en") as "en" | "fr" | "ja";
   const author = uiStrings.siteTitle[lang] || "Artus Mosquet";
 
   const rawTitle = uiStrings.navReading[lang] || "Reading List";
@@ -23,14 +23,14 @@ export const GET: APIRoute = async ({ params }) => {
   const subtitle =
     lang === "fr"
       ? "Livres & Littérature"
-      : lang === "jp"
+      : lang === "ja"
         ? "本と読書記録"
         : "Books & Literature";
 
   const description =
     lang === "fr"
       ? "Livres sur l'informatique, l'ingénierie, la littérature japonaise, la philosophie et la technologie."
-      : lang === "jp"
+      : lang === "ja"
         ? "コンピュータサイエンス、工学、日本文学、哲学、技術に関する読書記録。"
         : "Books on computer science, engineering, Japanese literature, philosophy, and technology.";
 

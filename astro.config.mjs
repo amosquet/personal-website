@@ -44,14 +44,15 @@ export default defineConfig({
   },
 
   i18n: {
-    locales: ["en", "fr", "jp"],
+    locales: ["en", "fr", "ja"],
     defaultLocale: "en",
     fallback: {
       fr: "en",
-      jp: "en",
+      ja: "en",
     },
     routing: {
       prefixDefaultLocale: true,
+      redirectToDefaultLocale: true,
       fallbackType: "rewrite",
     },
   },

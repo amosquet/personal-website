@@ -7,7 +7,7 @@ import { getProjectSlug } from "@/utils/slugify";
 export const prerender = true;
 
 export function getStaticPaths() {
-  const langs = ["en", "fr", "jp"] as const;
+  const langs = ["en", "fr", "ja"] as const;
   return langs.flatMap((lang) => {
     return projects.map((project) => ({
       params: { lang, project: getProjectSlug(project) },
@@ -18,7 +18,7 @@ export function getStaticPaths() {
 
 export const GET: APIRoute = async ({ props, params }) => {
   const { project } = props as { project: (typeof projects)[0] };
-  const lang = (params.lang || "en") as "en" | "fr" | "jp";
+  const lang = (params.lang || "en") as "en" | "fr" | "ja";
   const author = uiStrings.siteTitle[lang] || "Artus Mosquet";
 
   const buffer = await generateOgImage({

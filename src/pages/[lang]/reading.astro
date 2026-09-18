@@ -3,11 +3,11 @@ export function getStaticPaths() {
     return [
         { params: { lang: "en" } },
         { params: { lang: "fr" } },
-        { params: { lang: "jp" } },
+        { params: { lang: "ja" } },
     ];
 }
 
-const { lang } = Astro.params as { lang: "en" | "fr" | "jp" };
+const { lang } = Astro.params as { lang: "en" | "fr" | "ja" };
 
 import Layout from "@/layouts/Layout.astro";
 import { useTranslations } from "@/i18n/utils";
