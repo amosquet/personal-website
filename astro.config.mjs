@@ -37,6 +37,7 @@ function bookCoversSync() {
 export default defineConfig({
   site: "https://artusmosquet.com",
   output: "static",
+  prerenderConflictBehavior: "ignore",
 
   redirects: {
     "/resume": "/Artus_Mosquet_Resume.pdf",
