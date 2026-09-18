@@ -27,22 +27,44 @@ The codebase follows this directory structure, where dynamic routing is handled 
 ├── src/
 │   ├── assets/
 │   ├── components/
+│   ├── content/
+│   │   ├── blog/
+│   │   └── now.md
 │   ├── data/
-│   │   └── hardware.json
+│   │   ├── hardware.json
+│   │   └── projects.json
 │   ├── i18n/
 │   ├── layouts/
 │   │   └── Layout.astro
-│   └── pages/
-│       ├── [lang]/
-│       │   ├── about.astro
-│       │   ├── blog.astro
-│       │   ├── contact.astro
-│       │   └── index.astro
-│       └── index.astro
+│   ├── lib/
+│   ├── pages/
+│   │   ├── [lang]/
+│   │   │   ├── blog/
+│   │   │   │   └── [slug].astro
+│   │   │   ├── projects/
+│   │   │   │   └── [project].astro
+│   │   │   ├── reading/
+│   │   │   │   ├── [isbn].astro
+│   │   │   │   └── suggest.astro
+│   │   │   ├── about.astro
+│   │   │   ├── blog.astro
+│   │   │   ├── faq.astro
+│   │   │   ├── hardware.astro
+│   │   │   ├── index.astro
+│   │   │   ├── now.astro
+│   │   │   ├── privacy.astro
+│   │   │   ├── projects.astro
+│   │   │   └── reading.astro
+│   │   └── index.astro
+│   ├── styles/
+│   │   └── global.css
+│   ├── utils/
+│   └── content.config.ts
 ├── astro.config.mjs
 ├── bun.lock
 ├── LICENSE
-└── package.json
+├── package.json
+└── tsconfig.json
 ```
 
 ## License & Copyright
