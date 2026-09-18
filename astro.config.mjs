@@ -53,7 +53,7 @@ export default defineConfig({
     },
     routing: {
       prefixDefaultLocale: true,
-      redirectToDefaultLocale: true,
+      redirectToDefaultLocale: false,
       fallbackType: "rewrite",
     },
   },

@@ -26,13 +26,21 @@
         <meta name="twitter:title" content="Artus Mosquet" />
         <meta name="twitter:description" content="Personal website of Artus Mosquet, Full-Time ECE Student at Purdue University." />
         <meta name="twitter:image" content="https://artusmosquet.com/og-image.png" />
+        <script is:inline>
+            const supportedLocales = ['en', 'fr', 'ja'];
+            let target = '/en/';
+            if (typeof navigator !== 'undefined' && navigator.languages) {
+                const preferred = navigator.languages.map(l => l.split('-')[0]).find(l => supportedLocales.includes(l));
+                if (preferred) {
+                    target = `/${preferred}/`;
+                }
+            }
+            window.location.replace(target);
+        </script>
     </head>
     <body>
         <noscript>
             <meta http-equiv="refresh" content="0;url=/en/" />
-            <p>
-                Redirecting to <a href="/en/">the default site</a>...
-            </p>
         </noscript>
     </body>
 </html>
