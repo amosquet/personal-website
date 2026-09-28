@@ -11,7 +11,7 @@
     "name": "Shisho Companion (Android)",
     "caption": "Android Reading & Task Companion",
     "description": "A native Android app to manage reading lists, notes, and reminders with Shisho.\nIt features offline-first caching with SQLCipher encryption, two-way PocketBase sync, Google Books integration, and scheduled notifications.",
-    "githubUrl": "https://github.com/amosquet/shisho-companion-android",
+    "githubUrl": "https://git.amcloud.dev/shisho-companion-android",
     "language": "Kotlin",
     "techStack": [
       "Kotlin",
@@ -28,7 +28,7 @@
     "name": "Email to Print",
     "caption": "Automated Print Service",
     "description": "A cross-platform Python service that monitors an IMAP email inbox and automatically prints any attachments it receives using CUPS.\nIt runs continuously in the background using launchd on macOS or systemd on Linux. It features two-sided printing, automatic nightly updates via cron, and optional Sentry integration for error tracking.\n\nThis service is currently being used by me and running 24/7, you can try it out by emailing an attachment to emailtoprint at amcloud.dev",
-    "githubUrl": "https://github.com/amosquet/emailtoprint",
+    "githubUrl": "https://git.amcloud.dev/emailtoprint",
     "language": "Python",
     "techStack": ["Python", "CUPS", "IMAP", "Sentry"]
   },
@@ -36,7 +36,7 @@
     "name": "shisho",
     "caption": "Personal Discord Bot",
     "description": "Named after the Japanese word for \"Librarian\", Shisho is a personal Discord bot built to manage my reading list and handle various automated tasks.\nIt works by connecting directly to my PocketBase book database to add and manage books on my reading list, automatically handling start and end dates. It can also receive and execute commands remotely via email and text messages. It's built with Python, managed via uv, and monitored with Sentry.",
-    "githubUrl": "https://github.com/amosquet/shisho",
+    "githubUrl": "https://git.amcloud.dev/shisho",
     "language": "Python",
     "techStack": ["Python", "Discord.py", "PocketBase", "Sentry"]
   },
@@ -44,7 +44,7 @@
     "name": "comfibeats",
     "caption": "24/7 Music Bot",
     "description": "A reliable, custom Discord music bot designed to run 24/7 playing Comfi Beats for LilyPichu.\nIt is built with Bun and discord.js and focuses on easy self-hosting. It features the ability to automatically join designated voice channels, play JSON-based playlists generated from local audio files, and manage per-server settings. It also includes an automatic self-updating script that pulls the latest changes from GitHub directly via Discord commands.",
-    "githubUrl": "https://github.com/amosquet/comfibeats",
+    "githubUrl": "https://git.amcloud.dev/comfibeats",
     "language": "JavaScript",
     "techStack": ["Bun", "Discord.js", "JavaScript"]
   },
@@ -52,7 +52,7 @@
     "name": "LJOtoAnki",
     "caption": "Flashcard Automation",
     "description": "A Python framework for automating the creation of Anki flashcards from Purdue's \"Learn Japanese Online\" (LJO) course materials.\nIt works by processing vocabulary PDFs using LLM clients (such as Gemini) to intelligently parse the Japanese learning words and output them into clean text files. These files can then be directly imported into Anki, saving countless hours of manual data entry.",
-    "githubUrl": "https://github.com/amosquet/LJOtoAnki",
+    "githubUrl": "https://git.amcloud.dev/LJOtoAnki",
     "language": "Python",
     "techStack": ["Python", "LLMs", "Anki"]
   },
@@ -61,6 +61,6 @@
     "caption": "custom encryption",
     "description": "A custom encryption algorithm written in Python. Designed to explore cryptography concepts.",
     "techStack": ["Python", "Cryptography", "Security"],
-    "githubUrl": "https://github.com/amosquet/RCCG"
+    "githubUrl": "https://git.amcloud.dev/Random-Cypher"
   }
 ]
