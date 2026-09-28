@@ -1,5 +1,13 @@
 [
   {
+    "name": "Study Deck",
+    "caption": "Local & Open Source Quizlet Alternative",
+    "description": "A local, Open Source, and better alternative to Quizlet.\nQuizlet asks that you pay money to use flashcards, Anki is annoying to use and really only made for flashcards.\nStudy Deck has all of the features of Quizlet, compatible with Quizlet and Anki study decks, and is free to use, in perpetuity.",
+    "githubUrl": "https://git.amcloud.dev/studydeck",
+    "language": "TypeScript",
+    "techStack": ["JavaScript", "TypeScript", "CSS", "HTML"]
+  },
+  {
     "name": "Shisho Companion (Android)",
     "caption": "Android Reading & Task Companion",
     "description": "A native Android app to manage reading lists, notes, and reminders with Shisho.\nIt features offline-first caching with SQLCipher encryption, two-way PocketBase sync, Google Books integration, and scheduled notifications.",
