@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { generateOgImage } from "@/utils/generateOgImage";
 import { uiStrings } from "@/i18n/uiStrings";
-import { cleanText } from "@/components/SEO.astro";
+import { cleanText } from "@/utils/cleanText";
 
 export const prerender = true;
 

@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 
 import sitemap from "@astrojs/sitemap";
 
+/** @returns {import("astro").AstroIntegration} */
 function bookCoversSync() {
   return {
     name: "book-covers-sync",

@@ -1,6 +1,8 @@
 ---
 import { defaultLocale, locales, type Locale } from "@/i18n/i18n";
 import { uiStrings } from "@/i18n/uiStrings";
+import { cleanText } from "@/utils/cleanText";
+export { cleanText };
 
 export interface Props {
   title?: string;
@@ -34,21 +36,6 @@ const defaultDescription =
   uiStrings.siteDescription?.[locale] ||
   "Personal website of Artus Mosquet, Full-Time ECE Student at Purdue University.";
 
-export function cleanText(input?: string): string {
-  if (!input) return "";
-  return input
-    .replace(/<rt[\s\S]*?<\/rt>/gi, "")
-    .replace(/<rp[\s\S]*?<\/rp>/gi, "")
-    .replace(/<[^>]+>/g, "")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s+/g, " ")
-    .trim();
-}
 
 const cleanTitleText = cleanText(title);
 const fullTitle = cleanTitleText

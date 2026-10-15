@@ -115,7 +115,7 @@ function wrapText(text: string, maxCharsPerLine: number, maxLines: number): stri
   return lines.slice(0, maxLines);
 }
 
-export async function generateOgImage(options: OgImageOptions): Promise<Buffer> {
+export async function generateOgImage(options: OgImageOptions): Promise<Uint8Array<ArrayBuffer>> {
   const width = 1200;
   const height = 630;
 
@@ -309,9 +309,10 @@ export async function generateOgImage(options: OgImageOptions): Promise<Buffer> 
 </svg>
 `;
 
-  return await sharp(Buffer.from(svg))
+  const buf = await sharp(Buffer.from(svg))
     .png({ quality: 95, compressionLevel: 9 })
     .toBuffer();
+  return new Uint8Array(buf.buffer as ArrayBuffer, buf.byteOffset, buf.byteLength);
 }
 
 export const generateOgImageForPost = generateOgImage;
