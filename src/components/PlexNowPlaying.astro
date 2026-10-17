@@ -57,10 +57,8 @@ const apiUrl =
         >
           <img
             id="plex-cover-img"
-            src=""
             alt=""
             class="w-full h-full object-cover hidden"
-            loading="lazy"
           />
           <div
             id="plex-cover-fallback"
@@ -271,10 +269,6 @@ const apiUrl =
 
       if (coverImg && coverFallback) {
         if (resolvedCover) {
-          if (currentCoverUrl !== resolvedCover) {
-            currentCoverUrl = resolvedCover;
-            coverImg.src = resolvedCover;
-          }
           coverImg.alt = track.album || track.title || "Album cover";
           coverImg.onload = () => {
             coverImg.classList.remove("hidden");
@@ -284,6 +278,13 @@ const apiUrl =
             coverImg.classList.add("hidden");
             coverFallback.classList.remove("hidden");
           };
+          if (currentCoverUrl !== resolvedCover) {
+            currentCoverUrl = resolvedCover;
+            coverImg.src = resolvedCover;
+          } else if (coverImg.complete && coverImg.naturalWidth > 0) {
+            coverImg.classList.remove("hidden");
+            coverFallback.classList.add("hidden");
+          }
         } else {
           currentCoverUrl = "";
           coverImg.removeAttribute("src");
