@@ -358,6 +358,7 @@ const apiUrl =
       topGrid.innerHTML = albums
         .map((a) => {
           const title = escapeHtml(a.title || "Untitled Album");
+          const artist = escapeHtml(a.artist || "Unknown Artist");
           const artistKey = a.parent_rating_key || a.artist_rating_key;
           const artistHref = artistKey
             ? `/${lang}/music/artist?id=${encodeURIComponent(artistKey)}`
@@ -533,7 +534,8 @@ const apiUrl =
         const data = await res.json();
         renderTopAlbums(data.top_albums || []);
         renderRecentTracks(data.recent_tracks || []);
-      } catch (_) {
+      } catch (err) {
+        console.error("Failed to load crate data:", err);
         renderTopAlbums([]);
         renderRecentTracks([]);
       }
