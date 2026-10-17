@@ -493,14 +493,14 @@ export const uiStrings: TypeUIStrings = {
     ja: "<ruby>音楽<rt>おんがく</rt></ruby> & <ruby>再生履歴<rt>さいせいりれき</rt></ruby>",
   },
   musicPageSubtitle: {
-    en: "Live playback telemetry, heavy rotation albums, and recently played tracks from my self-hosted Plex server.",
-    fr: "Télémétrie en direct, albums en boucle et morceaux récemment écoutés depuis mon serveur Plex auto-hébergé.",
-    ja: "自宅のPlexサーバーから取得したリアルタイム<ruby>再生状況<rt>さいせいじょうきょう</rt></ruby>、ヘビーローテーション、<ruby>最近<rt>さいきん</rt></ruby>の<ruby>再生履歴<rt>さいせいりれき</rt></ruby>。",
+    en: "Live playback telemetry, top played albums, and recently played tracks from my self-hosted Plex server.",
+    fr: "Télémétrie en direct, albums les plus écoutés et morceaux récemment écoutés depuis mon serveur Plex auto-hébergé.",
+    ja: "自宅のPlexサーバーから取得したリアルタイム<ruby>再生状況<rt>さいせいじょうきょう</rt></ruby>、<ruby>再生回数<rt>さいせいかいすう</rt></ruby>トップ、<ruby>最近<rt>さいきん</rt></ruby>の<ruby>再生履歴<rt>さいせいりれき</rt></ruby>。",
   },
   topRotationTitle: {
-    en: "Heavy Rotation",
-    fr: "En boucle",
-    ja: "ヘビーローテーション",
+    en: "Top Played",
+    fr: "Les plus écoutés",
+    ja: "<ruby>再生回数<rt>さいせいかいすう</rt></ruby>トップ",
   },
   recentlyPlayedTitle: {
     en: "Recently Played",
