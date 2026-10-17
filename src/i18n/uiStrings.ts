@@ -482,5 +482,111 @@ export const uiStrings: TypeUIStrings = {
     fr: "Diffusé via Plex",
     ja: "Plexでストリーミング",
   },
+  exploreMusicCrate: {
+    en: "Crate digging & history →",
+    fr: "Rotation & historique →",
+    ja: "<ruby>再生履歴<rt>さいせいりれき</rt></ruby>・おすすめ →",
+  },
+  musicPageTitle: {
+    en: "Music & Crate Digging",
+    fr: "Musique & Rotation",
+    ja: "<ruby>音楽<rt>おんがく</rt></ruby> & <ruby>再生履歴<rt>さいせいりれき</rt></ruby>",
+  },
+  musicPageSubtitle: {
+    en: "Live playback telemetry, heavy rotation albums, and recently played tracks from my self-hosted Plex server.",
+    fr: "Télémétrie en direct, albums en boucle et morceaux récemment écoutés depuis mon serveur Plex auto-hébergé.",
+    ja: "自宅のPlexサーバーから取得したリアルタイム<ruby>再生状況<rt>さいせいじょうきょう</rt></ruby>、ヘビーローテーション、<ruby>最近<rt>さいきん</rt></ruby>の<ruby>再生履歴<rt>さいせいりれき</rt></ruby>。",
+  },
+  topRotationTitle: {
+    en: "Heavy Rotation",
+    fr: "En boucle",
+    ja: "ヘビーローテーション",
+  },
+  recentlyPlayedTitle: {
+    en: "Recently Played",
+    fr: "Écoutés récemment",
+    ja: "<ruby>最近<rt>さいきん</rt></ruby><ruby>再生<rt>さいせい</rt></ruby>した<ruby>曲<rt>きょく</rt></ruby>",
+  },
+  playsCount: {
+    en: "plays",
+    fr: "écoutes",
+    ja: "回再生",
+  },
+  suggestMusic: {
+    en: "Recommend a Track or Album",
+    fr: "Recommander un morceau ou un album",
+    ja: "<ruby>曲<rt>きょく</rt></ruby>・アルバムを<ruby>推薦<rt>すいせん</rt></ruby>する",
+  },
+  suggestMusicDesc: {
+    en: "Have a song or album I should listen to? Send it to my queue via Shisho.",
+    fr: "Un morceau ou un album à me faire découvrir ? Envoyez-le via Shisho.",
+    ja: "おすすめの<ruby>曲<rt>きょく</rt></ruby>やアルバムがあれば、Shisho<ruby>経由<rt>けいゆ</rt></ruby>でぜひ<ruby>教<rt>おし</rt></ruby>えてください。",
+  },
+  musicKindLabel: {
+    en: "Type",
+    fr: "Type",
+    ja: "タイプ",
+  },
+  musicKindSong: {
+    en: "Song",
+    fr: "Morceau",
+    ja: "曲",
+  },
+  musicKindAlbum: {
+    en: "Album",
+    fr: "Album",
+    ja: "アルバム",
+  },
+  musicTitleLabel: {
+    en: "Song or Album Title",
+    fr: "Titre du morceau ou de l'album",
+    ja: "曲名またはアルバム名",
+  },
+  musicTitlePlaceholder: {
+    en: "e.g., Plastic Love",
+    fr: "ex. : Discovery",
+    ja: "例：Plastic Love",
+  },
+  musicArtistLabel: {
+    en: "Artist",
+    fr: "Artiste",
+    ja: "アーティスト",
+  },
+  musicArtistPlaceholder: {
+    en: "e.g., Mariya Takeuchi",
+    fr: "ex. : Daft Punk",
+    ja: "例：竹内まりや",
+  },
+  musicLinkLabel: {
+    en: "Link (Spotify, Bandcamp, YouTube, etc.)",
+    fr: "Lien (Spotify, Bandcamp, YouTube, etc.)",
+    ja: "リンク (Spotify, Bandcamp, YouTubeなど)",
+  },
+  musicReasonLabel: {
+    en: "Why should I listen to it?",
+    fr: "Pourquoi devrais-je l'écouter ?",
+    ja: "おすすめの理由は？",
+  },
+  musicValidationError: {
+    en: "Please provide both a Song/Album Title and an Artist.",
+    fr: "Veuillez renseigner à la fois le titre et l'artiste.",
+    ja: "タイトルとアーティストの両方を入力してください。",
+  },
+  noMusicSuggestions: {
+    en: "No music recommendations yet. Drop the first track!",
+    fr: "Aucune recommandation musicale pour l'instant. Soyez le premier !",
+    ja: "まだ推薦された音楽はありません。最初の1曲をぜひ！",
+  },
+  communityMusicSuggestions: {
+    en: "Community Crate",
+    fr: "Sélection de la communauté",
+    ja: "コミュニティからのおすすめ",
+  },
+  communityMusicDesc: {
+    en: "Songs and albums recommended by visitors.",
+    fr: "Morceaux et albums recommandés par les visiteurs.",
+    ja: "訪問者から推薦された曲・アルバムの一覧です。",
+  },
 };
+
 

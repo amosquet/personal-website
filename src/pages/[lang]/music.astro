@@ -1,0 +1,558 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import { useTranslations } from "@/i18n/utils";
+import PlexNowPlaying from "@/components/PlexNowPlaying.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "en" } },
+    { params: { lang: "fr" } },
+    { params: { lang: "ja" } },
+  ];
+}
+
+const { lang } = Astro.params as { lang: "en" | "fr" | "ja" };
+const t = useTranslations(lang);
+const apiUrl =
+  import.meta.env.PUBLIC_SHISHO_API_URL || "https://shisho.amcloud.dev";
+---
+
+<Layout title={t("musicPageTitle")} description={t("musicPageSubtitle")}>
+  <div class="max-w-5xl mx-auto px-4 py-12 space-y-14">
+    <!-- Top Header -->
+    <div>
+      <a
+        href={`/${lang}/`}
+        class="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white mb-6 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider transition-colors"
+      >
+        &larr; <Fragment set:html={t("navHome")} />
+      </a>
+
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div>
+          <h1
+            class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-50 tracking-tight mb-2"
+          >
+            <Fragment set:html={t("musicPageTitle")} />
+          </h1>
+          <p
+            class="text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl"
+            set:html={t("musicPageSubtitle")}
+          />
+        </div>
+        <a
+          href="#recommend-music-section"
+          class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-black dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 text-xs sm:text-sm font-semibold transition-colors self-start sm:self-auto shadow-xs"
+        >
+          <span>+</span>
+          <Fragment set:html={t("suggestMusic")} />
+        </a>
+      </div>
+    </div>
+
+    <!-- 1. Live Now Playing Banner -->
+    <PlexNowPlaying lang={lang} showCrateLink={false} />
+
+    <!-- 2. Heavy Rotation (Top Albums) -->
+    <section aria-labelledby="top-rotation-heading">
+      <div class="flex items-center justify-between mb-5 pb-2 border-b border-gray-200 dark:border-gray-700">
+        <h2
+          id="top-rotation-heading"
+          class="text-lg font-bold text-gray-900 dark:text-gray-50 flex items-center gap-2"
+        >
+          <Icon name="mdi:album" class="w-5 h-5 text-amber-500" />
+          <Fragment set:html={t("topRotationTitle")} />
+        </h2>
+      </div>
+
+      <div
+        id="crate-top-grid"
+        class="grid grid-cols-2 sm:grid-cols-4 gap-4"
+        aria-live="polite"
+      >
+        {
+          [1, 2, 3, 4].map(() => (
+            <div class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 animate-pulse">
+              <div class="w-full aspect-square bg-gray-100 dark:bg-gray-700 mb-3" />
+              <div class="h-4 bg-gray-200 dark:bg-gray-600 w-3/4 mb-1.5" />
+              <div class="h-3 bg-gray-100 dark:bg-gray-700 w-1/2" />
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- 3. Recently Played Tracks -->
+    <section aria-labelledby="recent-tracks-heading">
+      <div class="flex items-center justify-between mb-5 pb-2 border-b border-gray-200 dark:border-gray-700">
+        <h2
+          id="recent-tracks-heading"
+          class="text-lg font-bold text-gray-900 dark:text-gray-50 flex items-center gap-2"
+        >
+          <Icon name="mdi:history" class="w-5 h-5 text-gray-500 dark:text-gray-400" />
+          <Fragment set:html={t("recentlyPlayedTitle")} />
+        </h2>
+      </div>
+
+      <div
+        id="crate-recent-grid"
+        class="grid grid-cols-1 md:grid-cols-2 gap-3"
+        aria-live="polite"
+      >
+        {
+          [1, 2, 3, 4, 5, 6].map(() => (
+            <div class="border border-gray-200 dark:border-gray-700 p-3.5 bg-white dark:bg-gray-800 flex items-center gap-3.5 animate-pulse">
+              <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 shrink-0" />
+              <div class="flex-1 space-y-2">
+                <div class="h-4 bg-gray-200 dark:bg-gray-600 w-2/3" />
+                <div class="h-3 bg-gray-100 dark:bg-gray-700 w-1/2" />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- 4. Recommend Music Form -->
+    <section
+      id="recommend-music-section"
+      class="border-t border-gray-200 dark:border-gray-700 pt-12"
+    >
+      <div class="mb-8 text-center max-w-2xl mx-auto">
+        <h2
+          class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-50 tracking-tight mb-2"
+        >
+          <Fragment set:html={t("suggestMusic")} />
+        </h2>
+        <p
+          class="text-sm sm:text-base text-gray-600 dark:text-gray-400"
+          set:html={t("suggestMusicDesc")}
+        />
+      </div>
+
+      <div
+        class="border border-gray-200 dark:border-gray-700 p-6 sm:p-8 bg-white dark:bg-gray-800 shadow-xs max-w-2xl mx-auto"
+      >
+        <div
+          id="music-suggest-alert"
+          class="hidden p-3.5 text-sm mb-5 transition-all"
+          role="alert"
+        >
+        </div>
+
+        <form id="suggest-music-form" class="space-y-5">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div>
+              <label
+                for="music-kind"
+                class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1"
+              >
+                {t("musicKindLabel")}
+              </label>
+              <select
+                id="music-kind"
+                name="kind"
+                class="w-full bg-white dark:bg-gray-700 p-3 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors"
+              >
+                <option value="song">{t("musicKindSong")}</option>
+                <option value="album">{t("musicKindAlbum")}</option>
+              </select>
+            </div>
+
+            <div class="sm:col-span-2">
+              <label
+                for="music-title"
+                class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1"
+              >
+                {t("musicTitleLabel")} *
+              </label>
+              <input
+                type="text"
+                id="music-title"
+                name="title"
+                required
+                class="w-full bg-white dark:bg-gray-700 p-3 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                placeholder={t("musicTitlePlaceholder")}
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label
+                for="music-artist"
+                class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1"
+              >
+                {t("musicArtistLabel")} *
+              </label>
+              <input
+                type="text"
+                id="music-artist"
+                name="artist"
+                required
+                class="w-full bg-white dark:bg-gray-700 p-3 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                placeholder={t("musicArtistPlaceholder")}
+              />
+            </div>
+
+            <div>
+              <label
+                for="music-submitter"
+                class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1"
+              >
+                {t("yourName")}{" "}
+                <span class="text-gray-400 dark:text-gray-500 font-normal"
+                  >({t("optional")})</span
+                >
+              </label>
+              <input
+                type="text"
+                id="music-submitter"
+                name="submitter"
+                class="w-full bg-white dark:bg-gray-700 p-3 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                placeholder={t("yourNamePlaceholder")}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="music-url"
+              class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1"
+            >
+              {t("musicLinkLabel")}{" "}
+              <span class="text-gray-400 dark:text-gray-500 font-normal"
+                >({t("optional")})</span
+              >
+            </label>
+            <input
+              type="url"
+              id="music-url"
+              name="url"
+              class="w-full bg-white dark:bg-gray-700 p-3 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm font-mono focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500"
+              placeholder="https://open.spotify.com/..."
+            />
+          </div>
+
+          <div>
+            <label
+              for="music-reason"
+              class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1"
+            >
+              {t("musicReasonLabel")}{" "}
+              <span class="text-gray-400 dark:text-gray-500 font-normal"
+                >({t("optional")})</span
+              >
+            </label>
+            <textarea
+              id="music-reason"
+              name="reason"
+              rows="3"
+              class="w-full bg-white dark:bg-gray-700 p-3 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500"
+              placeholder={t("bookReasonPlaceholder")}></textarea>
+          </div>
+
+          <div class="pt-2">
+            <button
+              type="submit"
+              id="music-submit-btn"
+              class="w-full sm:w-auto px-8 py-3 bg-black dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-300 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
+            >
+              <span id="music-submit-text">{t("submitSuggestion")}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 5. Community Music Recommendations -->
+    <section class="border-t border-gray-200 dark:border-gray-700 pt-12">
+      <div class="mb-6">
+        <h2
+          class="text-2xl font-bold text-gray-900 dark:text-gray-50 mb-1"
+          set:html={t("communityMusicSuggestions")}
+        />
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          {t("communityMusicDesc")}
+        </p>
+      </div>
+
+      <div
+        id="music-suggestions-grid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        aria-live="polite"
+      >
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<script
+  is:inline
+  define:vars={{
+    apiUrl,
+    playsCountLabel: t("playsCount"),
+    emptySuggestionsText: t("noMusicSuggestions"),
+    suggestedByText: t("suggestedBy"),
+    submitBtnText: t("submitSuggestion"),
+    submittingText: t("submitting"),
+    successPrefix: t("suggestSuccess"),
+    validationErrorText: t("musicValidationError"),
+    networkErrorText: t("suggestNetworkError"),
+    songLabel: t("musicKindSong"),
+    albumLabel: t("musicKindAlbum"),
+  }}
+>
+  (() => {
+    const baseUrl = (apiUrl || "").replace(/\/$/, "");
+    const topGrid = document.getElementById("crate-top-grid");
+    const recentGrid = document.getElementById("crate-recent-grid");
+    const suggestionsGrid = document.getElementById("music-suggestions-grid");
+    const form = document.getElementById("suggest-music-form");
+    const alertBox = document.getElementById("music-suggest-alert");
+    const submitBtn = document.getElementById("music-submit-btn");
+    const submitText = document.getElementById("music-submit-text");
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      const d = document.createElement("div");
+      d.textContent = String(str);
+      return d.innerHTML;
+    }
+
+    function resolveCoverUrl(url) {
+      if (!url) return "";
+      if (url.startsWith("http")) return url;
+      return `${baseUrl}${url.startsWith("/") ? "" : "/"}${url}`;
+    }
+
+    function formatDuration(ms) {
+      const totalSeconds = Math.max(0, Math.floor((ms || 0) / 1000));
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    }
+
+    function renderTopAlbums(albums) {
+      if (!topGrid) return;
+      if (!albums || albums.length === 0) {
+        topGrid.innerHTML = `
+          <div class="col-span-full border border-dashed border-gray-300 dark:border-gray-700 p-8 text-center text-xs text-gray-500 dark:text-gray-400">
+            No rotation history available right now.
+          </div>
+        `;
+        return;
+      }
+
+      topGrid.innerHTML = albums
+        .map((a) => {
+          const title = escapeHtml(a.title || "Untitled Album");
+          const artist = escapeHtml(a.artist || "Unknown Artist");
+          const year = a.year ? ` (${escapeHtml(a.year)})` : "";
+          const cover = resolveCoverUrl(a.cover_url);
+          const plays = Number(a.view_count) || 0;
+          const playsBadge =
+            plays > 0
+              ? `<span class="px-2 py-0.5 text-[10px] font-mono bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600">${plays} ${escapeHtml(playsCountLabel)}</span>`
+              : "";
+
+          const imgMarkup = cover
+            ? `<img src="${escapeHtml(cover)}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.style.display='none'" />`
+            : "";
+
+          return `
+            <div class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col justify-between group">
+              <div>
+                <div class="w-full aspect-square bg-gray-50 dark:bg-gray-700/60 border border-gray-100 dark:border-gray-700 mb-3 overflow-hidden flex items-center justify-center">
+                  ${imgMarkup}
+                </div>
+                <h3 class="font-bold text-gray-900 dark:text-gray-50 text-sm line-clamp-1" title="${title}">${title}</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">${artist}${year}</p>
+              </div>
+              <div class="mt-3 pt-2 border-t border-gray-50 dark:border-gray-700/60 flex items-center justify-between">
+                ${playsBadge}
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    function renderRecentTracks(tracks) {
+      if (!recentGrid) return;
+      if (!tracks || tracks.length === 0) {
+        recentGrid.innerHTML = `
+          <div class="col-span-full border border-dashed border-gray-300 dark:border-gray-700 p-8 text-center text-xs text-gray-500 dark:text-gray-400">
+            No recently played tracks available right now.
+          </div>
+        `;
+        return;
+      }
+
+      recentGrid.innerHTML = tracks
+        .map((t) => {
+          const title = escapeHtml(t.title || "Untitled Track");
+          const artist = escapeHtml(t.artist || "Unknown Artist");
+          const album = t.album ? ` • ${escapeHtml(t.album)}` : "";
+          const cover = resolveCoverUrl(t.cover_url);
+          const dur = t.duration_ms ? formatDuration(t.duration_ms) : "";
+          const codec = t.audio_codec
+            ? `<span class="px-1.5 py-0.5 text-[10px] font-mono bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">${escapeHtml(t.audio_codec)}</span>`
+            : "";
+
+          const imgMarkup = cover
+            ? `<img src="${escapeHtml(cover)}" alt="${title}" class="w-full h-full object-cover" onerror="this.style.display='none'" />`
+            : "";
+
+          return `
+            <div class="border border-gray-200 dark:border-gray-700 p-3.5 bg-white dark:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500 transition-colors flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-12 h-12 shrink-0 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 overflow-hidden flex items-center justify-center">
+                  ${imgMarkup}
+                </div>
+                <div class="min-w-0">
+                  <h3 class="text-sm font-bold text-gray-900 dark:text-gray-50 truncate">${title}</h3>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 truncate">${artist}${album}</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 shrink-0">
+                ${codec}
+                ${dur ? `<span class="text-xs font-mono text-gray-400 dark:text-gray-500">${dur}</span>` : ""}
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    function renderSuggestions(items) {
+      if (!suggestionsGrid) return;
+      if (!items || items.length === 0) {
+        suggestionsGrid.innerHTML = `
+          <div class="col-span-full border border-dashed border-gray-300 dark:border-gray-700 p-10 text-center bg-gray-50 dark:bg-gray-800/40 text-sm text-gray-500 dark:text-gray-400">
+            ${escapeHtml(emptySuggestionsText)}
+          </div>
+        `;
+        return;
+      }
+
+      suggestionsGrid.innerHTML = items
+        .map((s) => {
+          const title = escapeHtml(s.title || "Untitled");
+          const artist = escapeHtml(s.artist || "Unknown Artist");
+          const kindBadge =
+            s.kind === "album" ? escapeHtml(albumLabel) : escapeHtml(songLabel);
+          const submitter = escapeHtml(s.submitter || "Anonymous");
+          const dateStr = s.date_suggested ? escapeHtml(s.date_suggested.split(" ")[0]) : "";
+          const coverMarkup = s.cover_url
+            ? `<img src="${escapeHtml(s.cover_url)}" alt="${title}" class="w-16 h-16 object-cover shrink-0 border border-gray-200 dark:border-gray-600" onerror="this.style.display='none'" />`
+            : "";
+          const reasonMarkup = s.message
+            ? `<blockquote class="text-xs sm:text-sm text-gray-700 dark:text-gray-300 italic border-l-2 border-amber-400 pl-3 py-1 my-3 bg-amber-50/40 dark:bg-amber-900/10">"${escapeHtml(s.message)}"</blockquote>`
+            : "";
+          const linkMarkup = s.url
+            ? `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline">Listen ↗</a>`
+            : "";
+
+          return `
+            <div class="border border-gray-200 dark:border-gray-700 p-5 bg-white dark:bg-gray-800 shadow-xs flex flex-col justify-between">
+              <div>
+                <div class="flex items-start gap-3.5 mb-2">
+                  ${coverMarkup}
+                  <div class="min-w-0 flex-1">
+                    <span class="inline-block px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 mb-1">${kindBadge}</span>
+                    <h3 class="text-base font-bold text-gray-900 dark:text-gray-50 truncate">${title}</h3>
+                    <p class="text-xs text-gray-600 dark:text-gray-400 font-medium truncate">${artist}</p>
+                  </div>
+                </div>
+                ${reasonMarkup}
+              </div>
+              <div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                <span>${escapeHtml(suggestedByText)} <strong>${submitter}</strong> ${dateStr ? `• ${dateStr}` : ""}</span>
+                ${linkMarkup}
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    async function loadCrate() {
+      try {
+        const res = await fetch(`${baseUrl}/api/plex/crate`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        renderTopAlbums(data.top_albums || []);
+        renderRecentTracks(data.recent_tracks || []);
+      } catch (_) {
+        renderTopAlbums([]);
+        renderRecentTracks([]);
+      }
+    }
+
+    async function loadSuggestions() {
+      try {
+        const res = await fetch(`${baseUrl}/api/plex/suggestions`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        renderSuggestions(data.suggestions || []);
+      } catch (_) {
+        renderSuggestions([]);
+      }
+    }
+
+    function showAlert(msg, isError) {
+      if (!alertBox) return;
+      alertBox.textContent = msg;
+      alertBox.className = isError
+        ? "p-3.5 text-sm mb-5 border border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300"
+        : "p-3.5 text-sm mb-5 border border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300";
+    }
+
+    form?.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!form || !submitBtn || !submitText) return;
+
+      const formData = new FormData(form);
+      const title = String(formData.get("title") || "").trim();
+      const artist = String(formData.get("artist") || "").trim();
+      const kind = String(formData.get("kind") || "song").trim();
+      const url = String(formData.get("url") || "").trim();
+      const reason = String(formData.get("reason") || "").trim();
+      const submitter = String(formData.get("submitter") || "").trim();
+
+      if (!title || !artist) {
+        showAlert(validationErrorText, true);
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitText.textContent = submittingText;
+
+      try {
+        const res = await fetch(`${baseUrl}/api/plex/suggest`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, artist, kind, url, reason, submitter }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          showAlert(data.error || networkErrorText, true);
+        } else {
+          showAlert(`${successPrefix}: ${data.display_name || title}`, false);
+          form.reset();
+          loadSuggestions();
+        }
+      } catch (_) {
+        showAlert(networkErrorText, true);
+      } finally {
+        submitBtn.disabled = false;
+        submitText.textContent = submitBtnText;
+      }
+    });
+
+    loadCrate();
+    loadSuggestions();
+  })();
+</script>
