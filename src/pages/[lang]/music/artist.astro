@@ -307,7 +307,174 @@ const apiUrl =
       if (errorEl) errorEl.classList.remove("hidden");
     }
 
+    function renderArtist(artist) {
+      if (!artist || !artist.name) return;
+
+      // Update document title dynamically
+      document.title = `${artist.name} | Music`;
+
+      // Render Avatar
+      const avatar = resolveCoverUrl(artist.avatar_url);
+      if (avatar && avatarImg && avatarFallback) {
+        avatarImg.alt = `${artist.name} photo`;
+        avatarImg.onload = () => {
+          avatarImg.classList.remove("hidden");
+          avatarFallback.classList.add("hidden");
+        };
+        avatarImg.onerror = () => {
+          avatarImg.classList.add("hidden");
+          avatarFallback.classList.remove("hidden");
+        };
+        avatarImg.src = avatar;
+      }
+
+      // Name
+      if (nameEl) nameEl.textContent = artist.name || "Unknown Artist";
+
+      // Country
+      if (countryBadge) {
+        if (Array.isArray(artist.countries) && artist.countries.length > 0) {
+          countryBadge.textContent = artist.countries.join(", ");
+          countryBadge.classList.remove("hidden");
+        } else {
+          countryBadge.classList.add("hidden");
+        }
+      }
+
+      // Stats
+      const totalAlbs = Number(artist.total_albums) || 0;
+      const totalTrks = Number(artist.total_tracks) || 0;
+      const totalPlays = Number(artist.total_plays) || 0;
+
+      if (albumCountEl) {
+        albumCountEl.textContent = `${totalAlbs} ${albumsLabel}`;
+      }
+      if (trackCountEl) {
+        trackCountEl.textContent = `${totalTrks} ${tracksLabel}`;
+      }
+      if (albumsCountBadge) {
+        albumsCountBadge.textContent = `${totalAlbs} ${albumsLabel}`;
+      }
+
+      if (totalPlays > 0 && playsCountEl && playsSeparator) {
+        playsCountEl.textContent = `${totalPlays} ${totalPlaysLabel}`;
+        playsCountEl.classList.remove("hidden");
+        playsSeparator.classList.remove("hidden");
+      }
+
+      // Genres
+      if (genresWrapper && Array.isArray(artist.genres) && artist.genres.length > 0) {
+        genresWrapper.innerHTML = artist.genres
+          .map(
+            (g) =>
+              `<span class="px-2 py-0.5 text-[10px] font-medium bg-gray-100 dark:bg-gray-700/60 text-gray-600 dark:text-gray-300">${escapeHtml(g)}</span>`
+          )
+          .join("");
+        genresWrapper.classList.remove("hidden");
+      }
+
+      // Bio
+      if (summaryWrapper && artist.summary) {
+        summaryWrapper.textContent = artist.summary;
+        summaryWrapper.classList.remove("hidden");
+      }
+
+      // Action Buttons
+      if (youtubeBtn) {
+        if (artist.youtube_music_url) {
+          youtubeBtn.href = artist.youtube_music_url;
+          youtubeBtn.classList.remove("hidden");
+        } else {
+          youtubeBtn.classList.add("hidden");
+        }
+      }
+
+      if (qobuzBtn) {
+        if (artist.qobuz_url) {
+          qobuzBtn.href = artist.qobuz_url;
+          qobuzBtn.classList.remove("hidden");
+        } else {
+          qobuzBtn.classList.add("hidden");
+        }
+      }
+
+      // Top Tracks
+      if (tracksBody && Array.isArray(artist.top_tracks)) {
+        tracksBody.innerHTML = artist.top_tracks
+          .map((track, idx) => {
+            const rank = idx + 1;
+            const title = escapeHtml(track.title || "Untitled Track");
+            const albumLink = track.album_rating_key
+              ? `<a href="/${lang}/music/album?id=${encodeURIComponent(track.album_rating_key)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${escapeHtml(track.album || "")}</a>`
+              : escapeHtml(track.album || "");
+            const trackPlays = Number(track.view_count) || 0;
+            const playsHtml =
+              trackPlays > 0
+                ? `<span class="font-mono text-gray-600 dark:text-gray-300">${trackPlays}</span>`
+                : `<span class="text-gray-400 dark:text-gray-600">-</span>`;
+            const dur = track.duration_ms ? formatDuration(track.duration_ms) : "-";
+
+            return `
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                <td class="py-3 px-4 text-center font-mono text-gray-400 dark:text-gray-500 font-bold">${rank}</td>
+                <td class="py-3 px-4">
+                  <div class="font-semibold text-gray-900 dark:text-gray-50">${title}</div>
+                </td>
+                <td class="py-3 px-4 hidden sm:table-cell text-gray-500 dark:text-gray-400">${albumLink}</td>
+                <td class="py-3 px-4 hidden md:table-cell text-right">${playsHtml}</td>
+                <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${dur}</td>
+              </tr>
+            `;
+          })
+          .join("");
+      }
+
+      // Discography / Albums Grid
+      if (albumsGrid && Array.isArray(artist.albums)) {
+        albumsGrid.innerHTML = artist.albums
+          .map((alb) => {
+            const aTitle = escapeHtml(alb.title || "Untitled Album");
+            const aYear = alb.year ? ` (${escapeHtml(alb.year)})` : "";
+            const aCover = resolveCoverUrl(alb.cover_url);
+            const aPlays = Number(alb.view_count) || 0;
+            const aPlaysBadge =
+              aPlays > 0
+                ? `<span class="px-2 py-0.5 text-[10px] font-mono bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600">${aPlays} ${escapeHtml(playsCountLabel)}</span>`
+                : "";
+
+            const imgMarkup = aCover
+              ? `<img src="${escapeHtml(aCover)}" alt="${aTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.style.display='none'" />`
+              : "";
+
+            return `
+              <a
+                href="/${lang}/music/album?id=${encodeURIComponent(alb.rating_key)}"
+                class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col justify-between group block cursor-pointer"
+              >
+                <div>
+                  <div class="w-full aspect-square bg-gray-50 dark:bg-gray-700/60 border border-gray-100 dark:border-gray-700 mb-3 overflow-hidden flex items-center justify-center">
+                    ${imgMarkup}
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-gray-50 text-sm line-clamp-1 group-hover:underline" title="${aTitle}">${aTitle}</h3>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">${artist.name}${aYear}</p>
+                </div>
+                <div class="mt-3 pt-2 border-t border-gray-50 dark:border-gray-700/60 flex items-center justify-between">
+                  ${aPlaysBadge}
+                </div>
+              </a>
+            `;
+          })
+          .join("");
+      }
+
+      // Hide skeleton and reveal content
+      if (skeletonEl) skeletonEl.classList.add("hidden");
+      if (errorEl) errorEl.classList.add("hidden");
+      if (contentEl) contentEl.classList.remove("hidden");
+    }
+
     async function loadArtist() {
+      let hasRendered = false;
       try {
         if (!artistId && albumId) {
           const albumRes = await fetch(`${baseUrl}/api/plex/album?id=${encodeURIComponent(albumId)}`);
@@ -331,9 +498,23 @@ const apiUrl =
           return;
         }
 
+        // 1. Instant render from client-side sessionStorage cache if available
+        const cacheKey = `shisho_artist_${artistId}`;
+        try {
+          const cachedRaw = sessionStorage.getItem(cacheKey);
+          if (cachedRaw) {
+            const cachedParsed = JSON.parse(cachedRaw);
+            if (cachedParsed && cachedParsed.data) {
+              renderArtist(cachedParsed.data);
+              hasRendered = true;
+            }
+          }
+        } catch (_) {}
+
+        // 2. Fetch fresh data (benefits from Shisho in-memory and edge cache)
         const res = await fetch(`${baseUrl}/api/plex/artist?id=${encodeURIComponent(artistId)}`);
         if (!res.ok) {
-          showError();
+          if (!hasRendered) showError();
           return;
         }
 
@@ -350,172 +531,21 @@ const apiUrl =
         }
 
         if (!artist || !artist.name) {
-          showError();
+          if (!hasRendered) showError();
           return;
         }
 
-        // Update document title dynamically
-        document.title = `${artist.name} | Music`;
+        renderArtist(artist);
 
-        // Render Avatar
-        const avatar = resolveCoverUrl(artist.avatar_url);
-        if (avatar && avatarImg && avatarFallback) {
-          avatarImg.alt = `${artist.name} photo`;
-          avatarImg.onload = () => {
-            avatarImg.classList.remove("hidden");
-            avatarFallback.classList.add("hidden");
-          };
-          avatarImg.onerror = () => {
-            avatarImg.classList.add("hidden");
-            avatarFallback.classList.remove("hidden");
-          };
-          avatarImg.src = avatar;
-        }
-
-        // Name
-        if (nameEl) nameEl.textContent = artist.name || "Unknown Artist";
-
-        // Country
-        if (countryBadge) {
-          if (Array.isArray(artist.countries) && artist.countries.length > 0) {
-            countryBadge.textContent = artist.countries.join(", ");
-            countryBadge.classList.remove("hidden");
-          } else {
-            countryBadge.classList.add("hidden");
+        // 3. Persist to sessionStorage for subsequent instant loads
+        try {
+          sessionStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), data: artist }));
+          if (artist.artist_rating_key && artist.artist_rating_key !== artistId) {
+            sessionStorage.setItem(`shisho_artist_${artist.artist_rating_key}`, JSON.stringify({ timestamp: Date.now(), data: artist }));
           }
-        }
-
-        // Stats
-        const totalAlbs = Number(artist.total_albums) || 0;
-        const totalTrks = Number(artist.total_tracks) || 0;
-        const totalPlays = Number(artist.total_plays) || 0;
-
-        if (albumCountEl) {
-          albumCountEl.textContent = `${totalAlbs} ${albumsLabel}`;
-        }
-        if (trackCountEl) {
-          trackCountEl.textContent = `${totalTrks} ${tracksLabel}`;
-        }
-        if (albumsCountBadge) {
-          albumsCountBadge.textContent = `${totalAlbs} ${albumsLabel}`;
-        }
-
-        if (totalPlays > 0 && playsCountEl && playsSeparator) {
-          playsCountEl.textContent = `${totalPlays} ${totalPlaysLabel}`;
-          playsCountEl.classList.remove("hidden");
-          playsSeparator.classList.remove("hidden");
-        }
-
-        // Genres
-        if (genresWrapper && Array.isArray(artist.genres) && artist.genres.length > 0) {
-          genresWrapper.innerHTML = artist.genres
-            .map(
-              (g) =>
-                `<span class="px-2 py-0.5 text-[10px] font-medium bg-gray-100 dark:bg-gray-700/60 text-gray-600 dark:text-gray-300">${escapeHtml(g)}</span>`
-            )
-            .join("");
-          genresWrapper.classList.remove("hidden");
-        }
-
-        // Bio
-        if (summaryWrapper && artist.summary) {
-          summaryWrapper.textContent = artist.summary;
-          summaryWrapper.classList.remove("hidden");
-        }
-
-        // Action Buttons
-        if (youtubeBtn) {
-          if (artist.youtube_music_url) {
-            youtubeBtn.href = artist.youtube_music_url;
-            youtubeBtn.classList.remove("hidden");
-          } else {
-            youtubeBtn.classList.add("hidden");
-          }
-        }
-
-        if (qobuzBtn) {
-          if (artist.qobuz_url) {
-            qobuzBtn.href = artist.qobuz_url;
-            qobuzBtn.classList.remove("hidden");
-          } else {
-            qobuzBtn.classList.add("hidden");
-          }
-        }
-
-        // Top Tracks
-        if (tracksBody && Array.isArray(artist.top_tracks)) {
-          tracksBody.innerHTML = artist.top_tracks
-            .map((track, idx) => {
-              const rank = idx + 1;
-              const title = escapeHtml(track.title || "Untitled Track");
-              const albumLink = track.album_rating_key
-                ? `<a href="/${lang}/music/album?id=${encodeURIComponent(track.album_rating_key)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${escapeHtml(track.album || "")}</a>`
-                : escapeHtml(track.album || "");
-              const trackPlays = Number(track.view_count) || 0;
-              const playsHtml =
-                trackPlays > 0
-                  ? `<span class="font-mono text-gray-600 dark:text-gray-300">${trackPlays}</span>`
-                  : `<span class="text-gray-400 dark:text-gray-600">-</span>`;
-              const dur = track.duration_ms ? formatDuration(track.duration_ms) : "-";
-
-              return `
-                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-                  <td class="py-3 px-4 text-center font-mono text-gray-400 dark:text-gray-500 font-bold">${rank}</td>
-                  <td class="py-3 px-4">
-                    <div class="font-semibold text-gray-900 dark:text-gray-50">${title}</div>
-                  </td>
-                  <td class="py-3 px-4 hidden sm:table-cell text-gray-500 dark:text-gray-400">${albumLink}</td>
-                  <td class="py-3 px-4 hidden md:table-cell text-right">${playsHtml}</td>
-                  <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${dur}</td>
-                </tr>
-              `;
-            })
-            .join("");
-        }
-
-        // Discography / Albums Grid
-        if (albumsGrid && Array.isArray(artist.albums)) {
-          albumsGrid.innerHTML = artist.albums
-            .map((alb) => {
-              const aTitle = escapeHtml(alb.title || "Untitled Album");
-              const aYear = alb.year ? ` (${escapeHtml(alb.year)})` : "";
-              const aCover = resolveCoverUrl(alb.cover_url);
-              const aPlays = Number(alb.view_count) || 0;
-              const aPlaysBadge =
-                aPlays > 0
-                  ? `<span class="px-2 py-0.5 text-[10px] font-mono bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600">${aPlays} ${escapeHtml(playsCountLabel)}</span>`
-                  : "";
-
-              const imgMarkup = aCover
-                ? `<img src="${escapeHtml(aCover)}" alt="${aTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.style.display='none'" />`
-                : "";
-
-              return `
-                <a
-                  href="/${lang}/music/album?id=${encodeURIComponent(alb.rating_key)}"
-                  class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col justify-between group block cursor-pointer"
-                >
-                  <div>
-                    <div class="w-full aspect-square bg-gray-50 dark:bg-gray-700/60 border border-gray-100 dark:border-gray-700 mb-3 overflow-hidden flex items-center justify-center">
-                      ${imgMarkup}
-                    </div>
-                    <h3 class="font-bold text-gray-900 dark:text-gray-50 text-sm line-clamp-1 group-hover:underline" title="${aTitle}">${aTitle}</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">${artist.name}${aYear}</p>
-                  </div>
-                  <div class="mt-3 pt-2 border-t border-gray-50 dark:border-gray-700/60 flex items-center justify-between">
-                    ${aPlaysBadge}
-                  </div>
-                </a>
-              `;
-            })
-            .join("");
-        }
-
-        // Hide skeleton and reveal content
-        if (skeletonEl) skeletonEl.classList.add("hidden");
-        if (contentEl) contentEl.classList.remove("hidden");
+        } catch (_) {}
       } catch (err) {
-        showError();
+        if (!hasRendered) showError();
       }
     }
 

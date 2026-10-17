@@ -302,7 +302,158 @@ const apiUrl =
       if (errorEl) errorEl.classList.remove("hidden");
     }
 
+    function renderAlbum(album) {
+      if (!album || !album.title) return;
+
+      // Update document title dynamically
+      document.title = `${album.title} — ${album.artist} | Music`;
+
+      // Render Cover
+      const cover = resolveCoverUrl(album.cover_url);
+      if (cover && coverImg && coverFallback) {
+        coverImg.alt = `${album.title} album cover`;
+        coverImg.onload = () => {
+          coverImg.classList.remove("hidden");
+          coverFallback.classList.add("hidden");
+        };
+        coverImg.onerror = () => {
+          coverImg.classList.add("hidden");
+          coverFallback.classList.remove("hidden");
+        };
+        coverImg.src = cover;
+      }
+
+      // Title and Artist
+      if (titleEl) titleEl.textContent = album.title || "Untitled Album";
+      if (artistEl) {
+        const artistName = album.artist || "Unknown Artist";
+        if (album.artist_rating_key) {
+          artistEl.innerHTML = `<a href="/${lang}/music/artist?id=${encodeURIComponent(album.artist_rating_key)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${escapeHtml(artistName)}</a>`;
+        } else {
+          artistEl.textContent = artistName;
+        }
+      }
+
+      // Badges
+      if (yearBadge) {
+        if (album.year) {
+          yearBadge.textContent = String(album.year);
+          yearBadge.classList.remove("hidden");
+        } else {
+          yearBadge.classList.add("hidden");
+        }
+      }
+
+      if (qualityBadge) {
+        if (album.audio_quality) {
+          qualityBadge.textContent = album.audio_quality;
+          qualityBadge.classList.remove("hidden");
+        } else {
+          qualityBadge.classList.add("hidden");
+        }
+      }
+
+      // Stats
+      const trackCount = (album.tracks || []).length || album.track_count || 0;
+      if (trackCountEl) {
+        trackCountEl.textContent = `${trackCount} ${trackCount === 1 ? "track" : "tracks"}`;
+      }
+      if (tracklistSummaryCount) {
+        tracklistSummaryCount.textContent = `${trackCount} ${trackCount === 1 ? "track" : "tracks"}`;
+      }
+
+      if (durationEl && album.total_duration_ms) {
+        durationEl.textContent = formatLongDuration(album.total_duration_ms);
+      }
+
+      const plays = Number(album.view_count) || 0;
+      if (plays > 0 && playsCountEl && playsSeparator) {
+        playsCountEl.textContent = `${plays} ${playsCountLabel}`;
+        playsCountEl.classList.remove("hidden");
+        playsSeparator.classList.remove("hidden");
+      }
+
+      // Genres
+      if (genresWrapper && Array.isArray(album.genres) && album.genres.length > 0) {
+        genresWrapper.innerHTML = album.genres
+          .map(
+            (g) =>
+              `<span class="px-2 py-0.5 text-[10px] font-medium bg-gray-100 dark:bg-gray-700/60 text-gray-600 dark:text-gray-300">${escapeHtml(g)}</span>`
+          )
+          .join("");
+        genresWrapper.classList.remove("hidden");
+      }
+
+      // Summary
+      if (summaryWrapper && album.summary) {
+        summaryWrapper.textContent = album.summary;
+        summaryWrapper.classList.remove("hidden");
+      }
+
+      // Action Buttons
+      if (youtubeBtn) {
+        const ytUrl = album.youtube_music_url || album.youtube_url;
+        if (ytUrl) {
+          youtubeBtn.href = ytUrl;
+          youtubeBtn.classList.remove("hidden");
+        } else {
+          youtubeBtn.classList.add("hidden");
+        }
+      }
+
+      if (qobuzBtn) {
+        if (album.qobuz_url) {
+          qobuzBtn.href = album.qobuz_url;
+          qobuzBtn.classList.remove("hidden");
+        } else {
+          qobuzBtn.classList.add("hidden");
+        }
+      }
+
+      // Tracklist Table
+      if (tracklistBody && Array.isArray(album.tracks)) {
+        tracklistBody.innerHTML = album.tracks
+          .map((track, idx) => {
+            const num = track.index || (idx + 1);
+            const title = escapeHtml(track.title || "Untitled Track");
+            const artistSub =
+              track.artist && track.artist !== album.artist
+                ? `<div class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">${escapeHtml(track.artist)}</div>`
+                : "";
+            const formatBadge = track.audio_quality || track.audio_codec || "";
+            const formatHtml = formatBadge
+              ? `<span class="px-1.5 py-0.5 text-[10px] font-mono bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">${escapeHtml(formatBadge)}</span>`
+              : `<span class="text-gray-400 dark:text-gray-600">-</span>`;
+            const trackPlays = Number(track.view_count) || 0;
+            const playsHtml =
+              trackPlays > 0
+                ? `<span class="font-mono text-gray-600 dark:text-gray-300">${trackPlays}</span>`
+                : `<span class="text-gray-400 dark:text-gray-600">-</span>`;
+            const dur = track.duration_ms ? formatDuration(track.duration_ms) : "-";
+
+            return `
+              <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                <td class="py-3 px-4 text-center font-mono text-gray-400 dark:text-gray-500">${escapeHtml(String(num))}</td>
+                <td class="py-3 px-4">
+                  <div class="font-semibold text-gray-900 dark:text-gray-50">${title}</div>
+                  ${artistSub}
+                </td>
+                <td class="py-3 px-4 hidden sm:table-cell">${formatHtml}</td>
+                <td class="py-3 px-4 hidden md:table-cell text-right">${playsHtml}</td>
+                <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${dur}</td>
+              </tr>
+            `;
+          })
+          .join("");
+      }
+
+      // Hide skeleton and reveal content
+      if (skeletonEl) skeletonEl.classList.add("hidden");
+      if (contentEl) contentEl.classList.remove("hidden");
+    }
+
     async function loadAlbum() {
+      let hasRendered = false;
       try {
         if (!albumId && trackId) {
           albumId = trackId;
@@ -313,15 +464,29 @@ const apiUrl =
           return;
         }
 
+        // 1. Instant render from client-side sessionStorage cache if available
+        const cacheKey = `shisho_album_${albumId}`;
+        try {
+          const cachedRaw = sessionStorage.getItem(cacheKey);
+          if (cachedRaw) {
+            const cachedParsed = JSON.parse(cachedRaw);
+            if (cachedParsed && cachedParsed.data) {
+              renderAlbum(cachedParsed.data);
+              hasRendered = true;
+            }
+          }
+        } catch (_) {}
+
+        // 2. Fetch fresh data (benefits from Shisho in-memory and edge cache)
         const res = await fetch(`${baseUrl}/api/plex/album?id=${encodeURIComponent(albumId)}`);
         if (!res.ok) {
-          showError();
+          if (!hasRendered) showError();
           return;
         }
 
         const album = await res.json();
         if (!album || !album.title) {
-          showError();
+          if (!hasRendered) showError();
           return;
         }
 
@@ -333,153 +498,17 @@ const apiUrl =
           }
         }
 
-        // Update document title dynamically
-        document.title = `${album.title} — ${album.artist} | Music`;
+        renderAlbum(album);
 
-        // Render Cover
-        const cover = resolveCoverUrl(album.cover_url);
-        if (cover && coverImg && coverFallback) {
-          coverImg.alt = `${album.title} album cover`;
-          coverImg.onload = () => {
-            coverImg.classList.remove("hidden");
-            coverFallback.classList.add("hidden");
-          };
-          coverImg.onerror = () => {
-            coverImg.classList.add("hidden");
-            coverFallback.classList.remove("hidden");
-          };
-          coverImg.src = cover;
-        }
-
-        // Title and Artist
-        if (titleEl) titleEl.textContent = album.title || "Untitled Album";
-        if (artistEl) {
-          const artistName = album.artist || "Unknown Artist";
-          if (album.artist_rating_key) {
-            artistEl.innerHTML = `<a href="/${lang}/music/artist?id=${encodeURIComponent(album.artist_rating_key)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${escapeHtml(artistName)}</a>`;
-          } else {
-            artistEl.textContent = artistName;
+        // 3. Persist to sessionStorage for subsequent instant loads
+        try {
+          sessionStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), data: album }));
+          if (album.rating_key && album.rating_key !== albumId) {
+            sessionStorage.setItem(`shisho_album_${album.rating_key}`, JSON.stringify({ timestamp: Date.now(), data: album }));
           }
-        }
-
-        // Badges
-        if (yearBadge) {
-          if (album.year) {
-            yearBadge.textContent = String(album.year);
-            yearBadge.classList.remove("hidden");
-          } else {
-            yearBadge.classList.add("hidden");
-          }
-        }
-
-        if (qualityBadge) {
-          if (album.audio_quality) {
-            qualityBadge.textContent = album.audio_quality;
-            qualityBadge.classList.remove("hidden");
-          } else {
-            qualityBadge.classList.add("hidden");
-          }
-        }
-
-        // Stats
-        const trackCount = (album.tracks || []).length || album.track_count || 0;
-        if (trackCountEl) {
-          trackCountEl.textContent = `${trackCount} ${trackCount === 1 ? "track" : "tracks"}`;
-        }
-        if (tracklistSummaryCount) {
-          tracklistSummaryCount.textContent = `${trackCount} ${trackCount === 1 ? "track" : "tracks"}`;
-        }
-
-        if (durationEl && album.total_duration_ms) {
-          durationEl.textContent = formatLongDuration(album.total_duration_ms);
-        }
-
-        const plays = Number(album.view_count) || 0;
-        if (plays > 0 && playsCountEl && playsSeparator) {
-          playsCountEl.textContent = `${plays} ${playsCountLabel}`;
-          playsCountEl.classList.remove("hidden");
-          playsSeparator.classList.remove("hidden");
-        }
-
-        // Genres
-        if (genresWrapper && Array.isArray(album.genres) && album.genres.length > 0) {
-          genresWrapper.innerHTML = album.genres
-            .map(
-              (g) =>
-                `<span class="px-2 py-0.5 text-[10px] font-medium bg-gray-100 dark:bg-gray-700/60 text-gray-600 dark:text-gray-300">${escapeHtml(g)}</span>`
-            )
-            .join("");
-          genresWrapper.classList.remove("hidden");
-        }
-
-        // Summary
-        if (summaryWrapper && album.summary) {
-          summaryWrapper.textContent = album.summary;
-          summaryWrapper.classList.remove("hidden");
-        }
-
-        // Action Buttons
-        if (youtubeBtn) {
-          const ytUrl = album.youtube_music_url || album.youtube_url;
-          if (ytUrl) {
-            youtubeBtn.href = ytUrl;
-            youtubeBtn.classList.remove("hidden");
-          } else {
-            youtubeBtn.classList.add("hidden");
-          }
-        }
-
-        if (qobuzBtn) {
-          if (album.qobuz_url) {
-            qobuzBtn.href = album.qobuz_url;
-            qobuzBtn.classList.remove("hidden");
-          } else {
-            qobuzBtn.classList.add("hidden");
-          }
-        }
-
-        // Tracklist Table
-        if (tracklistBody && Array.isArray(album.tracks)) {
-          tracklistBody.innerHTML = album.tracks
-            .map((track, idx) => {
-              const num = track.index || (idx + 1);
-              const title = escapeHtml(track.title || "Untitled Track");
-              const artistSub =
-                track.artist && track.artist !== album.artist
-                  ? `<div class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">${escapeHtml(track.artist)}</div>`
-                  : "";
-              const formatBadge = track.audio_quality || track.audio_codec || "";
-              const formatHtml = formatBadge
-                ? `<span class="px-1.5 py-0.5 text-[10px] font-mono bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">${escapeHtml(formatBadge)}</span>`
-                : `<span class="text-gray-400 dark:text-gray-600">-</span>`;
-              const trackPlays = Number(track.view_count) || 0;
-              const playsHtml =
-                trackPlays > 0
-                  ? `<span class="font-mono text-gray-600 dark:text-gray-300">${trackPlays}</span>`
-                  : `<span class="text-gray-400 dark:text-gray-600">-</span>`;
-              const dur = track.duration_ms ? formatDuration(track.duration_ms) : "-";
-
-              return `
-                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-                  <td class="py-3 px-4 text-center font-mono text-gray-400 dark:text-gray-500">${escapeHtml(String(num))}</td>
-                  <td class="py-3 px-4">
-                    <div class="font-semibold text-gray-900 dark:text-gray-50">${title}</div>
-                    ${artistSub}
-                  </td>
-                  <td class="py-3 px-4 hidden sm:table-cell">${formatHtml}</td>
-                  <td class="py-3 px-4 hidden md:table-cell text-right">${playsHtml}</td>
-                  <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${dur}</td>
-                </tr>
-              `;
-            })
-            .join("");
-        }
-
-        // Hide skeleton and reveal content
-        if (skeletonEl) skeletonEl.classList.add("hidden");
-        if (contentEl) contentEl.classList.remove("hidden");
+        } catch (_) {}
       } catch (err) {
-        showError();
+        if (!hasRendered) showError();
       }
     }
 
