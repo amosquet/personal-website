@@ -419,8 +419,8 @@ const apiUrl =
         // Tracklist Table
         if (tracklistBody && Array.isArray(album.tracks)) {
           tracklistBody.innerHTML = album.tracks
-            .map((track) => {
-              const num = track.index || "-";
+            .map((track, idx) => {
+              const num = track.index || (idx + 1);
               const title = escapeHtml(track.title || "Untitled Track");
               const artistSub =
                 track.artist && track.artist !== album.artist

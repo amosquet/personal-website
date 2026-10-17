@@ -593,9 +593,9 @@ export const uiStrings: TypeUIStrings = {
     ja: "訪問者から推薦された曲・アルバムの一覧です。",
   },
   backToMusic: {
-    en: "← Back to Music",
-    fr: "← Retour à la musique",
-    ja: "← 音楽に戻る",
+    en: "Back to Music",
+    fr: "Retour à la musique",
+    ja: "音楽に戻る",
   },
   albumNotFound: {
     en: "Album Not Found",
