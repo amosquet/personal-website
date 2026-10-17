@@ -300,6 +300,7 @@ const apiUrl =
 <script
   is:inline
   define:vars={{
+    lang,
     apiUrl,
     playsCountLabel: t("playsCount"),
     emptySuggestionsText: t("noMusicSuggestions"),
@@ -370,19 +371,25 @@ const apiUrl =
             ? `<img src="${escapeHtml(cover)}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.style.display='none'" />`
             : "";
 
+          const isLink = Boolean(a.rating_key);
+          const tag = isLink ? "a" : "div";
+          const linkAttr = isLink
+            ? `href="/${lang}/music/album?id=${encodeURIComponent(a.rating_key)}"`
+            : "";
+
           return `
-            <div class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col justify-between group">
+            <${tag} ${linkAttr} class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col justify-between group block cursor-pointer">
               <div>
                 <div class="w-full aspect-square bg-gray-50 dark:bg-gray-700/60 border border-gray-100 dark:border-gray-700 mb-3 overflow-hidden flex items-center justify-center">
                   ${imgMarkup}
                 </div>
-                <h3 class="font-bold text-gray-900 dark:text-gray-50 text-sm line-clamp-1" title="${title}">${title}</h3>
+                <h3 class="font-bold text-gray-900 dark:text-gray-50 text-sm line-clamp-1 group-hover:underline" title="${title}">${title}</h3>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">${artist}${year}</p>
               </div>
               <div class="mt-3 pt-2 border-t border-gray-50 dark:border-gray-700/60 flex items-center justify-between">
                 ${playsBadge}
               </div>
-            </div>
+            </${tag}>
           `;
         })
         .join("");
@@ -403,7 +410,14 @@ const apiUrl =
         .map((t) => {
           const title = escapeHtml(t.title || "Untitled Track");
           const artist = escapeHtml(t.artist || "Unknown Artist");
-          const album = t.album ? ` • ${escapeHtml(t.album)}` : "";
+          const albumText = t.album ? escapeHtml(t.album) : "";
+          const albumMarkup = t.album
+            ? ` • ${
+                t.parent_rating_key
+                  ? `<a href="/${lang}/music/album?id=${encodeURIComponent(t.parent_rating_key)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${albumText}</a>`
+                  : albumText
+              }`
+            : "";
           const cover = resolveCoverUrl(t.cover_url);
           const dur = t.duration_ms ? formatDuration(t.duration_ms) : "";
           const codec = t.audio_codec
@@ -414,15 +428,20 @@ const apiUrl =
             ? `<img src="${escapeHtml(cover)}" alt="${title}" class="w-full h-full object-cover" onerror="this.style.display='none'" />`
             : "";
 
+          const coverWrapStart = t.parent_rating_key
+            ? `<a href="/${lang}/music/album?id=${encodeURIComponent(t.parent_rating_key)}" class="w-12 h-12 shrink-0 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 overflow-hidden flex items-center justify-center hover:opacity-85 transition-opacity">`
+            : `<div class="w-12 h-12 shrink-0 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 overflow-hidden flex items-center justify-center">`;
+          const coverWrapEnd = t.parent_rating_key ? `</a>` : `</div>`;
+
           return `
             <div class="border border-gray-200 dark:border-gray-700 p-3.5 bg-white dark:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500 transition-colors flex items-center justify-between gap-3">
               <div class="flex items-center gap-3 min-w-0">
-                <div class="w-12 h-12 shrink-0 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 overflow-hidden flex items-center justify-center">
+                ${coverWrapStart}
                   ${imgMarkup}
-                </div>
+                ${coverWrapEnd}
                 <div class="min-w-0">
                   <h3 class="text-sm font-bold text-gray-900 dark:text-gray-50 truncate">${title}</h3>
-                  <p class="text-xs text-gray-500 dark:text-gray-400 truncate">${artist}${album}</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 truncate">${artist}${albumMarkup}</p>
                 </div>
               </div>
               <div class="flex items-center gap-2 shrink-0">

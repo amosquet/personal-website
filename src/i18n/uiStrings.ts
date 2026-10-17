@@ -592,6 +592,67 @@ export const uiStrings: TypeUIStrings = {
     fr: "Morceaux et albums recommandés par les visiteurs.",
     ja: "訪問者から推薦された曲・アルバムの一覧です。",
   },
+  backToMusic: {
+    en: "← Back to Music",
+    fr: "← Retour à la musique",
+    ja: "← 音楽に戻る",
+  },
+  albumNotFound: {
+    en: "Album Not Found",
+    fr: "Album introuvable",
+    ja: "アルバムが見つかりませんでした",
+  },
+  albumNotFoundDesc: {
+    en: "The requested album could not be located in the music library, or the link is invalid.",
+    fr: "L'album demandé est introuvable dans la bibliothèque ou le lien est invalide.",
+    ja: "指定されたアルバムがライブラリに見つからないか、リンクが無効です。",
+  },
+  albumTracks: {
+    en: "Tracks",
+    fr: "Pistes",
+    ja: "収録曲",
+  },
+  trackNumber: {
+    en: "#",
+    fr: "N°",
+    ja: "#",
+  },
+  trackTitle: {
+    en: "Title",
+    fr: "Titre",
+    ja: "タイトル",
+  },
+  trackDuration: {
+    en: "Duration",
+    fr: "Durée",
+    ja: "時間",
+  },
+  trackPlays: {
+    en: "Plays",
+    fr: "Écoutes",
+    ja: "再生数",
+  },
+  totalPlaytime: {
+    en: "Total Playtime",
+    fr: "Durée totale",
+    ja: "合計時間",
+  },
+  listenOnYoutube: {
+    en: "Listen on YouTube",
+    fr: "Écouter sur YouTube",
+    ja: "YouTubeで聴く",
+  },
+  listenOnQobuz: {
+    en: "Hi-Res on Qobuz",
+    fr: "Hi-Res sur Qobuz",
+    ja: "Qobuzで聴く",
+  },
+  loadingAlbum: {
+    en: "Loading album tracks...",
+    fr: "Chargement des pistes de l'album...",
+    ja: "アルバム情報を読み込み中...",
+  },
 };
+
 
 
