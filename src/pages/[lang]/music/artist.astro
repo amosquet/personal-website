@@ -1,0 +1,494 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+import { useTranslations } from "@/i18n/utils";
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "en" } },
+    { params: { lang: "fr" } },
+    { params: { lang: "ja" } },
+  ];
+}
+
+const { lang } = Astro.params as { lang: "en" | "fr" | "ja" };
+const t = useTranslations(lang);
+const apiUrl =
+  import.meta.env.PUBLIC_SHISHO_API_URL || "https://shisho.amcloud.dev";
+---
+
+<Layout
+  title={`${t("artistPageTitle")} | ${t("musicPageTitle")}`}
+  description={t("musicPageSubtitle")}
+  image={`/${lang}/music/og.png`}
+  type="profile"
+>
+  <div class="max-w-5xl mx-auto px-4 py-12 space-y-12">
+    <!-- Back to Music navigation -->
+    <div>
+      <a
+        href={`/${lang}/music`}
+        class="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider transition-colors"
+      >
+        &larr; <Fragment set:html={t("backToMusic")} />
+      </a>
+    </div>
+
+    <!-- 1. Loading Skeleton -->
+    <div id="artist-skeleton" class="space-y-10 animate-pulse">
+      <div class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 flex flex-col sm:flex-row gap-6 sm:gap-8 items-start sm:items-center">
+        <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-gray-100 dark:bg-gray-700 shrink-0" />
+        <div class="flex-1 w-full space-y-4">
+          <div class="h-4 bg-gray-200 dark:bg-gray-700 w-1/4" />
+          <div class="h-9 bg-gray-200 dark:bg-gray-600 w-2/3" />
+          <div class="h-4 bg-gray-100 dark:bg-gray-700 w-1/2" />
+          <div class="flex gap-3 pt-2">
+            <div class="h-8 w-28 bg-gray-200 dark:bg-gray-700" />
+            <div class="h-8 w-28 bg-gray-200 dark:bg-gray-700" />
+          </div>
+        </div>
+      </div>
+
+      <div class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 space-y-4">
+        <div class="h-5 bg-gray-200 dark:bg-gray-700 w-1/5 mb-4" />
+        {
+          [1, 2, 3, 4, 5].map(() => (
+            <div class="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700/60">
+              <div class="h-4 bg-gray-100 dark:bg-gray-700 w-1/3" />
+              <div class="h-4 bg-gray-100 dark:bg-gray-700 w-16" />
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 space-y-4">
+        <div class="h-5 bg-gray-200 dark:bg-gray-700 w-1/5 mb-4" />
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {
+            [1, 2, 3, 4].map(() => (
+              <div class="space-y-2">
+                <div class="aspect-square bg-gray-100 dark:bg-gray-700" />
+                <div class="h-3 bg-gray-200 dark:bg-gray-700 w-3/4" />
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Error / Not Found State -->
+    <div
+      id="artist-error"
+      class="hidden border border-dashed border-gray-300 dark:border-gray-700 p-12 text-center bg-white dark:bg-gray-800"
+      role="alert"
+    >
+      <div class="w-12 h-12 mx-auto mb-4 text-gray-400 dark:text-gray-500 flex items-center justify-center">
+        <Icon name="mdi:account-music" class="w-12 h-12" />
+      </div>
+      <h2
+        id="artist-error-title"
+        class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2"
+      >
+        <Fragment set:html={t("artistNotFound")} />
+      </h2>
+      <p
+        id="artist-error-desc"
+        class="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto mb-6"
+      >
+        <Fragment set:html={t("artistNotFoundDesc")} />
+      </p>
+      <a
+        href={`/${lang}/music`}
+        class="inline-flex items-center gap-2 px-5 py-2.5 bg-black dark:bg-gray-100 text-white dark:text-gray-900 text-xs font-semibold hover:bg-gray-800 dark:hover:bg-gray-300 transition-colors"
+      >
+        &larr; <Fragment set:html={t("backToMusic")} />
+      </a>
+    </div>
+
+    <!-- 3. Loaded Artist Content -->
+    <article id="artist-content" class="hidden space-y-12" aria-live="polite">
+      <!-- Artist Hero Header -->
+      <header class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 flex flex-col sm:flex-row gap-6 sm:gap-8 items-start sm:items-center shadow-xs">
+        <!-- Avatar / Photo -->
+        <div class="w-28 h-28 sm:w-36 sm:h-36 shrink-0 aspect-square rounded-full border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 overflow-hidden flex items-center justify-center relative shadow-xs">
+          <img
+            id="artist-avatar-img"
+            src=""
+            alt=""
+            class="w-full h-full object-cover hidden"
+          />
+          <div
+            id="artist-avatar-fallback"
+            class="flex items-center justify-center text-gray-400 dark:text-gray-500"
+          >
+            <Icon name="mdi:account-music" class="w-16 h-16" />
+          </div>
+        </div>
+
+        <!-- Metadata & Actions -->
+        <div class="flex-1 min-w-0">
+          <div class="flex flex-wrap items-center gap-2 mb-2">
+            <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+              {t("artistPageTitle")}
+            </span>
+            <span
+              id="artist-country-badge"
+              class="hidden px-2 py-0.5 text-[10px] font-mono bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
+            ></span>
+          </div>
+
+          <h1
+            id="artist-name"
+            class="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 dark:text-gray-50 tracking-tight leading-tight"
+          ></h1>
+
+          <!-- Statistics -->
+          <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
+            <span id="artist-album-count" class="font-medium"></span>
+            <span class="text-gray-300 dark:text-gray-600">•</span>
+            <span id="artist-track-count" class="font-medium"></span>
+            <span id="artist-plays-separator" class="hidden text-gray-300 dark:text-gray-600">•</span>
+            <span id="artist-plays-count" class="hidden font-mono"></span>
+          </div>
+
+          <!-- Genres -->
+          <div id="artist-genres-wrapper" class="hidden mt-3 flex flex-wrap gap-1.5"></div>
+
+          <!-- Bio -->
+          <div
+            id="artist-summary-wrapper"
+            class="hidden mt-4 pt-3 border-t border-gray-100 dark:border-gray-700/60 text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl line-clamp-3 hover:line-clamp-none transition-all cursor-pointer"
+            title="Click to expand biography"
+          ></div>
+
+          <!-- Action Buttons -->
+          <div id="artist-actions-wrapper" class="mt-5 flex flex-wrap items-center gap-3">
+            <a
+              id="artist-youtube-btn"
+              href=""
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hidden inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800/60 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors"
+            >
+              <Icon name="simple-icons:youtubemusic" class="w-3.5 h-3.5 text-red-600 dark:text-red-400" />
+              <span>{t("listenOnYoutubeMusicArtist")}</span>
+              <span class="text-xs">↗</span>
+            </a>
+
+            <a
+              id="artist-qobuz-btn"
+              href=""
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hidden inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-800/60 hover:bg-sky-100 dark:hover:bg-sky-900/50 transition-colors"
+            >
+              <Icon name="mdi:music" class="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+              <span>{t("listenOnQobuzArtist")}</span>
+              <span class="text-xs">↗</span>
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- 1. Top Tracks Section -->
+      <section id="artist-top-tracks-section" aria-labelledby="top-tracks-heading" class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xs">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <h2
+            id="top-tracks-heading"
+            class="text-base font-bold text-gray-900 dark:text-gray-50 flex items-center gap-2"
+          >
+            <Icon name="mdi:fire" class="w-5 h-5 text-amber-500" />
+            <Fragment set:html={t("artistTopTracks")} />
+          </h2>
+          <span class="text-xs text-gray-400 dark:text-gray-500 font-mono">Plex library</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-gray-50 dark:bg-gray-700/40 border-b border-gray-200 dark:border-gray-700 text-[11px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+              <tr>
+                <th scope="col" class="py-3 px-4 w-12 text-center">{t("trackNumber")}</th>
+                <th scope="col" class="py-3 px-4">{t("trackTitle")}</th>
+                <th scope="col" class="py-3 px-4 hidden sm:table-cell">{t("musicKindAlbum")}</th>
+                <th scope="col" class="py-3 px-4 hidden md:table-cell text-right">{t("trackPlays")}</th>
+                <th scope="col" class="py-3 px-4 text-right w-20">{t("trackDuration")}</th>
+              </tr>
+            </thead>
+            <tbody id="artist-tracks-body" class="divide-y divide-gray-100 dark:divide-gray-700/60">
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 2. Discography / Albums Grid -->
+      <section id="artist-albums-section" aria-labelledby="discography-heading">
+        <div class="flex items-center justify-between mb-5 pb-2 border-b border-gray-200 dark:border-gray-700">
+          <h2
+            id="discography-heading"
+            class="text-lg font-bold text-gray-900 dark:text-gray-50 flex items-center gap-2"
+          >
+            <Icon name="mdi:album" class="w-5 h-5 text-amber-500" />
+            <Fragment set:html={t("artistAlbums")} />
+          </h2>
+          <span id="artist-albums-count-badge" class="text-xs font-mono text-gray-400 dark:text-gray-500"></span>
+        </div>
+
+        <div
+          id="artist-albums-grid"
+          class="grid grid-cols-2 sm:grid-cols-4 gap-4"
+        >
+        </div>
+      </section>
+    </article>
+  </div>
+</Layout>
+
+<script
+  is:inline
+  define:vars={{
+    lang,
+    apiUrl,
+    playsCountLabel: t("playsCount"),
+    totalPlaysLabel: t("totalArtistPlays"),
+    albumsLabel: t("totalArtistAlbums"),
+    tracksLabel: t("totalArtistTracks"),
+  }}
+>
+  (() => {
+    const baseUrl = (apiUrl || "").replace(/\/$/, "");
+    const params = new URLSearchParams(window.location.search);
+    const artistId = (params.get("id") || "").trim();
+
+    const skeletonEl = document.getElementById("artist-skeleton");
+    const errorEl = document.getElementById("artist-error");
+    const contentEl = document.getElementById("artist-content");
+
+    const avatarImg = document.getElementById("artist-avatar-img");
+    const avatarFallback = document.getElementById("artist-avatar-fallback");
+    const nameEl = document.getElementById("artist-name");
+    const countryBadge = document.getElementById("artist-country-badge");
+    const albumCountEl = document.getElementById("artist-album-count");
+    const trackCountEl = document.getElementById("artist-track-count");
+    const playsSeparator = document.getElementById("artist-plays-separator");
+    const playsCountEl = document.getElementById("artist-plays-count");
+    const genresWrapper = document.getElementById("artist-genres-wrapper");
+    const summaryWrapper = document.getElementById("artist-summary-wrapper");
+    const youtubeBtn = document.getElementById("artist-youtube-btn");
+    const qobuzBtn = document.getElementById("artist-qobuz-btn");
+    const tracksBody = document.getElementById("artist-tracks-body");
+    const albumsGrid = document.getElementById("artist-albums-grid");
+    const albumsCountBadge = document.getElementById("artist-albums-count-badge");
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      const d = document.createElement("div");
+      d.textContent = String(str);
+      return d.innerHTML;
+    }
+
+    function resolveCoverUrl(url) {
+      if (!url) return "";
+      if (url.startsWith("http")) return url;
+      return `${baseUrl}${url.startsWith("/") ? "" : "/"}${url}`;
+    }
+
+    function formatDuration(ms) {
+      const totalSeconds = Math.max(0, Math.floor((ms || 0) / 1000));
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    }
+
+    function showError() {
+      if (skeletonEl) skeletonEl.classList.add("hidden");
+      if (contentEl) contentEl.classList.add("hidden");
+      if (errorEl) errorEl.classList.remove("hidden");
+    }
+
+    async function loadArtist() {
+      if (!artistId) {
+        showError();
+        return;
+      }
+
+      try {
+        const res = await fetch(`${baseUrl}/api/plex/artist?id=${encodeURIComponent(artistId)}`);
+        if (!res.ok) {
+          showError();
+          return;
+        }
+
+        const artist = await res.json();
+        if (!artist || !artist.name) {
+          showError();
+          return;
+        }
+
+        // Update document title dynamically
+        document.title = `${artist.name} | Music`;
+
+        // Render Avatar
+        const avatar = resolveCoverUrl(artist.avatar_url);
+        if (avatar && avatarImg && avatarFallback) {
+          avatarImg.alt = `${artist.name} photo`;
+          avatarImg.onload = () => {
+            avatarImg.classList.remove("hidden");
+            avatarFallback.classList.add("hidden");
+          };
+          avatarImg.onerror = () => {
+            avatarImg.classList.add("hidden");
+            avatarFallback.classList.remove("hidden");
+          };
+          avatarImg.src = avatar;
+        }
+
+        // Name
+        if (nameEl) nameEl.textContent = artist.name || "Unknown Artist";
+
+        // Country
+        if (countryBadge) {
+          if (Array.isArray(artist.countries) && artist.countries.length > 0) {
+            countryBadge.textContent = artist.countries.join(", ");
+            countryBadge.classList.remove("hidden");
+          } else {
+            countryBadge.classList.add("hidden");
+          }
+        }
+
+        // Stats
+        const totalAlbs = Number(artist.total_albums) || 0;
+        const totalTrks = Number(artist.total_tracks) || 0;
+        const totalPlays = Number(artist.total_plays) || 0;
+
+        if (albumCountEl) {
+          albumCountEl.textContent = `${totalAlbs} ${albumsLabel}`;
+        }
+        if (trackCountEl) {
+          trackCountEl.textContent = `${totalTrks} ${tracksLabel}`;
+        }
+        if (albumsCountBadge) {
+          albumsCountBadge.textContent = `${totalAlbs} ${albumsLabel}`;
+        }
+
+        if (totalPlays > 0 && playsCountEl && playsSeparator) {
+          playsCountEl.textContent = `${totalPlays} ${totalPlaysLabel}`;
+          playsCountEl.classList.remove("hidden");
+          playsSeparator.classList.remove("hidden");
+        }
+
+        // Genres
+        if (genresWrapper && Array.isArray(artist.genres) && artist.genres.length > 0) {
+          genresWrapper.innerHTML = artist.genres
+            .map(
+              (g) =>
+                `<span class="px-2 py-0.5 text-[10px] font-medium bg-gray-100 dark:bg-gray-700/60 text-gray-600 dark:text-gray-300">${escapeHtml(g)}</span>`
+            )
+            .join("");
+          genresWrapper.classList.remove("hidden");
+        }
+
+        // Bio
+        if (summaryWrapper && artist.summary) {
+          summaryWrapper.textContent = artist.summary;
+          summaryWrapper.classList.remove("hidden");
+        }
+
+        // Action Buttons
+        if (youtubeBtn) {
+          if (artist.youtube_music_url) {
+            youtubeBtn.href = artist.youtube_music_url;
+            youtubeBtn.classList.remove("hidden");
+          } else {
+            youtubeBtn.classList.add("hidden");
+          }
+        }
+
+        if (qobuzBtn) {
+          if (artist.qobuz_url) {
+            qobuzBtn.href = artist.qobuz_url;
+            qobuzBtn.classList.remove("hidden");
+          } else {
+            qobuzBtn.classList.add("hidden");
+          }
+        }
+
+        // Top Tracks
+        if (tracksBody && Array.isArray(artist.top_tracks)) {
+          tracksBody.innerHTML = artist.top_tracks
+            .map((track, idx) => {
+              const rank = idx + 1;
+              const title = escapeHtml(track.title || "Untitled Track");
+              const albumLink = track.album_rating_key
+                ? `<a href="/${lang}/music/album?id=${encodeURIComponent(track.album_rating_key)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${escapeHtml(track.album || "")}</a>`
+                : escapeHtml(track.album || "");
+              const trackPlays = Number(track.view_count) || 0;
+              const playsHtml =
+                trackPlays > 0
+                  ? `<span class="font-mono text-gray-600 dark:text-gray-300">${trackPlays}</span>`
+                  : `<span class="text-gray-400 dark:text-gray-600">-</span>`;
+              const dur = track.duration_ms ? formatDuration(track.duration_ms) : "-";
+
+              return `
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                  <td class="py-3 px-4 text-center font-mono text-gray-400 dark:text-gray-500 font-bold">${rank}</td>
+                  <td class="py-3 px-4">
+                    <div class="font-semibold text-gray-900 dark:text-gray-50">${title}</div>
+                  </td>
+                  <td class="py-3 px-4 hidden sm:table-cell text-gray-500 dark:text-gray-400">${albumLink}</td>
+                  <td class="py-3 px-4 hidden md:table-cell text-right">${playsHtml}</td>
+                  <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${dur}</td>
+                </tr>
+              `;
+            })
+            .join("");
+        }
+
+        // Discography / Albums Grid
+        if (albumsGrid && Array.isArray(artist.albums)) {
+          albumsGrid.innerHTML = artist.albums
+            .map((alb) => {
+              const aTitle = escapeHtml(alb.title || "Untitled Album");
+              const aYear = alb.year ? ` (${escapeHtml(alb.year)})` : "";
+              const aCover = resolveCoverUrl(alb.cover_url);
+              const aPlays = Number(alb.view_count) || 0;
+              const aPlaysBadge =
+                aPlays > 0
+                  ? `<span class="px-2 py-0.5 text-[10px] font-mono bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600">${aPlays} ${escapeHtml(playsCountLabel)}</span>`
+                  : "";
+
+              const imgMarkup = aCover
+                ? `<img src="${escapeHtml(aCover)}" alt="${aTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.style.display='none'" />`
+                : "";
+
+              return `
+                <a
+                  href="/${lang}/music/album?id=${encodeURIComponent(alb.rating_key)}"
+                  class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col justify-between group block cursor-pointer"
+                >
+                  <div>
+                    <div class="w-full aspect-square bg-gray-50 dark:bg-gray-700/60 border border-gray-100 dark:border-gray-700 mb-3 overflow-hidden flex items-center justify-center">
+                      ${imgMarkup}
+                    </div>
+                    <h3 class="font-bold text-gray-900 dark:text-gray-50 text-sm line-clamp-1 group-hover:underline" title="${aTitle}">${aTitle}</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">${artist.name}${aYear}</p>
+                  </div>
+                  <div class="mt-3 pt-2 border-t border-gray-50 dark:border-gray-700/60 flex items-center justify-between">
+                    ${aPlaysBadge}
+                  </div>
+                </a>
+              `;
+            })
+            .join("");
+        }
+
+        // Hide skeleton and reveal content
+        if (skeletonEl) skeletonEl.classList.add("hidden");
+        if (contentEl) contentEl.classList.remove("hidden");
+      } catch (err) {
+        showError();
+      }
+    }
+
+    loadArtist();
+  })();
+</script>

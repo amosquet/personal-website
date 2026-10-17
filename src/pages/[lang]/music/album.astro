@@ -227,6 +227,7 @@ const apiUrl =
 <script
   is:inline
   define:vars={{
+    lang,
     apiUrl,
     playsCountLabel: t("playsCount"),
   }}
@@ -339,7 +340,14 @@ const apiUrl =
 
         // Title and Artist
         if (titleEl) titleEl.textContent = album.title || "Untitled Album";
-        if (artistEl) artistEl.textContent = album.artist || "Unknown Artist";
+        if (artistEl) {
+          const artistName = album.artist || "Unknown Artist";
+          if (album.artist_rating_key) {
+            artistEl.innerHTML = `<a href="/${lang}/music/artist?id=${encodeURIComponent(album.artist_rating_key)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${escapeHtml(artistName)}</a>`;
+          } else {
+            artistEl.textContent = artistName;
+          }
+        }
 
         // Badges
         if (yearBadge) {

@@ -657,6 +657,61 @@ export const uiStrings: TypeUIStrings = {
     fr: "Chargement des pistes de l'album...",
     ja: "アルバム情報を読み込み中...",
   },
+  artistPageTitle: {
+    en: "Artist",
+    fr: "Artiste",
+    ja: "アーティスト",
+  },
+  artistTopTracks: {
+    en: "Top Tracks",
+    fr: "Morceaux populaires",
+    ja: "人気曲",
+  },
+  artistAlbums: {
+    en: "Discography & Albums",
+    fr: "Discographie & Albums",
+    ja: "ディスコグラフィ・アルバム",
+  },
+  artistNotFound: {
+    en: "Artist Not Found",
+    fr: "Artiste introuvable",
+    ja: "アーティストが見つかりませんでした",
+  },
+  artistNotFoundDesc: {
+    en: "The requested artist could not be located in the music library, or the link is invalid.",
+    fr: "L'artiste demandé est introuvable dans la bibliothèque ou le lien est invalide.",
+    ja: "指定されたアーティストがライブラリに見つからないか、リンクが無効です。",
+  },
+  artistBio: {
+    en: "Biography",
+    fr: "Biographie",
+    ja: "バイオグラフィ",
+  },
+  listenOnYoutubeMusicArtist: {
+    en: "YouTube Music",
+    fr: "YouTube Music",
+    ja: "YouTube Music",
+  },
+  listenOnQobuzArtist: {
+    en: "Qobuz Profile",
+    fr: "Profil Qobuz",
+    ja: "Qobuzプロフィール",
+  },
+  totalArtistPlays: {
+    en: "library plays",
+    fr: "écoutes au total",
+    ja: "回再生（合計）",
+  },
+  totalArtistAlbums: {
+    en: "albums",
+    fr: "albums",
+    ja: "枚のアルバム",
+  },
+  totalArtistTracks: {
+    en: "tracks",
+    fr: "pistes",
+    ja: "曲",
+  },
 };
 
 
