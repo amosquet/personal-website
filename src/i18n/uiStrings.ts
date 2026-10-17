@@ -642,6 +642,11 @@ export const uiStrings: TypeUIStrings = {
     fr: "Écouter sur YouTube",
     ja: "YouTubeで聴く",
   },
+  listenOnYoutubeMusic: {
+    en: "Listen on YouTube Music",
+    fr: "Écouter sur YouTube Music",
+    ja: "YouTube Musicで聴く",
+  },
   listenOnQobuz: {
     en: "Hi-Res on Qobuz",
     fr: "Hi-Res sur Qobuz",

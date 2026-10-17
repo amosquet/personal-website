@@ -168,8 +168,8 @@ const apiUrl =
               rel="noopener noreferrer"
               class="hidden inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800/60 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors"
             >
-              <Icon name="mdi:youtube" class="w-4 h-4 text-red-600 dark:text-red-400" />
-              <span>{t("listenOnYoutube")}</span>
+              <Icon name="simple-icons:youtubemusic" class="w-4 h-4 text-red-600 dark:text-red-400" />
+              <span>{t("listenOnYoutubeMusic")}</span>
               <span class="text-xs">↗</span>
             </a>
 
@@ -399,8 +399,9 @@ const apiUrl =
 
         // Action Buttons
         if (youtubeBtn) {
-          if (album.youtube_url) {
-            youtubeBtn.href = album.youtube_url;
+          const ytUrl = album.youtube_music_url || album.youtube_url;
+          if (ytUrl) {
+            youtubeBtn.href = ytUrl;
             youtubeBtn.classList.remove("hidden");
           } else {
             youtubeBtn.classList.add("hidden");
