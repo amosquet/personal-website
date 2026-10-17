@@ -447,4 +447,40 @@ export const uiStrings: TypeUIStrings = {
     fr: "CV (PDF)",
     ja: "<ruby>履歴書<rt>りれきしょ</rt></ruby> (PDF)",
   },
+  nowPlayingTitle: {
+    en: "Now Playing",
+    fr: "Écoute en cours",
+    ja: "<ruby>現在<rt>げんざい</rt></ruby><ruby>再生中<rt>さいせいちゅう</rt></ruby>",
+  },
+  plexPlaying: {
+    en: "Playing",
+    fr: "En lecture",
+    ja: "<ruby>再生中<rt>さいせいちゅう</rt></ruby>",
+  },
+  plexPaused: {
+    en: "Paused",
+    fr: "En pause",
+    ja: "<ruby>一時停止<rt>いちじていし</rt></ruby>",
+  },
+  plexIdle: {
+    en: "Idle",
+    fr: "Inactif",
+    ja: "アイドル",
+  },
+  plexLastPlayed: {
+    en: "Last Played",
+    fr: "Dernière écoute",
+    ja: "<ruby>最後<rt>さいご</rt></ruby>の<ruby>再生<rt>さいせい</rt></ruby>",
+  },
+  plexNotPlaying: {
+    en: "Not actively streaming music right now.",
+    fr: "Aucune musique en cours de lecture pour le moment.",
+    ja: "<ruby>現在<rt>げんざい</rt></ruby>ストリーミング<ruby>中<rt>ちゅう</rt></ruby>の<ruby>音楽<rt>おんがく</rt></ruby>はありません。",
+  },
+  plexStreamingVia: {
+    en: "Streaming via Plex",
+    fr: "Diffusé via Plex",
+    ja: "Plexでストリーミング",
+  },
 };
+
