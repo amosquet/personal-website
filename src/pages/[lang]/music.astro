@@ -18,7 +18,12 @@ const apiUrl =
   import.meta.env.PUBLIC_SHISHO_API_URL || "https://shisho.amcloud.dev";
 ---
 
-<Layout title={t("musicPageTitle")} description={t("musicPageSubtitle")}>
+<Layout
+  title={t("musicPageTitle")}
+  description={t("musicPageSubtitle")}
+  image={`/${lang}/music/og.png`}
+  type="music.playlist"
+>
   <div class="max-w-5xl mx-auto px-4 py-12 space-y-14">
     <!-- Top Header -->
     <div>
