@@ -568,9 +568,14 @@ export const uiStrings: TypeUIStrings = {
     ja: "おすすめの理由は？",
   },
   musicValidationError: {
-    en: "Please provide both a Song/Album Title and an Artist.",
-    fr: "Veuillez renseigner à la fois le titre et l'artiste.",
-    ja: "タイトルとアーティストの両方を入力してください。",
+    en: "Please provide either a music link, or both a title and artist.",
+    fr: "Veuillez renseigner un lien ou à la fois le titre et l'artiste.",
+    ja: "音楽のリンク、またはタイトルとアーティストの両方を入力してください。",
+  },
+  optionalIfLink: {
+    en: "optional if link provided",
+    fr: "facultatif si un lien est fourni",
+    ja: "リンク入力時は省略可",
   },
   noMusicSuggestions: {
     en: "No music recommendations yet. Drop the first track!",

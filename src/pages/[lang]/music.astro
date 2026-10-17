@@ -165,13 +165,15 @@ const apiUrl =
                 for="music-title"
                 class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1"
               >
-                {t("musicTitleLabel")} *
+                {t("musicTitleLabel")}{" "}
+                <span class="text-gray-400 dark:text-gray-500 font-normal lowercase"
+                  >({t("optionalIfLink")})</span
+                >
               </label>
               <input
                 type="text"
                 id="music-title"
                 name="title"
-                required
                 class="w-full bg-white dark:bg-gray-700 p-3 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500"
                 placeholder={t("musicTitlePlaceholder")}
               />
@@ -184,13 +186,15 @@ const apiUrl =
                 for="music-artist"
                 class="block text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-300 mb-1"
               >
-                {t("musicArtistLabel")} *
+                {t("musicArtistLabel")}{" "}
+                <span class="text-gray-400 dark:text-gray-500 font-normal lowercase"
+                  >({t("optionalIfLink")})</span
+                >
               </label>
               <input
                 type="text"
                 id="music-artist"
                 name="artist"
-                required
                 class="w-full bg-white dark:bg-gray-700 p-3 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500"
                 placeholder={t("musicArtistPlaceholder")}
               />
@@ -522,7 +526,7 @@ const apiUrl =
       const reason = String(formData.get("reason") || "").trim();
       const submitter = String(formData.get("submitter") || "").trim();
 
-      if (!title || !artist) {
+      if (!url && (!title || !artist)) {
         showAlert(validationErrorText, true);
         return;
       }
