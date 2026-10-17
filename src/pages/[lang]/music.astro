@@ -358,7 +358,10 @@ const apiUrl =
       topGrid.innerHTML = albums
         .map((a) => {
           const title = escapeHtml(a.title || "Untitled Album");
-          const artist = escapeHtml(a.artist || "Unknown Artist");
+          const artistKey = a.parent_rating_key || a.artist_rating_key;
+          const artistMarkup = artistKey
+            ? `<a href="/${lang}/music/artist?id=${encodeURIComponent(artistKey)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${artist}</a>`
+            : artist;
           const year = a.year ? ` (${escapeHtml(a.year)})` : "";
           const cover = resolveCoverUrl(a.cover_url);
           const plays = Number(a.view_count) || 0;
@@ -372,24 +375,25 @@ const apiUrl =
             : "";
 
           const isLink = Boolean(a.rating_key);
-          const tag = isLink ? "a" : "div";
-          const linkAttr = isLink
-            ? `href="/${lang}/music/album?id=${encodeURIComponent(a.rating_key)}"`
-            : "";
+          const albumHref = isLink ? `/${lang}/music/album?id=${encodeURIComponent(a.rating_key)}` : "";
+          const albumStart = isLink ? `<a href="${albumHref}" class="block group/album">` : `<div>`;
+          const albumEnd = isLink ? `</a>` : `</div>`;
 
           return `
-            <${tag} ${linkAttr} class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col justify-between group block cursor-pointer">
+            <div class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col justify-between group">
               <div>
-                <div class="w-full aspect-square bg-gray-50 dark:bg-gray-700/60 border border-gray-100 dark:border-gray-700 mb-3 overflow-hidden flex items-center justify-center">
-                  ${imgMarkup}
-                </div>
-                <h3 class="font-bold text-gray-900 dark:text-gray-50 text-sm line-clamp-1 group-hover:underline" title="${title}">${title}</h3>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">${artist}${year}</p>
+                ${albumStart}
+                  <div class="w-full aspect-square bg-gray-50 dark:bg-gray-700/60 border border-gray-100 dark:border-gray-700 mb-3 overflow-hidden flex items-center justify-center">
+                    ${imgMarkup}
+                  </div>
+                  <h3 class="font-bold text-gray-900 dark:text-gray-50 text-sm line-clamp-1 group-hover/album:underline" title="${title}">${title}</h3>
+                ${albumEnd}
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">${artistMarkup}${year}</p>
               </div>
               <div class="mt-3 pt-2 border-t border-gray-50 dark:border-gray-700/60 flex items-center justify-between">
                 ${playsBadge}
               </div>
-            </${tag}>
+            </div>
           `;
         })
         .join("");
@@ -410,6 +414,10 @@ const apiUrl =
         .map((t) => {
           const title = escapeHtml(t.title || "Untitled Track");
           const artist = escapeHtml(t.artist || "Unknown Artist");
+          const artistKey = t.grandparent_rating_key || t.artist_rating_key;
+          const artistMarkup = artistKey
+            ? `<a href="/${lang}/music/artist?id=${encodeURIComponent(artistKey)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${artist}</a>`
+            : artist;
           const albumText = t.album ? escapeHtml(t.album) : "";
           const albumMarkup = t.album
             ? ` • ${
@@ -441,7 +449,7 @@ const apiUrl =
                 ${coverWrapEnd}
                 <div class="min-w-0">
                   <h3 class="text-sm font-bold text-gray-900 dark:text-gray-50 truncate">${title}</h3>
-                  <p class="text-xs text-gray-500 dark:text-gray-400 truncate">${artist}${albumMarkup}</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 truncate">${artistMarkup}${albumMarkup}</p>
                 </div>
               </div>
               <div class="flex items-center gap-2 shrink-0">

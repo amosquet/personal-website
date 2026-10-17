@@ -285,7 +285,15 @@ const apiUrl =
       trackContainer.classList.remove("hidden");
 
       if (titleEl) titleEl.textContent = track.title || "Untitled Track";
-      if (artistEl) artistEl.textContent = track.artist || "Unknown Artist";
+      if (artistEl) {
+        const artistText = escapeHtml(track.artist || "Unknown Artist");
+        const artistKey = track.grandparent_rating_key || track.artist_rating_key;
+        if (artistKey) {
+          artistEl.innerHTML = `<a href="/${locale}/music/artist?id=${encodeURIComponent(artistKey)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${artistText}</a>`;
+        } else {
+          artistEl.textContent = track.artist || "Unknown Artist";
+        }
+      }
 
       if (albumEl) {
         const albumParts = [];
