@@ -235,7 +235,8 @@ const apiUrl =
   (() => {
     const baseUrl = (apiUrl || "").replace(/\/$/, "");
     const params = new URLSearchParams(window.location.search);
-    const albumId = (params.get("id") || "").trim();
+    let albumId = (params.get("id") || "").trim();
+    const trackId = (params.get("track_id") || "").trim();
 
     const skeletonEl = document.getElementById("album-skeleton");
     const errorEl = document.getElementById("album-error");
@@ -302,12 +303,16 @@ const apiUrl =
     }
 
     async function loadAlbum() {
-      if (!albumId) {
-        showError();
-        return;
-      }
-
       try {
+        if (!albumId && trackId) {
+          albumId = trackId;
+        }
+
+        if (!albumId) {
+          showError();
+          return;
+        }
+
         const res = await fetch(`${baseUrl}/api/plex/album?id=${encodeURIComponent(albumId)}`);
         if (!res.ok) {
           showError();
@@ -318,6 +323,14 @@ const apiUrl =
         if (!album || !album.title) {
           showError();
           return;
+        }
+
+        if (album.rating_key && String(album.rating_key).trim() !== albumId) {
+          const canonicalId = String(album.rating_key).trim();
+          albumId = canonicalId;
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState({}, "", `/${lang}/music/album?id=${encodeURIComponent(canonicalId)}`);
+          }
         }
 
         // Update document title dynamically

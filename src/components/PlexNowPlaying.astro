@@ -302,22 +302,29 @@ const apiUrl =
         }
       }
 
+      const albumKey = track.parent_rating_key || track.album_rating_key;
+      const albumHref = albumKey
+        ? `/${locale}/music/album?id=${encodeURIComponent(albumKey)}`
+        : track.rating_key
+          ? `/${locale}/music/album?track_id=${encodeURIComponent(track.rating_key)}`
+          : "";
+
       if (albumEl) {
         const albumParts = [];
         if (track.album) albumParts.push(track.album);
         if (track.year) albumParts.push(`(${track.year})`);
         const albumText = albumParts.join(" ");
 
-        if (track.parent_rating_key) {
-          albumEl.innerHTML = `<a href="/${locale}/music/album?id=${encodeURIComponent(track.parent_rating_key)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${escapeHtml(albumText)}</a>`;
+        if (albumHref) {
+          albumEl.innerHTML = `<a href="${albumHref}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${escapeHtml(albumText)}</a>`;
         } else {
           albumEl.textContent = albumText;
         }
       }
 
       if (coverLink) {
-        if (track.parent_rating_key) {
-          coverLink.href = `/${locale}/music/album?id=${encodeURIComponent(track.parent_rating_key)}`;
+        if (albumHref) {
+          coverLink.href = albumHref;
           coverLink.classList.remove("pointer-events-none", "cursor-default");
           coverLink.classList.add("cursor-pointer");
         } else {
