@@ -359,8 +359,13 @@ const apiUrl =
         .map((a) => {
           const title = escapeHtml(a.title || "Untitled Album");
           const artistKey = a.parent_rating_key || a.artist_rating_key;
-          const artistMarkup = artistKey
-            ? `<a href="/${lang}/music/artist?id=${encodeURIComponent(artistKey)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${artist}</a>`
+          const artistHref = artistKey
+            ? `/${lang}/music/artist?id=${encodeURIComponent(artistKey)}`
+            : a.rating_key
+              ? `/${lang}/music/artist?album_id=${encodeURIComponent(a.rating_key)}`
+              : "";
+          const artistMarkup = artistHref
+            ? `<a href="${artistHref}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${artist}</a>`
             : artist;
           const year = a.year ? ` (${escapeHtml(a.year)})` : "";
           const cover = resolveCoverUrl(a.cover_url);
@@ -415,8 +420,15 @@ const apiUrl =
           const title = escapeHtml(t.title || "Untitled Track");
           const artist = escapeHtml(t.artist || "Unknown Artist");
           const artistKey = t.grandparent_rating_key || t.artist_rating_key;
-          const artistMarkup = artistKey
-            ? `<a href="/${lang}/music/artist?id=${encodeURIComponent(artistKey)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${artist}</a>`
+          const artistHref = artistKey
+            ? `/${lang}/music/artist?id=${encodeURIComponent(artistKey)}`
+            : t.parent_rating_key
+              ? `/${lang}/music/artist?album_id=${encodeURIComponent(t.parent_rating_key)}`
+              : t.rating_key
+                ? `/${lang}/music/artist?track_id=${encodeURIComponent(t.rating_key)}`
+                : "";
+          const artistMarkup = artistHref
+            ? `<a href="${artistHref}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${artist}</a>`
             : artist;
           const albumText = t.album ? escapeHtml(t.album) : "";
           const albumMarkup = t.album

@@ -288,8 +288,15 @@ const apiUrl =
       if (artistEl) {
         const artistText = escapeHtml(track.artist || "Unknown Artist");
         const artistKey = track.grandparent_rating_key || track.artist_rating_key;
-        if (artistKey) {
-          artistEl.innerHTML = `<a href="/${locale}/music/artist?id=${encodeURIComponent(artistKey)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${artistText}</a>`;
+        const artistHref = artistKey
+          ? `/${locale}/music/artist?id=${encodeURIComponent(artistKey)}`
+          : track.parent_rating_key
+            ? `/${locale}/music/artist?album_id=${encodeURIComponent(track.parent_rating_key)}`
+            : track.rating_key
+              ? `/${locale}/music/artist?track_id=${encodeURIComponent(track.rating_key)}`
+              : "";
+        if (artistHref) {
+          artistEl.innerHTML = `<a href="${artistHref}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${artistText}</a>`;
         } else {
           artistEl.textContent = track.artist || "Unknown Artist";
         }

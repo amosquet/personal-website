@@ -257,7 +257,9 @@ const apiUrl =
   (() => {
     const baseUrl = (apiUrl || "").replace(/\/$/, "");
     const params = new URLSearchParams(window.location.search);
-    const artistId = (params.get("id") || "").trim();
+    let artistId = (params.get("id") || "").trim();
+    const albumId = (params.get("album_id") || "").trim();
+    const trackId = (params.get("track_id") || "").trim();
 
     const skeletonEl = document.getElementById("artist-skeleton");
     const errorEl = document.getElementById("artist-error");
@@ -306,19 +308,47 @@ const apiUrl =
     }
 
     async function loadArtist() {
-      if (!artistId) {
-        showError();
-        return;
-      }
-
       try {
+        if (!artistId && albumId) {
+          const albumRes = await fetch(`${baseUrl}/api/plex/album?id=${encodeURIComponent(albumId)}`);
+          if (albumRes.ok) {
+            const albumData = await albumRes.json();
+            if (albumData && albumData.artist_rating_key) {
+              artistId = String(albumData.artist_rating_key).trim();
+              if (window.history && window.history.replaceState) {
+                window.history.replaceState({}, "", `/${lang}/music/artist?id=${encodeURIComponent(artistId)}`);
+              }
+            }
+          }
+        }
+
+        if (!artistId && trackId) {
+          artistId = trackId;
+        }
+
+        if (!artistId) {
+          showError();
+          return;
+        }
+
         const res = await fetch(`${baseUrl}/api/plex/artist?id=${encodeURIComponent(artistId)}`);
         if (!res.ok) {
           showError();
           return;
         }
 
-        const artist = await res.json();
+        let artist = await res.json();
+        if (artist && artist.artist_rating_key && String(artist.artist_rating_key).trim() !== artistId) {
+          const realKey = String(artist.artist_rating_key).trim();
+          const realRes = await fetch(`${baseUrl}/api/plex/artist?id=${encodeURIComponent(realKey)}`);
+          if (realRes.ok) {
+            artist = await realRes.json();
+            if (window.history && window.history.replaceState) {
+              window.history.replaceState({}, "", `/${lang}/music/artist?id=${encodeURIComponent(realKey)}`);
+            }
+          }
+        }
+
         if (!artist || !artist.name) {
           showError();
           return;
