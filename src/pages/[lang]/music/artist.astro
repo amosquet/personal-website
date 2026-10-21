@@ -22,12 +22,13 @@ const apiUrl =
   description={t("musicPageSubtitle")}
   image={`/${lang}/music/og.png`}
   type="profile"
+  noindex={true}
 >
   <div class="max-w-5xl mx-auto px-4 py-12 space-y-12">
     <!-- Back to Music navigation -->
     <div>
       <a
-        href={`/${lang}/music`}
+        href={`/${lang}/music/`}
         class="text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider transition-colors"
       >
         &larr; <Fragment set:html={t("backToMusic")} />
@@ -112,7 +113,7 @@ const apiUrl =
         <Fragment set:html={t("artistNotFoundDesc")} />
       </p>
       <a
-        href={`/${lang}/music`}
+        href={`/${lang}/music/`}
         class="inline-flex items-center gap-2 px-5 py-2.5 bg-black dark:bg-gray-100 text-white dark:text-gray-900 text-xs font-semibold hover:bg-gray-800 dark:hover:bg-gray-300 transition-colors"
       >
         &larr; <Fragment set:html={t("backToMusic")} />
@@ -367,7 +368,7 @@ const apiUrl =
 
       return `
         <a
-          href="/${lang}/music/album?id=${encodeURIComponent(item.rating_key)}"
+          href="/${lang}/music/album/?id=${encodeURIComponent(item.rating_key)}"
           class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col justify-between group block cursor-pointer"
         >
           <div>
@@ -540,7 +541,7 @@ const apiUrl =
             const rank = idx + 1;
             const title = escapeHtml(track.title || "Untitled Track");
             const albumLink = track.album_rating_key
-              ? `<a href="/${lang}/music/album?id=${encodeURIComponent(track.album_rating_key)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${escapeHtml(track.album || "")}</a>`
+              ? `<a href="/${lang}/music/album/?id=${encodeURIComponent(track.album_rating_key)}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${escapeHtml(track.album || "")}</a>`
               : escapeHtml(track.album || "");
             const trackPlays = Number(track.view_count) || 0;
             const playsHtml =
@@ -633,7 +634,7 @@ const apiUrl =
             if (albumData && albumData.artist_rating_key) {
               artistId = String(albumData.artist_rating_key).trim();
               if (window.history && window.history.replaceState) {
-                window.history.replaceState({}, "", `/${lang}/music/artist?id=${encodeURIComponent(artistId)}`);
+                window.history.replaceState({}, "", `/${lang}/music/artist/?id=${encodeURIComponent(artistId)}`);
               }
             }
           }
@@ -675,7 +676,7 @@ const apiUrl =
           if (realRes.ok) {
             artist = await realRes.json();
             if (window.history && window.history.replaceState) {
-              window.history.replaceState({}, "", `/${lang}/music/artist?id=${encodeURIComponent(realKey)}`);
+              window.history.replaceState({}, "", `/${lang}/music/artist/?id=${encodeURIComponent(realKey)}`);
             }
           }
         }

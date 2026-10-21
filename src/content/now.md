@@ -19,7 +19,7 @@ Currenty I'm back in West Lafayette, Indiana - back at Purdue for the fall semes
 
 **Projects:**
 
-- Working on [**Shisho**](/en/projects/shisho) - my AI assistant/discord bot.
+- Working on [**Shisho**](/en/projects/shisho/) - my AI assistant/discord bot.
 - Trying to get more sponsors for Purdue Hackers to fund all the cool projects.
 - I want to make a 3D-Printed UUV that's open source and easy for anybody to make at home.
 
@@ -27,6 +27,6 @@ Currenty I'm back in West Lafayette, Indiana - back at Purdue for the fall semes
 
 **Leasure:**
 
-- Trying to finish [_System Collapse_](/en/reading/9781250826985), and then I'll try finishing [_A Promised Land_](/en/reading/9781524763183) (it feels super long).
+- Trying to finish [_System Collapse_](/en/reading/9781250826985/), and then I'll try finishing [_A Promised Land_](/en/reading/9781524763183/) (it feels super long).
 - Listening to a lot of あの (Ano), good music.
 - Playing 007 First Light

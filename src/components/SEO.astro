@@ -9,6 +9,8 @@ export interface Props {
   description?: string;
   image?: string;
   type?: "website" | "article" | "book" | string;
+  noindex?: boolean;
+  availableLocales?: readonly string[];
   article?: {
     publishedTime?: string;
     modifiedTime?: string;
@@ -26,10 +28,13 @@ const {
   description,
   image,
   type = "website",
+  noindex = false,
+  availableLocales,
   article,
   book,
 } = Astro.props;
 
+const activeLocales = availableLocales ?? locales;
 const locale = (Astro.currentLocale || defaultLocale) as "en" | "fr" | "ja";
 const siteTitle = uiStrings.siteTitle[locale] || "Artus Mosquet";
 const defaultDescription =
@@ -67,7 +72,7 @@ const ogLocaleMap: Record<string, string> = {
 };
 
 const currentOgLocale = ogLocaleMap[locale] || "en_US";
-const alternateOgLocales = locales
+const alternateOgLocales = activeLocales
   .filter((l) => l !== locale)
   .map((l) => ogLocaleMap[l])
   .filter(Boolean);
@@ -79,26 +84,30 @@ const hreflangMap: Record<string, string> = {
 };
 
 function getLocalizedPath(targetLocale: string): string {
-  const pathname = Astro.url.pathname;
+  const rawPathname = Astro.url.pathname;
+  const pathname = rawPathname.endsWith("/") ? rawPathname : `${rawPathname}/`;
   if (pathname.startsWith(`/${locale}/`)) {
     return pathname.replace(new RegExp(`^/${locale}/`), `/${targetLocale}/`);
-  }
-  if (pathname === `/${locale}`) {
-    return `/${targetLocale}/`;
   }
   if (pathname === "/" || pathname === "") {
     return `/${targetLocale}/`;
   }
   return `/${targetLocale}${pathname.startsWith("/") ? pathname : "/" + pathname}`;
 }
+
+const xDefaultLocale = activeLocales.includes(defaultLocale)
+  ? defaultLocale
+  : (activeLocales[0] || locale);
 ---
+
+{noindex && <meta name="robots" content="noindex, follow" />}
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalUrl} />
 
 <!-- Multilingual alternate hreflang tags -->
 {
-  locales.map((l) => {
+  activeLocales.map((l) => {
     const langCode = hreflangMap[l] || l;
     const localizedHref = new URL(getLocalizedPath(l), siteUrl).href;
     return <link rel="alternate" hreflang={langCode} href={localizedHref} />;
@@ -107,7 +116,7 @@ function getLocalizedPath(targetLocale: string): string {
 <link
   rel="alternate"
   hreflang="x-default"
-  href={new URL(getLocalizedPath(defaultLocale), siteUrl).href}
+  href={new URL(getLocalizedPath(xDefaultLocale), siteUrl).href}
 />
 
 <!-- Standard Meta Tags -->

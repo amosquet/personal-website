@@ -28,7 +28,7 @@ const enrichedBooks: EnrichedBook[] = await getBooks();
                 <Fragment set:html={t("navReading")} />
             </h1>
             <a
-                href={`/${lang}/reading/suggest`}
+                href={`/${lang}/reading/suggest/`}
                 class="inline-flex items-center justify-center gap-2 px-4 py-2 bg-black dark:bg-gray-700 text-white hover:bg-gray-800 dark:hover:bg-gray-600 text-sm font-semibold transition-colors self-start sm:self-auto shadow-sm"
             >
                 <svg
@@ -50,7 +50,7 @@ const enrichedBooks: EnrichedBook[] = await getBooks();
             {
                 enrichedBooks.map((book) => (
                     <a
-                        href={`/${lang}/reading/${book.isbn}`}
+                        href={`/${lang}/reading/${book.isbn}/`}
                         class="block group"
                     >
                         <div class="border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-800 shadow-sm hover:border-blue-400 dark:hover:border-blue-500 transition-colors h-full flex flex-col">

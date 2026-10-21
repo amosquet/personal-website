@@ -146,7 +146,7 @@ const apiUrl =
     {
       showCrateLink ? (
         <a
-          href={`/${locale}/music`}
+          href={`/${locale}/music/`}
           class="text-xs font-semibold text-gray-600 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white inline-flex items-center gap-1.5 transition-colors"
         >
           <Icon name="mdi:plex" class="w-4 h-4 text-amber-500 shrink-0" />
@@ -289,11 +289,11 @@ const apiUrl =
         const artistText = escapeHtml(track.artist || "Unknown Artist");
         const artistKey = track.grandparent_rating_key || track.artist_rating_key;
         const artistHref = artistKey
-          ? `/${locale}/music/artist?id=${encodeURIComponent(artistKey)}`
+          ? `/${locale}/music/artist/?id=${encodeURIComponent(artistKey)}`
           : track.parent_rating_key
-            ? `/${locale}/music/artist?album_id=${encodeURIComponent(track.parent_rating_key)}`
+            ? `/${locale}/music/artist/?album_id=${encodeURIComponent(track.parent_rating_key)}`
             : track.rating_key
-              ? `/${locale}/music/artist?track_id=${encodeURIComponent(track.rating_key)}`
+              ? `/${locale}/music/artist/?track_id=${encodeURIComponent(track.rating_key)}`
               : "";
         if (artistHref) {
           artistEl.innerHTML = `<a href="${artistHref}" class="hover:underline hover:text-gray-900 dark:hover:text-gray-100 transition-colors">${artistText}</a>`;
@@ -304,9 +304,9 @@ const apiUrl =
 
       const albumKey = track.parent_rating_key || track.album_rating_key;
       const albumHref = albumKey
-        ? `/${locale}/music/album?id=${encodeURIComponent(albumKey)}`
+        ? `/${locale}/music/album/?id=${encodeURIComponent(albumKey)}`
         : track.rating_key
-          ? `/${locale}/music/album?track_id=${encodeURIComponent(track.rating_key)}`
+          ? `/${locale}/music/album/?track_id=${encodeURIComponent(track.rating_key)}`
           : "";
 
       if (albumEl) {

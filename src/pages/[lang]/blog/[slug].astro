@@ -7,23 +7,34 @@ export async function getStaticPaths() {
         return import.meta.env.DEV || !data.draft;
     });
 
+    const localesBySlug = new Map<string, string[]>();
+    for (const post of posts) {
+        const parts = post.id.split("/");
+        const lang = parts[0];
+        const slug = parts.slice(1).join("/");
+        const list = localesBySlug.get(slug) || [];
+        list.push(lang);
+        localesBySlug.set(slug, list);
+    }
+
     return posts.map((post) => {
         const parts = post.id.split("/");
         const lang = parts[0];
         const slug = parts.slice(1).join("/");
+        const availableLocales = localesBySlug.get(slug) || [lang];
 
         return {
             params: { lang, slug },
-            props: { post },
+            props: { post, availableLocales },
         };
     });
 }
 
-const { post } = Astro.props;
+const { post, availableLocales } = Astro.props;
 const { lang, slug } = Astro.params as { lang: "en" | "fr" | "ja"; slug: string };
 const { Content } = await render(post);
 ---
 
-<MarkdownPostLayout frontmatter={post.data} lang={lang} slug={slug}>
+<MarkdownPostLayout frontmatter={post.data} lang={lang} slug={slug} availableLocales={availableLocales}>
     <Content />
 </MarkdownPostLayout>

@@ -38,6 +38,7 @@ function bookCoversSync() {
 export default defineConfig({
   site: "https://artusmosquet.com",
   output: "static",
+  trailingSlash: "always",
   prerenderConflictBehavior: "ignore",
 
   redirects: {
@@ -68,5 +69,17 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [icon(), bookCoversSync(), sitemap()],
+  integrations: [
+    icon(),
+    bookCoversSync(),
+    sitemap({
+      filter: (page) =>
+        page !== "https://artusmosquet.com/" &&
+        page !== "https://artusmosquet.com/resume/" &&
+        page !== "https://artusmosquet.com/cv/" &&
+        !page.endsWith("/music/album/") &&
+        !page.endsWith("/music/artist/") &&
+        !/\/reading\/[0-9Xx]+\/$/.test(page),
+    }),
+  ],
 });

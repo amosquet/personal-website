@@ -5,7 +5,7 @@ import SEO, { type Props as SEOProps } from "@/components/SEO.astro";
 
 export interface Props extends SEOProps {}
 
-const { title, description, image, type, article, book } = Astro.props;
+const { title, description, image, type, noindex, availableLocales, article, book } = Astro.props;
 
 import { defaultLocale } from "@/i18n/i18n";
 import { uiStrings } from "@/i18n/uiStrings";
@@ -50,6 +50,8 @@ import "@/styles/global.css";
             description={description}
             image={image}
             type={type}
+            noindex={noindex}
+            availableLocales={availableLocales}
             article={article}
             book={book}
         />
