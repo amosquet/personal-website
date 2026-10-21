@@ -74,6 +74,20 @@ const apiUrl =
           }
         </div>
       </div>
+
+      <div class="border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 space-y-4">
+        <div class="h-5 bg-gray-200 dark:bg-gray-700 w-1/5 mb-4" />
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          {
+            [1, 2, 3, 4].map(() => (
+              <div class="space-y-2">
+                <div class="aspect-square bg-gray-100 dark:bg-gray-700" />
+                <div class="h-3 bg-gray-200 dark:bg-gray-700 w-3/4" />
+              </div>
+            ))
+          }
+        </div>
+      </div>
     </div>
 
     <!-- 2. Error / Not Found State -->
@@ -144,8 +158,10 @@ const apiUrl =
 
           <!-- Statistics -->
           <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
-            <span id="artist-album-count" class="font-medium"></span>
-            <span class="text-gray-300 dark:text-gray-600">•</span>
+            <span id="artist-album-count" class="hidden font-medium"></span>
+            <span id="artist-singles-separator" class="hidden text-gray-300 dark:text-gray-600">•</span>
+            <span id="artist-singles-count" class="hidden font-medium"></span>
+            <span id="artist-tracks-separator" class="text-gray-300 dark:text-gray-600">•</span>
             <span id="artist-track-count" class="font-medium"></span>
             <span id="artist-plays-separator" class="hidden text-gray-300 dark:text-gray-600">•</span>
             <span id="artist-plays-count" class="hidden font-mono"></span>
@@ -221,7 +237,7 @@ const apiUrl =
       </section>
 
       <!-- 2. Discography / Albums Grid -->
-      <section id="artist-albums-section" aria-labelledby="discography-heading">
+      <section id="artist-albums-section" aria-labelledby="discography-heading" class="hidden">
         <div class="flex items-center justify-between mb-5 pb-2 border-b border-gray-200 dark:border-gray-700">
           <h2
             id="discography-heading"
@@ -239,6 +255,26 @@ const apiUrl =
         >
         </div>
       </section>
+
+      <!-- 3. Singles & EPs Grid -->
+      <section id="artist-singles-section" aria-labelledby="singles-heading" class="hidden">
+        <div class="flex items-center justify-between mb-5 pb-2 border-b border-gray-200 dark:border-gray-700">
+          <h2
+            id="singles-heading"
+            class="text-lg font-bold text-gray-900 dark:text-gray-50 flex items-center gap-2"
+          >
+            <Icon name="mdi:disc" class="w-5 h-5 text-amber-500" />
+            <Fragment set:html={t("artistSingles")} />
+          </h2>
+          <span id="artist-singles-count-badge" class="text-xs font-mono text-gray-400 dark:text-gray-500"></span>
+        </div>
+
+        <div
+          id="artist-singles-grid"
+          class="grid grid-cols-2 sm:grid-cols-4 gap-4"
+        >
+        </div>
+      </section>
     </article>
   </div>
 </Layout>
@@ -251,6 +287,7 @@ const apiUrl =
     playsCountLabel: t("playsCount"),
     totalPlaysLabel: t("totalArtistPlays"),
     albumsLabel: t("totalArtistAlbums"),
+    singlesLabel: t("totalArtistSingles"),
     tracksLabel: t("totalArtistTracks"),
   }}
 >
@@ -270,6 +307,9 @@ const apiUrl =
     const nameEl = document.getElementById("artist-name");
     const countryBadge = document.getElementById("artist-country-badge");
     const albumCountEl = document.getElementById("artist-album-count");
+    const singlesSeparator = document.getElementById("artist-singles-separator");
+    const singlesCountEl = document.getElementById("artist-singles-count");
+    const tracksSeparator = document.getElementById("artist-tracks-separator");
     const trackCountEl = document.getElementById("artist-track-count");
     const playsSeparator = document.getElementById("artist-plays-separator");
     const playsCountEl = document.getElementById("artist-plays-count");
@@ -278,8 +318,12 @@ const apiUrl =
     const youtubeBtn = document.getElementById("artist-youtube-btn");
     const qobuzBtn = document.getElementById("artist-qobuz-btn");
     const tracksBody = document.getElementById("artist-tracks-body");
+    const albumsSection = document.getElementById("artist-albums-section");
     const albumsGrid = document.getElementById("artist-albums-grid");
     const albumsCountBadge = document.getElementById("artist-albums-count-badge");
+    const singlesSection = document.getElementById("artist-singles-section");
+    const singlesGrid = document.getElementById("artist-singles-grid");
+    const singlesCountBadge = document.getElementById("artist-singles-count-badge");
 
     function escapeHtml(str) {
       if (!str) return "";
@@ -305,6 +349,39 @@ const apiUrl =
       if (skeletonEl) skeletonEl.classList.add("hidden");
       if (contentEl) contentEl.classList.add("hidden");
       if (errorEl) errorEl.classList.remove("hidden");
+    }
+
+    function renderReleaseCard(item, artistName) {
+      const title = escapeHtml(item.title || "Untitled");
+      const year = item.year ? ` (${escapeHtml(item.year)})` : "";
+      const cover = resolveCoverUrl(item.cover_url);
+      const plays = Number(item.view_count) || 0;
+      const playsBadge =
+        plays > 0
+          ? `<span class="px-2 py-0.5 text-[10px] font-mono bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600">${plays} ${escapeHtml(playsCountLabel)}</span>`
+          : "";
+
+      const imgMarkup = cover
+        ? `<img src="${escapeHtml(cover)}" alt="${title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.style.display='none'" />`
+        : "";
+
+      return `
+        <a
+          href="/${lang}/music/album?id=${encodeURIComponent(item.rating_key)}"
+          class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col justify-between group block cursor-pointer"
+        >
+          <div>
+            <div class="w-full aspect-square bg-gray-50 dark:bg-gray-700/60 border border-gray-100 dark:border-gray-700 mb-3 overflow-hidden flex items-center justify-center">
+              ${imgMarkup}
+            </div>
+            <h3 class="font-bold text-gray-900 dark:text-gray-50 text-sm line-clamp-1 group-hover:underline" title="${title}">${title}</h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">${escapeHtml(artistName)}${year}</p>
+          </div>
+          <div class="mt-3 pt-2 border-t border-gray-50 dark:border-gray-700/60 flex items-center justify-between">
+            ${playsBadge}
+          </div>
+        </a>
+      `;
     }
 
     function renderArtist(artist) {
@@ -341,19 +418,77 @@ const apiUrl =
         }
       }
 
-      // Stats
-      const totalAlbs = Number(artist.total_albums) || 0;
+      let albumsList = Array.isArray(artist.albums) ? [...artist.albums] : [];
+      let singlesList = Array.isArray(artist.singles) ? [...artist.singles] : [];
+
+      // Fallback: if singlesList is empty, look for any releases referenced in top_tracks
+      // that are not in albumsList (e.g. YOASOBI or NewJeans before backend cache refreshes)
+      if (singlesList.length === 0 && Array.isArray(artist.top_tracks) && artist.top_tracks.length > 0) {
+        const albumKeys = new Set(albumsList.map((a) => String(a.rating_key)));
+        const synthSinglesMap = new Map();
+        for (const trk of artist.top_tracks) {
+          const aKey = trk.album_rating_key ? String(trk.album_rating_key).trim() : "";
+          if (aKey && !albumKeys.has(aKey)) {
+            if (!synthSinglesMap.has(aKey)) {
+              synthSinglesMap.set(aKey, {
+                rating_key: aKey,
+                title: trk.album || "Untitled Release",
+                year: null,
+                view_count: Number(trk.view_count) || 0,
+                track_count: 0,
+                cover_url: null,
+              });
+            } else {
+              const item = synthSinglesMap.get(aKey);
+              item.view_count += Number(trk.view_count) || 0;
+            }
+          }
+        }
+        if (synthSinglesMap.size > 0) {
+          singlesList = Array.from(synthSinglesMap.values());
+          singlesList.sort((a, b) => b.view_count - a.view_count);
+        }
+      }
+
+      const totalAlbs = Number(artist.total_albums) || albumsList.length;
+      const totalSingles = Number(artist.total_singles) || singlesList.length;
       const totalTrks = Number(artist.total_tracks) || 0;
       const totalPlays = Number(artist.total_plays) || 0;
 
+      // Stats
       if (albumCountEl) {
-        albumCountEl.textContent = `${totalAlbs} ${albumsLabel}`;
+        if (totalAlbs > 0) {
+          albumCountEl.textContent = `${totalAlbs} ${albumsLabel}`;
+          albumCountEl.classList.remove("hidden");
+        } else {
+          albumCountEl.classList.add("hidden");
+        }
       }
+
+      if (singlesCountEl && singlesSeparator) {
+        if (totalSingles > 0) {
+          singlesCountEl.textContent = `${totalSingles} ${singlesLabel}`;
+          singlesCountEl.classList.remove("hidden");
+          if (totalAlbs > 0) {
+            singlesSeparator.classList.remove("hidden");
+          } else {
+            singlesSeparator.classList.add("hidden");
+          }
+        } else {
+          singlesCountEl.classList.add("hidden");
+          singlesSeparator.classList.add("hidden");
+        }
+      }
+
       if (trackCountEl) {
         trackCountEl.textContent = `${totalTrks} ${tracksLabel}`;
       }
-      if (albumsCountBadge) {
-        albumsCountBadge.textContent = `${totalAlbs} ${albumsLabel}`;
+      if (tracksSeparator) {
+        if (totalAlbs > 0 || totalSingles > 0) {
+          tracksSeparator.classList.remove("hidden");
+        } else {
+          tracksSeparator.classList.add("hidden");
+        }
       }
 
       if (totalPlays > 0 && playsCountEl && playsSeparator) {
@@ -430,42 +565,57 @@ const apiUrl =
       }
 
       // Discography / Albums Grid
-      if (albumsGrid && Array.isArray(artist.albums)) {
-        albumsGrid.innerHTML = artist.albums
-          .map((alb) => {
-            const aTitle = escapeHtml(alb.title || "Untitled Album");
-            const aYear = alb.year ? ` (${escapeHtml(alb.year)})` : "";
-            const aCover = resolveCoverUrl(alb.cover_url);
-            const aPlays = Number(alb.view_count) || 0;
-            const aPlaysBadge =
-              aPlays > 0
-                ? `<span class="px-2 py-0.5 text-[10px] font-mono bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600">${aPlays} ${escapeHtml(playsCountLabel)}</span>`
-                : "";
-
-            const imgMarkup = aCover
-              ? `<img src="${escapeHtml(aCover)}" alt="${aTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.style.display='none'" />`
-              : "";
-
-            return `
-              <a
-                href="/${lang}/music/album?id=${encodeURIComponent(alb.rating_key)}"
-                class="border border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-800 shadow-xs hover:border-gray-900 dark:hover:border-gray-400 transition-colors flex flex-col justify-between group block cursor-pointer"
-              >
-                <div>
-                  <div class="w-full aspect-square bg-gray-50 dark:bg-gray-700/60 border border-gray-100 dark:border-gray-700 mb-3 overflow-hidden flex items-center justify-center">
-                    ${imgMarkup}
-                  </div>
-                  <h3 class="font-bold text-gray-900 dark:text-gray-50 text-sm line-clamp-1 group-hover:underline" title="${aTitle}">${aTitle}</h3>
-                  <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5 truncate">${artist.name}${aYear}</p>
-                </div>
-                <div class="mt-3 pt-2 border-t border-gray-50 dark:border-gray-700/60 flex items-center justify-between">
-                  ${aPlaysBadge}
-                </div>
-              </a>
-            `;
-          })
-          .join("");
+      if (albumsSection && albumsGrid) {
+        if (albumsList.length > 0) {
+          if (albumsCountBadge) {
+            albumsCountBadge.textContent = `${albumsList.length} ${albumsLabel}`;
+          }
+          albumsGrid.innerHTML = albumsList
+            .map((alb) => renderReleaseCard(alb, artist.name))
+            .join("");
+          albumsSection.classList.remove("hidden");
+        } else {
+          albumsSection.classList.add("hidden");
+        }
       }
+
+      // Singles & EPs Grid
+      if (singlesSection && singlesGrid) {
+        if (singlesList.length > 0) {
+          if (singlesCountBadge) {
+            singlesCountBadge.textContent = `${singlesList.length} ${singlesLabel}`;
+          }
+          singlesGrid.innerHTML = singlesList
+            .map((s) => renderReleaseCard(s, artist.name))
+            .join("");
+          singlesSection.classList.remove("hidden");
+        } else {
+          singlesSection.classList.add("hidden");
+        }
+      }
+
+      // Asynchronously enrich any singles lacking cover art or year
+      singlesList.forEach((s) => {
+        if (!s.cover_url && s.rating_key) {
+          fetch(`${baseUrl}/api/plex/album?id=${encodeURIComponent(s.rating_key)}`)
+            .then((r) => (r.ok ? r.json() : null))
+            .then((albumData) => {
+              if (albumData && albumData.cover_url) {
+                s.cover_url = albumData.cover_url;
+                s.year = albumData.year || s.year;
+                const cardCover = document.querySelector(
+                  `a[href*="id=${encodeURIComponent(s.rating_key)}"] img`
+                );
+                const resolved = resolveCoverUrl(albumData.cover_url);
+                if (cardCover && resolved) {
+                  cardCover.src = resolved;
+                  cardCover.style.display = "";
+                }
+              }
+            })
+            .catch(() => {});
+        }
+      });
 
       // Hide skeleton and reveal content
       if (skeletonEl) skeletonEl.classList.add("hidden");

@@ -672,6 +672,11 @@ export const uiStrings: TypeUIStrings = {
     fr: "Discographie & Albums",
     ja: "ディスコグラフィ・アルバム",
   },
+  artistSingles: {
+    en: "Singles & EPs",
+    fr: "Singles & EPs",
+    ja: "シングル・EP",
+  },
   artistNotFound: {
     en: "Artist Not Found",
     fr: "Artiste introuvable",
@@ -706,6 +711,11 @@ export const uiStrings: TypeUIStrings = {
     en: "albums",
     fr: "albums",
     ja: "枚のアルバム",
+  },
+  totalArtistSingles: {
+    en: "singles & EPs",
+    fr: "singles & EPs",
+    ja: "枚のシングル・EP",
   },
   totalArtistTracks: {
     en: "tracks",
