@@ -98,6 +98,118 @@ function getLocalizedPath(targetLocale: string): string {
 const xDefaultLocale = activeLocales.includes(defaultLocale)
   ? defaultLocale
   : (activeLocales[0] || locale);
+
+const baseSiteOrigin = new URL("/", siteUrl).href.replace(/\/$/, "");
+const personId = `${baseSiteOrigin}/#person`;
+const websiteId = `${baseSiteOrigin}/#website`;
+
+const personSchema = {
+  "@type": "Person",
+  "@id": personId,
+  name: "Artus Mosquet",
+  alternateName: ["モスケ アルテゥス", "アルテゥス・モスケ"],
+  url: `${baseSiteOrigin}/en/`,
+  image: `${baseSiteOrigin}/og-image.png`,
+  jobTitle: cleanText(uiStrings.myOccupation?.[locale]) || "Full-Time ECE Student",
+  affiliation: {
+    "@type": "CollegeOrUniversity",
+    name: "Purdue University",
+    url: "https://www.purdue.edu/",
+  },
+  alumniOf: [
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Purdue University",
+      url: "https://www.purdue.edu/",
+    },
+  ],
+  sameAs: [
+    "https://github.com/amosquet",
+    "https://www.linkedin.com/in/artusmosquet",
+    "https://twitter.com/almondmanttv",
+    "https://twitch.tv/almondmanttv",
+  ],
+};
+
+const websiteSchema = {
+  "@type": "WebSite",
+  "@id": websiteId,
+  name: siteTitle,
+  alternateName: "Artus Mosquet",
+  url: `${baseSiteOrigin}/`,
+  inLanguage: activeLocales,
+  author: { "@id": personId },
+  publisher: { "@id": personId },
+};
+
+const normalizedPath = Astro.url.pathname.endsWith("/")
+  ? Astro.url.pathname
+  : `${Astro.url.pathname}/`;
+const isProfilePage =
+  /^\/(en|fr|ja)\/$/.test(normalizedPath) ||
+  /^\/(en|fr|ja)\/about\/$/.test(normalizedPath);
+
+let pageEntitySchema: Record<string, unknown>;
+if (type === "article" && article) {
+  pageEntitySchema = {
+    "@type": "BlogPosting",
+    "@id": `${canonicalUrl}#article`,
+    headline: cleanTitleText || siteTitle,
+    description: cleanDesc,
+    url: canonicalUrl,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": canonicalUrl,
+    },
+    image: [imageUrl],
+    inLanguage: locale,
+    author: { "@id": personId },
+    publisher: { "@id": personId },
+    isPartOf: { "@id": websiteId },
+    ...(article.publishedTime ? { datePublished: article.publishedTime } : {}),
+    ...(article.modifiedTime || article.publishedTime
+      ? { dateModified: article.modifiedTime || article.publishedTime }
+      : {}),
+    ...(article.tags && article.tags.length > 0
+      ? { keywords: article.tags.map((t) => cleanText(t)) }
+      : {}),
+  };
+} else if (type === "book" && book) {
+  pageEntitySchema = {
+    "@type": "WebPage",
+    "@id": canonicalUrl,
+    url: canonicalUrl,
+    name: fullTitle,
+    description: cleanDesc,
+    inLanguage: locale,
+    isPartOf: { "@id": websiteId },
+    mainEntity: {
+      "@type": "Book",
+      name: cleanTitleText || fullTitle,
+      image: imageUrl,
+      ...(book.author
+        ? { author: { "@type": "Person", name: cleanText(book.author) } }
+        : {}),
+      ...(book.isbn ? { isbn: book.isbn } : {}),
+    },
+  };
+} else {
+  pageEntitySchema = {
+    "@type": isProfilePage ? "ProfilePage" : "WebPage",
+    "@id": canonicalUrl,
+    url: canonicalUrl,
+    name: fullTitle,
+    description: cleanDesc,
+    inLanguage: locale,
+    isPartOf: { "@id": websiteId },
+    ...(isProfilePage ? { mainEntity: { "@id": personId } } : { about: { "@id": personId } }),
+  };
+}
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [personSchema, websiteSchema, pageEntitySchema],
+};
 ---
 
 {noindex && <meta name="robots" content="noindex, follow" />}
@@ -180,3 +292,6 @@ const xDefaultLocale = activeLocales.includes(defaultLocale)
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={cleanDesc} />
 <meta name="twitter:image" content={imageUrl} />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />

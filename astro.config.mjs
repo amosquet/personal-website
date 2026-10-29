@@ -73,6 +73,14 @@ export default defineConfig({
     icon(),
     bookCoversSync(),
     sitemap({
+      i18n: {
+        defaultLocale: "en",
+        locales: {
+          en: "en-US",
+          fr: "fr-FR",
+          ja: "ja-JP",
+        },
+      },
       filter: (page) =>
         page !== "https://artusmosquet.com/" &&
         page !== "https://artusmosquet.com/resume/" &&

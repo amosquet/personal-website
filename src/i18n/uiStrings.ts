@@ -12,10 +12,45 @@ export const uiStrings: TypeUIStrings = {
     fr: "Artus Mosquet",
     ja: "モスケ アルテゥス",
   },
+  homePageTitle: {
+    en: "Artus Mosquet | Electrical Engineering Student at Purdue",
+    fr: "Artus Mosquet | Étudiant en génie électrique à Purdue",
+    ja: "モスケ アルテゥス (Artus Mosquet) | パデュー大学電気工学専攻",
+  },
   siteDescription: {
     en: "Personal website of Artus Mosquet, Full-Time ECE Student at Purdue University.",
     fr: "Site personnel d'Artus Mosquet, étudiant en ECE à l'Université de Purdue.",
     ja: "パデュー大学電気工学専攻、モスケ アルテゥスの個人ウェブサイト。",
+  },
+  projectsDescription: {
+    en: "Software, hardware, and open-source engineering projects built by Artus Mosquet.",
+    fr: "Projets logiciels, matériels et open source réalisés par Artus Mosquet.",
+    ja: "モスケ アルテゥスが開発したソフトウェア・ハードウェア・OSSプロジェクト一覧。",
+  },
+  blogDescription: {
+    en: "Articles and technical notes on software engineering, self-hosting, Linux, and hardware by Artus Mosquet.",
+    fr: "Articles et notes techniques sur le développement logiciel, l'auto-hébergement, Linux et le matériel par Artus Mosquet.",
+    ja: "ソフトウェア開発、セルフホスティング、Linux、ハードウェアに関するモスケ アルテゥスの技術ブログ。",
+  },
+  readingDescription: {
+    en: "Books Artus Mosquet is currently reading, has finished, or plans to read next.",
+    fr: "Livres qu'Artus Mosquet lit actuellement, a terminés ou prévoit de lire.",
+    ja: "モスケ アルテゥスが現在読んでいる本、読了した本、これから読む本の読書リスト。",
+  },
+  faqDescription: {
+    en: "Frequently asked questions and random facts about Artus Mosquet, his domains, and Linux setup.",
+    fr: "Foire aux questions et informations diverses sur Artus Mosquet, ses domaines et sa configuration Linux.",
+    ja: "モスケ アルテゥスに関するよくある質問（FAQ）、所有ドメイン、Linux環境について。",
+  },
+  nowDescription: {
+    en: "What Artus Mosquet is currently studying, building, and reading in West Lafayette, Indiana.",
+    fr: "Ce qu'Artus Mosquet étudie, développe et lit en ce moment à West Lafayette, Indiana.",
+    ja: "インディアナ州ウェストラファイエットでのモスケ アルテゥスの現在の学習・開発・読書状況。",
+  },
+  privacyDescription: {
+    en: "Privacy policy and data handling practices for artusmosquet.com.",
+    fr: "Politique de confidentialité et gestion des données personnelles sur artusmosquet.com.",
+    ja: "artusmosquet.com におけるプライバシーポリシーとデータ取り扱いについて。",
   },
   navHome: {
     en: "Home",
@@ -98,13 +133,13 @@ export const uiStrings: TypeUIStrings = {
     ja: "ステータス",
   },
   helloThere: {
-    en: "Hello There!",
-    fr: "Bonjour !",
-    ja: "こんにちは！",
+    en: "Hello! I'm Artus Mosquet",
+    fr: "Bonjour ! Je suis Artus Mosquet",
+    ja: "こんにちは！モスケ アルテゥスです",
   },
   introText: {
-    en: "I'm a Full-Time ECE Student at Purdue. I speak French and English, and I enjoy working on my servers and projects.",
-    fr: "Je suis étudiant à temps plein en ECE à Purdue. Je parle français et anglais, et j'aime travailler sur mes serveurs et mes projets.",
+    en: "I'm a Full-Time Electrical & Computer Engineering (ECE) Student at Purdue University. I speak French and English, and I enjoy working on my servers and projects.",
+    fr: "Je suis étudiant à temps plein en génie électrique et informatique (ECE) à l'Université Purdue. Je parle français et anglais, et j'aime travailler sur mes serveurs et mes projets.",
     ja: "パデュー<ruby>大学<rt>だいがく</rt></ruby>のフルタイムの<ruby>電気工学専攻<rt>でんきこうがくせんこう</rt></ruby>の<ruby>学生<rt>がくせい</rt></ruby>です。フランス<ruby>語<rt>ご</rt></ruby>と<ruby>英語<rt>えいご</rt></ruby>を<ruby>話<rt>はな</rt></ruby>し、<ruby>自分<rt>じぶん</rt></ruby>のサーバーやプロジェクトに<ruby>取<rt>と</rt></ruby>り<ruby>組<rt>く</rt></ruby>むのが<ruby>好<rt>す</rt></ruby>きです。",
   },
   dataStored: {

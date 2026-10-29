@@ -41,7 +41,9 @@ import "@/styles/global.css";
         <title>
             {
                 title
-                    ? `${title} | ${uiStrings.siteTitle[locale]}`
+                    ? title.includes(uiStrings.siteTitle[locale] || "Artus Mosquet")
+                        ? title
+                        : `${title} | ${uiStrings.siteTitle[locale]}`
                     : uiStrings.siteTitle[locale]
             }
         </title>
