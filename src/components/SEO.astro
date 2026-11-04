@@ -21,6 +21,13 @@ export interface Props {
     author?: string;
     isbn?: string;
   };
+  project?: {
+    name: string;
+    description?: string;
+    codeRepository?: string;
+    programmingLanguage?: string;
+    keywords?: string[];
+  };
 }
 
 const {
@@ -32,6 +39,7 @@ const {
   availableLocales,
   article,
   book,
+  project,
 } = Astro.props;
 
 const activeLocales = availableLocales ?? locales;
@@ -149,6 +157,60 @@ const isProfilePage =
   /^\/(en|fr|ja)\/$/.test(normalizedPath) ||
   /^\/(en|fr|ja)\/about\/$/.test(normalizedPath);
 
+const pathSegments = normalizedPath.split("/").filter(Boolean);
+const sectionNameMap: Record<string, string | undefined> = {
+  about: cleanText(uiStrings.navAbout?.[locale]),
+  blog: cleanText(uiStrings.navBlog?.[locale]),
+  projects: cleanText(uiStrings.navProjects?.[locale]),
+  reading: cleanText(uiStrings.navReading?.[locale]),
+  hardware: cleanText(uiStrings.navHardware?.[locale]),
+  music: cleanText(uiStrings.musicPageTitle?.[locale]),
+  faq: cleanText(uiStrings.faq?.[locale]),
+  now: cleanText(uiStrings.nowTitle?.[locale]),
+  privacy: cleanText(uiStrings.privacyPolicy?.[locale]),
+};
+
+const breadcrumbId = `${canonicalUrl}#breadcrumb`;
+let breadcrumbSchema: Record<string, unknown> | null = null;
+if (pathSegments.length >= 2) {
+  const sectionSlug = pathSegments[1];
+  const sectionLabel = sectionNameMap[sectionSlug] || sectionSlug;
+  const items: Array<Record<string, unknown>> = [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: cleanText(uiStrings.navHome?.[locale]) || "Home",
+      item: `${baseSiteOrigin}/${locale}/`,
+    },
+  ];
+  if (pathSegments.length === 2) {
+    items.push({
+      "@type": "ListItem",
+      position: 2,
+      name: cleanTitleText || sectionLabel,
+      item: canonicalUrl,
+    });
+  } else {
+    items.push({
+      "@type": "ListItem",
+      position: 2,
+      name: sectionLabel,
+      item: `${baseSiteOrigin}/${locale}/${sectionSlug}/`,
+    });
+    items.push({
+      "@type": "ListItem",
+      position: 3,
+      name: cleanTitleText || fullTitle,
+      item: canonicalUrl,
+    });
+  }
+  breadcrumbSchema = {
+    "@type": "BreadcrumbList",
+    "@id": breadcrumbId,
+    itemListElement: items,
+  };
+}
+
 let pageEntitySchema: Record<string, unknown>;
 if (type === "article" && article) {
   pageEntitySchema = {
@@ -160,6 +222,7 @@ if (type === "article" && article) {
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": canonicalUrl,
+      ...(breadcrumbSchema ? { breadcrumb: { "@id": breadcrumbId } } : {}),
     },
     image: [imageUrl],
     inLanguage: locale,
@@ -174,6 +237,32 @@ if (type === "article" && article) {
       ? { keywords: article.tags.map((t) => cleanText(t)) }
       : {}),
   };
+} else if (project) {
+  pageEntitySchema = {
+    "@type": "WebPage",
+    "@id": canonicalUrl,
+    url: canonicalUrl,
+    name: fullTitle,
+    description: cleanDesc,
+    inLanguage: locale,
+    isPartOf: { "@id": websiteId },
+    ...(breadcrumbSchema ? { breadcrumb: { "@id": breadcrumbId } } : {}),
+    mainEntity: {
+      "@type": "SoftwareSourceCode",
+      "@id": `${canonicalUrl}#software`,
+      name: cleanText(project.name) || cleanTitleText || fullTitle,
+      description: cleanText(project.description) || cleanDesc,
+      url: canonicalUrl,
+      author: { "@id": personId },
+      ...(project.codeRepository ? { codeRepository: project.codeRepository } : {}),
+      ...(project.programmingLanguage
+        ? { programmingLanguage: project.programmingLanguage }
+        : {}),
+      ...(project.keywords && project.keywords.length > 0
+        ? { keywords: project.keywords.map((k) => cleanText(k)) }
+        : {}),
+    },
+  };
 } else if (type === "book" && book) {
   pageEntitySchema = {
     "@type": "WebPage",
@@ -183,6 +272,7 @@ if (type === "article" && article) {
     description: cleanDesc,
     inLanguage: locale,
     isPartOf: { "@id": websiteId },
+    ...(breadcrumbSchema ? { breadcrumb: { "@id": breadcrumbId } } : {}),
     mainEntity: {
       "@type": "Book",
       name: cleanTitleText || fullTitle,
@@ -202,13 +292,19 @@ if (type === "article" && article) {
     description: cleanDesc,
     inLanguage: locale,
     isPartOf: { "@id": websiteId },
+    ...(breadcrumbSchema ? { breadcrumb: { "@id": breadcrumbId } } : {}),
     ...(isProfilePage ? { mainEntity: { "@id": personId } } : { about: { "@id": personId } }),
   };
 }
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@graph": [personSchema, websiteSchema, pageEntitySchema],
+  "@graph": [
+    personSchema,
+    websiteSchema,
+    pageEntitySchema,
+    ...(breadcrumbSchema ? [breadcrumbSchema] : []),
+  ],
 };
 ---
 

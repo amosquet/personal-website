@@ -6,7 +6,24 @@ import { useTranslations } from "@/i18n/utils";
 const t = useTranslations(locale);
 import { Icon } from "astro-icon/components";
 
+export interface Props {
+    title?: string;
+    availableLocales?: readonly string[];
+}
+
+const { availableLocales } = Astro.props;
 const currentPath = Astro.url.pathname;
+
+function getLanguageSwitchPath(targetLocale: string): string {
+    if (availableLocales && !availableLocales.includes(targetLocale)) {
+        const segments = currentPath.split("/").filter(Boolean);
+        if (segments.length >= 2) {
+            return `/${targetLocale}/${segments[1]}/`;
+        }
+        return `/${targetLocale}/`;
+    }
+    return currentPath.replace(`/${locale}/`, `/${targetLocale}/`);
+}
 ---
 
 <style>
@@ -328,10 +345,7 @@ const currentPath = Astro.url.pathname;
                 <div class="language-dropdown-content">
                     {locales.map((otherLocale) => {
                         if (otherLocale === locale) return null;
-                        const newPath = currentPath.replace(
-                            `/${locale}/`,
-                            `/${otherLocale}/`,
-                        );
+                        const newPath = getLanguageSwitchPath(otherLocale);
                         return <a href={newPath}>{otherLocale}</a>;
                     })}
                     {locale === "ja" && (
@@ -421,10 +435,7 @@ const currentPath = Astro.url.pathname;
             <span class="mobile-lang-label">Lang:</span>
             {locales.map((otherLocale) => {
                 if (otherLocale === locale) return null;
-                const newPath = currentPath.replace(
-                    `/${locale}/`,
-                    `/${otherLocale}/`,
-                );
+                const newPath = getLanguageSwitchPath(otherLocale);
                 return (
                     <a href={newPath} class="mobile-lang-link">
                         {otherLocale}

@@ -27,6 +27,13 @@ const ogImage = `/${lang}/projects/${getProjectSlug(project)}/og.png`;
     title={project.name}
     description={project.caption || project.description}
     image={ogImage}
+    project={{
+        name: project.name,
+        description: project.description || project.caption,
+        codeRepository: project.githubUrl,
+        programmingLanguage: project.language,
+        keywords: project.techStack,
+    }}
 >
     <div class="max-w-3xl mx-auto px-4 py-12">
         <a

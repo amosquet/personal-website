@@ -44,9 +44,14 @@ const latestPostDate = latestPost
           day: "numeric",
       }).format(latestPost.data.pubDate)
     : "";
+const latestPostLang = latestPost
+    ? latestPost.id.includes("/")
+        ? latestPost.id.split("/")[0]
+        : lang
+    : lang;
 const latestPostSlug = latestPost
     ? latestPost.id.includes("/")
-        ? latestPost.id.split("/")[1]
+        ? latestPost.id.split("/").slice(1).join("/")
         : latestPost.id
     : "";
 
@@ -242,7 +247,7 @@ const previewDevices = hardwareData.slice(0, 3);
 
                     {latestPost ? (
                         <a
-                            href={`/${lang}/blog/${latestPostSlug}/`}
+                            href={`/${latestPostLang}/blog/${latestPostSlug}/`}
                             class="block"
                         >
                             <h2 class="text-lg font-bold text-gray-900 dark:text-gray-50 group-hover:text-black dark:group-hover:text-white mb-2 transition-colors">

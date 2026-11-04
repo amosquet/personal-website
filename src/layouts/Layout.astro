@@ -5,7 +5,7 @@ import SEO, { type Props as SEOProps } from "@/components/SEO.astro";
 
 export interface Props extends SEOProps {}
 
-const { title, description, image, type, noindex, availableLocales, article, book } = Astro.props;
+const { title, description, image, type, noindex, availableLocales, article, book, project } = Astro.props;
 
 import { defaultLocale } from "@/i18n/i18n";
 import { uiStrings } from "@/i18n/uiStrings";
@@ -23,6 +23,7 @@ import "@/styles/global.css";
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="sitemap" href="/sitemap-index.xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -56,6 +57,7 @@ import "@/styles/global.css";
             availableLocales={availableLocales}
             article={article}
             book={book}
+            project={project}
         />
         <script
             defer
@@ -63,7 +65,7 @@ import "@/styles/global.css";
             data-website-id="a4719bd5-323b-424b-a461-1dcd96c98c92"></script>
     </head>
     <body class="bg-white dark:bg-gray-900 min-h-screen flex flex-col font-sans">
-        <BaseHead title={title} />
+        <BaseHead title={title} availableLocales={availableLocales} />
         <main class="grow">
             <slot />
         </main>
