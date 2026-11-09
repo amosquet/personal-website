@@ -4,11 +4,7 @@ import { useTranslations } from "@/i18n/utils";
 import { getProjectSlug } from "@/utils/slugify";
 
 export function getStaticPaths() {
-    return [
-        { params: { lang: "en" } },
-        { params: { lang: "fr" } },
-        { params: { lang: "ja" } },
-    ];
+    return [{ params: { lang: "en" } }];
 }
 
 const { lang } = Astro.params as { lang: "en" | "fr" | "ja" };

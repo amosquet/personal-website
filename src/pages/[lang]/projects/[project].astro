@@ -5,7 +5,7 @@ import projects from "@/data/projects.json";
 import { getProjectSlug } from "@/utils/slugify";
 
 export function getStaticPaths() {
-    const langs = ["en", "fr", "ja"] as const;
+    const langs = ["en"] as const;
     return langs.flatMap((lang) => {
         return projects.map((project) => ({
             params: { lang, project: getProjectSlug(project) },

@@ -4,7 +4,7 @@ import { useTranslations } from "@/i18n/utils";
 import { getBooks, type EnrichedBook } from "@/lib/books";
 
 export async function getStaticPaths() {
-    const locales = ["en", "fr", "ja"];
+    const locales = ["en"];
     const books = await getBooks();
 
     const paths = [];
