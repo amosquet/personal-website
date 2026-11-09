@@ -31,3 +31,18 @@ export const directoryNames: PathNames = {
         // ja: "tags",
     },
 };
+
+// Sections whose main content is only available in the listed locales.
+// Pages in other sections render in every locale; for sections listed here,
+// only these locales get a page and all internal links fall back to them.
+export const sectionLocales: Record<string, readonly string[]> = {
+    about: locales,
+    blog: locales,
+    privacy: locales,
+    faq: ["en"],
+    hardware: ["en"],
+    music: ["en"],
+    now: ["en"],
+    projects: ["en"],
+    reading: ["en"],
+};

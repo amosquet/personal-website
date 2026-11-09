@@ -4,11 +4,7 @@ import { Icon } from "astro-icon/components";
 import { useTranslations } from "@/i18n/utils";
 
 export function getStaticPaths() {
-  return [
-    { params: { lang: "en" } },
-    { params: { lang: "fr" } },
-    { params: { lang: "ja" } },
-  ];
+  return [{ params: { lang: "en" } }];
 }
 
 const { lang } = Astro.params as { lang: "en" | "fr" | "ja" };

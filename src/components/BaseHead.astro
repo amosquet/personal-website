@@ -2,7 +2,7 @@
 import { defaultLocale, locales } from "@/i18n/i18n";
 import { uiStrings } from "@/i18n/uiStrings";
 const locale = Astro.currentLocale || defaultLocale;
-import { useTranslations } from "@/i18n/utils";
+import { localizedSectionPath, sectionAvailableLocales, useTranslations } from "@/i18n/utils";
 const t = useTranslations(locale);
 import { Icon } from "astro-icon/components";
 
@@ -15,14 +15,17 @@ const { availableLocales } = Astro.props;
 const currentPath = Astro.url.pathname;
 
 function getLanguageSwitchPath(targetLocale: string): string {
-    if (availableLocales && !availableLocales.includes(targetLocale)) {
-        const segments = currentPath.split("/").filter(Boolean);
-        if (segments.length >= 2) {
-            return `/${targetLocale}/${segments[1]}/`;
-        }
-        return `/${targetLocale}/`;
+    const segments = currentPath.split("/").filter(Boolean);
+    const section = segments.length >= 2 ? segments[1] : "";
+    const sectionLocalesForPath = sectionAvailableLocales(section);
+    const pageLocales = availableLocales ?? sectionLocalesForPath;
+    if (pageLocales.includes(targetLocale)) {
+        return currentPath.replace(`/${locale}/`, `/${targetLocale}/`);
     }
-    return currentPath.replace(`/${locale}/`, `/${targetLocale}/`);
+    if (sectionLocalesForPath.includes(targetLocale)) {
+        return `/${targetLocale}/${section}/`;
+    }
+    return `/${targetLocale}/`;
 }
 ---
 
@@ -308,11 +311,11 @@ function getLanguageSwitchPath(targetLocale: string): string {
 
         {/* Desktop links */}
         <div class="links">
-            <a href={"/" + locale + "/"}>{uiStrings["navHome"]![locale]}</a>
-            <a href={"/" + locale + "/blog/"}>{uiStrings["navBlog"]![locale]}</a>
-            <a href={"/" + locale + "/about/"}>{uiStrings["navAbout"]![locale]}</a>
-            <a href={"/" + locale + "/projects/"}>{uiStrings["navProjects"]![locale]}</a>
-            <a href={"/" + locale + "/reading/"}>{uiStrings["navReading"]![locale]}</a>
+            <a href={localizedSectionPath(locale, "")}>{uiStrings["navHome"]![locale]}</a>
+            <a href={localizedSectionPath(locale, "blog")}>{uiStrings["navBlog"]![locale]}</a>
+            <a href={localizedSectionPath(locale, "about")}>{uiStrings["navAbout"]![locale]}</a>
+            <a href={localizedSectionPath(locale, "projects")}>{uiStrings["navProjects"]![locale]}</a>
+            <a href={localizedSectionPath(locale, "reading")}>{uiStrings["navReading"]![locale]}</a>
             <a
                 href="https://status.amcloud.dev"
                 target="_blank"
@@ -417,11 +420,11 @@ function getLanguageSwitchPath(targetLocale: string): string {
         role="navigation"
         aria-label="Mobile navigation"
     >
-        <a href={"/" + locale + "/"}>{uiStrings["navHome"]![locale]}</a>
-        <a href={"/" + locale + "/blog/"}>{uiStrings["navBlog"]![locale]}</a>
-        <a href={"/" + locale + "/about/"}>{uiStrings["navAbout"]![locale]}</a>
-        <a href={"/" + locale + "/projects/"}>{uiStrings["navProjects"]![locale]}</a>
-        <a href={"/" + locale + "/reading/"}>{uiStrings["navReading"]![locale]}</a>
+        <a href={localizedSectionPath(locale, "")}>{uiStrings["navHome"]![locale]}</a>
+        <a href={localizedSectionPath(locale, "blog")}>{uiStrings["navBlog"]![locale]}</a>
+        <a href={localizedSectionPath(locale, "about")}>{uiStrings["navAbout"]![locale]}</a>
+        <a href={localizedSectionPath(locale, "projects")}>{uiStrings["navProjects"]![locale]}</a>
+        <a href={localizedSectionPath(locale, "reading")}>{uiStrings["navReading"]![locale]}</a>
         <a
             href="https://status.amcloud.dev"
             target="_blank"
