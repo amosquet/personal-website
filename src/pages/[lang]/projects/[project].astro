@@ -18,7 +18,7 @@ const { lang } = Astro.params as { lang: "en" | "fr" | "ja" };
 const { project } = Astro.props;
 const t = useTranslations(lang);
 
-const mainFields = ["name", "caption", "description", "slug"];
+const mainFields = ["name", "caption", "description", "slug", "liveUrl"];
 const additionalFields = Object.entries(project).filter(([key]) => !mainFields.includes(key));
 const ogImage = `/${lang}/projects/${getProjectSlug(project)}/og.png`;
 ---
@@ -51,6 +51,18 @@ const ogImage = `/${lang}/projects/${getProjectSlug(project)}/og.png`;
                 {project.caption && (
                     <p class="text-xl text-gray-600 dark:text-gray-400 font-normal">
                         {project.caption}
+                    </p>
+                )}
+                {project.liveUrl && (
+                    <p class="mt-4">
+                        <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center gap-1 font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline"
+                        >
+                            {t("projectLiveSite")} &nearr;
+                        </a>
                     </p>
                 )}
             </header>

@@ -1,5 +1,21 @@
 [
   {
+    "name": "Directory",
+    "caption": "Purdue Hackers Member & Alumni Directory",
+    "description": "A place for Purdue Hackers members to search and connect with other members and alumni.\n\nMembers sign in with Purdue Hackers ID and get instant fuzzy search across full names, @usernames, emails, and Discord tags, with filters for roles (Organizers, Alumni, Members) and graduation year. Each member gets a profile page with avatar, role badge, grad class, and direct contact options, plus customizable extras like socials, location, a timezone with live clock, headline, and bio.\n\nBuilt with Bun and Astro (SSR), backed by Turso (LibSQL) in production with a local SQLite database for development, hosted on Vercel, and styled with the official Purdue Hackers UI design system.",
+    "githubUrl": "https://github.com/purduehackers/directory",
+    "liveUrl": "https://directory.purduehackers.com",
+    "language": "TypeScript",
+    "techStack": [
+      "TypeScript",
+      "Astro",
+      "Bun",
+      "Tailwind CSS",
+      "Drizzle ORM",
+      "MiniSearch"
+    ]
+  },
+  {
     "name": "Study Deck",
     "caption": "Local & Open Source Quizlet Alternative",
     "description": "A local, Open Source, and better alternative to Quizlet.\nQuizlet asks that you pay money to use flashcards, Anki is annoying to use and really only made for flashcards.\nStudy Deck has all of the features of Quizlet, compatible with Quizlet and Anki study decks, and is free to use, in perpetuity.",
